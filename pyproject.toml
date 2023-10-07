@@ -4,7 +4,7 @@ version = "0.0.0"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
 scripts = {qms = "main:main"}
-dependencies = ["pyside6"]
+dependencies = ["pyside6", "matplotlib"]
 
 [project.optional-dependencies]
 dev = ["mypy", "ruff", "black"]
@@ -20,5 +20,4 @@ line-length = 120
 
 [tool.mypy]
 exclude = ["build", ".venv", "src/layouts"]
-disallow_untyped_defs = true
 ignore_missing_imports = true
