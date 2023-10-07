@@ -17,8 +17,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QFrame,
     QHBoxLayout, QLabel, QLineEdit, QPushButton,
-    QRadioButton, QSizePolicy, QSpacerItem, QSpinBox,
-    QVBoxLayout, QWidget)
+    QRadioButton, QSizePolicy, QSpinBox, QVBoxLayout,
+    QWidget)
 
 class Ui_DiagnosticView(object):
     def setupUi(self, DiagnosticView):
@@ -35,15 +35,15 @@ class Ui_DiagnosticView(object):
 
         self.verticalLayout_2.addWidget(self.label)
 
-        self.widget = QWidget(DiagnosticView)
-        self.widget.setObjectName(u"widget")
+        self.resonance_chart = QWidget(DiagnosticView)
+        self.resonance_chart.setObjectName(u"resonance_chart")
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
-        self.widget.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.resonance_chart.sizePolicy().hasHeightForWidth())
+        self.resonance_chart.setSizePolicy(sizePolicy)
 
-        self.verticalLayout_2.addWidget(self.widget)
+        self.verticalLayout_2.addWidget(self.resonance_chart)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -148,10 +148,6 @@ class Ui_DiagnosticView(object):
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_5)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_2.addItem(self.verticalSpacer)
-
 
         self.horizontalLayout.addLayout(self.verticalLayout_2)
 
@@ -170,10 +166,10 @@ class Ui_DiagnosticView(object):
 
         self.verticalLayout.addWidget(self.label_2)
 
-        self.widget_2 = QWidget(DiagnosticView)
-        self.widget_2.setObjectName(u"widget_2")
+        self.rf_chart = QWidget(DiagnosticView)
+        self.rf_chart.setObjectName(u"rf_chart")
 
-        self.verticalLayout.addWidget(self.widget_2)
+        self.verticalLayout.addWidget(self.rf_chart)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -303,10 +299,10 @@ class Ui_DiagnosticView(object):
 
         self.verticalLayout.addWidget(self.label_32)
 
-        self.widget_5 = QWidget(DiagnosticView)
-        self.widget_5.setObjectName(u"widget_5")
+        self.rf_stability_chart = QWidget(DiagnosticView)
+        self.rf_stability_chart.setObjectName(u"rf_stability_chart")
 
-        self.verticalLayout.addWidget(self.widget_5)
+        self.verticalLayout.addWidget(self.rf_stability_chart)
 
         self.rf_enable_checkbox = QCheckBox(DiagnosticView)
         self.rf_enable_checkbox.setObjectName(u"rf_enable_checkbox")
@@ -334,10 +330,6 @@ class Ui_DiagnosticView(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_10)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer_2)
-
 
         self.horizontalLayout.addLayout(self.verticalLayout)
 
@@ -356,10 +348,10 @@ class Ui_DiagnosticView(object):
 
         self.verticalLayout_3.addWidget(self.label_3)
 
-        self.widget_3 = QWidget(DiagnosticView)
-        self.widget_3.setObjectName(u"widget_3")
+        self.source_chart = QWidget(DiagnosticView)
+        self.source_chart.setObjectName(u"source_chart")
 
-        self.verticalLayout_3.addWidget(self.widget_3)
+        self.verticalLayout_3.addWidget(self.source_chart)
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
@@ -479,19 +471,15 @@ class Ui_DiagnosticView(object):
 
         self.verticalLayout_3.addWidget(self.label_23)
 
-        self.widget_4 = QWidget(DiagnosticView)
-        self.widget_4.setObjectName(u"widget_4")
+        self.source_stability_chart = QWidget(DiagnosticView)
+        self.source_stability_chart.setObjectName(u"source_stability_chart")
 
-        self.verticalLayout_3.addWidget(self.widget_4)
+        self.verticalLayout_3.addWidget(self.source_stability_chart)
 
         self.source_enable_checkbox = QCheckBox(DiagnosticView)
         self.source_enable_checkbox.setObjectName(u"source_enable_checkbox")
 
         self.verticalLayout_3.addWidget(self.source_enable_checkbox)
-
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_3.addItem(self.verticalSpacer_3)
 
 
         self.horizontalLayout.addLayout(self.verticalLayout_3)

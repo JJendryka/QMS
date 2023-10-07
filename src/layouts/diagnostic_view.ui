@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,1,0,1">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0,0">
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0">
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -27,7 +27,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="widget" native="true">
+      <widget class="QWidget" name="resonance_chart" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -162,19 +162,6 @@
        </item>
       </layout>
      </item>
-     <item>
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
     </layout>
    </item>
    <item>
@@ -197,7 +184,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="widget_2" native="true"/>
+      <widget class="QWidget" name="rf_chart" native="true"/>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -359,7 +346,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="widget_5" native="true"/>
+      <widget class="QWidget" name="rf_stability_chart" native="true"/>
      </item>
      <item>
       <widget class="QCheckBox" name="rf_enable_checkbox">
@@ -392,19 +379,6 @@
        </item>
       </layout>
      </item>
-     <item>
-      <spacer name="verticalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
     </layout>
    </item>
    <item>
@@ -427,7 +401,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="widget_3" native="true"/>
+      <widget class="QWidget" name="source_chart" native="true"/>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -566,7 +540,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="widget_4" native="true"/>
+      <widget class="QWidget" name="source_stability_chart" native="true"/>
      </item>
      <item>
       <widget class="QCheckBox" name="source_enable_checkbox">
@@ -574,19 +548,6 @@
         <string>Test enable source</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <spacer name="verticalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>
