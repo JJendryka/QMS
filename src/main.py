@@ -1,6 +1,8 @@
 import logging
 import argparse
 
+from PySide6.QtWidgets import QApplication, QWidget
+
 import custom_logging
 
 logger = logging.getLogger(__name__)
@@ -23,6 +25,11 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     custom_logging.setup_logging(args.log_level, logger)
+
+    app = QApplication()
+    window = QWidget()
+    window.show()
+    app.exec()
 
 
 if __name__ == "__main__":
