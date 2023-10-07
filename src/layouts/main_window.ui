@@ -21,7 +21,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="usesScrollButtons">
        <bool>false</bool>
@@ -29,7 +29,7 @@
       <property name="tabBarAutoHide">
        <bool>true</bool>
       </property>
-      <widget class="QWidget" name="spectrum_tab">
+      <widget class="SpectrumView" name="spectrum_tab">
        <attribute name="title">
         <string>Spectrum</string>
        </attribute>
@@ -39,7 +39,7 @@
         <string>Stability Map</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="diagnostics_tab">
+      <widget class="DiagnosticView" name="diagnostic_tab">
        <attribute name="title">
         <string>Diagnostics</string>
        </attribute>
@@ -83,6 +83,20 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SpectrumView</class>
+   <extends>QWidget</extends>
+   <header location="global">spectrum_view.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DiagnosticView</class>
+   <extends>QWidget</extends>
+   <header location="global">diagnostic_view.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
