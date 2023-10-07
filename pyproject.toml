@@ -1,9 +1,9 @@
 [project]
-name = "QMS-backend"
+name = "QMS"
 version = "0.0.0"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
-scripts = {qms-backend = "main:main"}
+scripts = {qms = "main:main"}
 
 [project.optional-dependencies]
 dev = ["mypy", "ruff", "black"]
