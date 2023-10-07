@@ -6,6 +6,10 @@ from PySide6.QtWidgets import QApplication
 import custom_logging
 from main_window import MainWindow
 
+import signal
+
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+
 logger = logging.getLogger(__name__)
 
 
