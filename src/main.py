@@ -1,9 +1,10 @@
 import logging
 import argparse
 
-from PySide6.QtWidgets import QApplication, QWidget
+from PySide6.QtWidgets import QApplication
 
 import custom_logging
+from main_window import MainWindow
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +28,7 @@ def main() -> None:
     custom_logging.setup_logging(args.log_level, logger)
 
     app = QApplication()
-    window = QWidget()
+    window = MainWindow()
     window.show()
     app.exec()
 

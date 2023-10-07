@@ -13,11 +13,12 @@ dev = ["mypy", "ruff", "black"]
 select = ["E", "F", "N", "B", "A", "RET"]
 line-length = 120
 target-version = "py310"
+exclude = ["build", ".venv", "src/layouts"]
 
 [tool.black]
 line-length = 120
 
 [tool.mypy]
-ignore_missing_imports = true
+exclude = ["build", ".venv", "src/layouts"]
 disallow_untyped_defs = true
-exclude = ["build", ".venv"]
+ignore_missing_imports = true
