@@ -1,4 +1,3 @@
-from os import replace
 from PySide6 import QtWidgets
 from PySide6.QtGui import QResizeEvent
 
@@ -24,7 +23,7 @@ class MplCanvas(FigureCanvasQTAgg):
         super(MplCanvas, self).__init__(fig)
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
 
-    def resizeEvent(self, event: QResizeEvent):
+    def resizeEvent(self, event: QResizeEvent):  # noqa: N802
         super(MplCanvas, self).resizeEvent(event)
         self.figure.tight_layout(pad=0.5)
 
