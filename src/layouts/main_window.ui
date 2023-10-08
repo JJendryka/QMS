@@ -21,7 +21,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="usesScrollButtons">
        <bool>false</bool>
@@ -34,7 +34,7 @@
         <string>Spectrum</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="stability_map_tab">
+      <widget class="MapView" name="stability_map_tab">
        <attribute name="title">
         <string>Stability Map</string>
        </attribute>
@@ -94,6 +94,12 @@
    <class>DiagnosticView</class>
    <extends>QWidget</extends>
    <header location="global">diagnostic_view.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MapView</class>
+   <extends>QWidget</extends>
+   <header location="global">map_view.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

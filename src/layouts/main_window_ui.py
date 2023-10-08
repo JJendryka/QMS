@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QMainWindow, QMenu,
     QMenuBar, QSizePolicy, QTabWidget, QWidget)
 
 from diagnostic_view import DiagnosticView
+from map_view import MapView
 from spectrum_view import SpectrumView
 
 class Ui_MainWindow(object):
@@ -43,7 +44,7 @@ class Ui_MainWindow(object):
         self.spectrum_tab = SpectrumView()
         self.spectrum_tab.setObjectName(u"spectrum_tab")
         self.tabWidget.addTab(self.spectrum_tab, "")
-        self.stability_map_tab = QWidget()
+        self.stability_map_tab = MapView()
         self.stability_map_tab.setObjectName(u"stability_map_tab")
         self.tabWidget.addTab(self.stability_map_tab, "")
         self.diagnostic_tab = DiagnosticView()
@@ -69,7 +70,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

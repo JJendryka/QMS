@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DiagnosticView</class>
- <widget class="QWidget" name="DiagnosticView">
+ <class>diagnostic_view</class>
+ <widget class="QWidget" name="diagnostic_view">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -19,7 +19,13 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Resonance</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Resonance&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -49,7 +55,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="min_frequency_lineedit"/>
+        <widget class="QLineEdit" name="min_frequency_lineedit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_6">
@@ -76,7 +89,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="max_frequency_lineedit"/>
+        <widget class="QLineEdit" name="max_frequency_lineedit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_7">
@@ -151,7 +171,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="working_frequency_lineedit"/>
+        <widget class="QLineEdit" name="working_frequency_lineedit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_13">
@@ -176,7 +203,7 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>RF Input-Output</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;RF Input-Output&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -271,7 +298,7 @@
      <item>
       <widget class="QLabel" name="label_24">
        <property name="text">
-        <string>PID Setup</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;PID Setup&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -338,7 +365,7 @@
      <item>
       <widget class="QLabel" name="label_32">
        <property name="text">
-        <string>RF Stability</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;RF Stability&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -393,7 +420,7 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Source V-I</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Source V-I&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -478,6 +505,9 @@
          <property name="text">
           <string>Constant Voltage</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -532,7 +562,7 @@
      <item>
       <widget class="QLabel" name="label_23">
        <property name="text">
-        <string>Source Stability</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Source Stability&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
