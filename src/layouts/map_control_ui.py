@@ -23,7 +23,7 @@ class Ui_map_control(object):
     def setupUi(self, map_control):
         if not map_control.objectName():
             map_control.setObjectName(u"map_control")
-        map_control.resize(1182, 155)
+        map_control.resize(1304, 195)
         self.verticalLayout = QVBoxLayout(map_control)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.line_3 = QFrame(map_control)
@@ -127,12 +127,84 @@ class Ui_map_control(object):
 
         self.horizontalLayout.addWidget(self.label_15)
 
+        self.line_16 = QFrame(map_control)
+        self.line_16.setObjectName(u"line_16")
+        self.line_16.setFrameShape(QFrame.VLine)
+        self.line_16.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout.addWidget(self.line_16)
+
         self.line_10 = QFrame(map_control)
         self.line_10.setObjectName(u"line_10")
         self.line_10.setFrameShape(QFrame.VLine)
         self.line_10.setFrameShadow(QFrame.Sunken)
 
         self.horizontalLayout.addWidget(self.line_10)
+
+        self.label_22 = QLabel(map_control)
+        self.label_22.setObjectName(u"label_22")
+
+        self.horizontalLayout.addWidget(self.label_22)
+
+        self.line_17 = QFrame(map_control)
+        self.line_17.setObjectName(u"line_17")
+        self.line_17.setFrameShape(QFrame.VLine)
+        self.line_17.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout.addWidget(self.line_17)
+
+        self.rf_u_scale_label = QLabel(map_control)
+        self.rf_u_scale_label.setObjectName(u"rf_u_scale_label")
+        self.rf_u_scale_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout.addWidget(self.rf_u_scale_label)
+
+        self.rf_u_scale_spinbox = QDoubleSpinBox(map_control)
+        self.rf_u_scale_spinbox.setObjectName(u"rf_u_scale_spinbox")
+
+        self.horizontalLayout.addWidget(self.rf_u_scale_spinbox)
+
+        self.rf_u_scale_unit_label = QLabel(map_control)
+        self.rf_u_scale_unit_label.setObjectName(u"rf_u_scale_unit_label")
+
+        self.horizontalLayout.addWidget(self.rf_u_scale_unit_label)
+
+        self.line_15 = QFrame(map_control)
+        self.line_15.setObjectName(u"line_15")
+        self.line_15.setFrameShape(QFrame.VLine)
+        self.line_15.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout.addWidget(self.line_15)
+
+        self.label_20 = QLabel(map_control)
+        self.label_20.setObjectName(u"label_20")
+
+        self.horizontalLayout.addWidget(self.label_20)
+
+        self.mass_spinbox = QDoubleSpinBox(map_control)
+        self.mass_spinbox.setObjectName(u"mass_spinbox")
+
+        self.horizontalLayout.addWidget(self.mass_spinbox)
+
+        self.label_25 = QLabel(map_control)
+        self.label_25.setObjectName(u"label_25")
+
+        self.horizontalLayout.addWidget(self.label_25)
+
+        self.label_24 = QLabel(map_control)
+        self.label_24.setObjectName(u"label_24")
+
+        self.horizontalLayout.addWidget(self.label_24)
+
+        self.rf_spinbox = QDoubleSpinBox(map_control)
+        self.rf_spinbox.setObjectName(u"rf_spinbox")
+
+        self.horizontalLayout.addWidget(self.rf_spinbox)
+
+        self.label_26 = QLabel(map_control)
+        self.label_26.setObjectName(u"label_26")
+
+        self.horizontalLayout.addWidget(self.label_26)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -288,17 +360,17 @@ class Ui_map_control(object):
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.progessbar = QProgressBar(map_control)
-        self.progessbar.setObjectName(u"progessbar")
-        self.progessbar.setValue(24)
-
-        self.horizontalLayout_3.addWidget(self.progessbar)
-
         self.label_23 = QLabel(map_control)
         self.label_23.setObjectName(u"label_23")
         self.label_23.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.horizontalLayout_3.addWidget(self.label_23)
+
+        self.progessbar = QProgressBar(map_control)
+        self.progessbar.setObjectName(u"progessbar")
+        self.progessbar.setValue(24)
+
+        self.horizontalLayout_3.addWidget(self.progessbar)
 
         self.steps_label = QLabel(map_control)
         self.steps_label.setObjectName(u"steps_label")
@@ -340,6 +412,159 @@ class Ui_map_control(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_3)
 
+        self.line_18 = QFrame(map_control)
+        self.line_18.setObjectName(u"line_18")
+        self.line_18.setFrameShape(QFrame.HLine)
+        self.line_18.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout.addWidget(self.line_18)
+
+        self.line_20 = QFrame(map_control)
+        self.line_20.setObjectName(u"line_20")
+        self.line_20.setFrameShape(QFrame.HLine)
+        self.line_20.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout.addWidget(self.line_20)
+
+        self.horizontalLayout_31 = QHBoxLayout()
+        self.horizontalLayout_31.setObjectName(u"horizontalLayout_31")
+        self.parameters_label = QLabel(map_control)
+        self.parameters_label.setObjectName(u"parameters_label")
+
+        self.horizontalLayout_31.addWidget(self.parameters_label)
+
+        self.line_121 = QFrame(map_control)
+        self.line_121.setObjectName(u"line_121")
+        self.line_121.setFrameShape(QFrame.VLine)
+        self.line_121.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_31.addWidget(self.line_121)
+
+        self.a_label = QLabel(map_control)
+        self.a_label.setObjectName(u"a_label")
+        self.a_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_31.addWidget(self.a_label)
+
+        self.a_spinbox = QDoubleSpinBox(map_control)
+        self.a_spinbox.setObjectName(u"a_spinbox")
+
+        self.horizontalLayout_31.addWidget(self.a_spinbox)
+
+        self.a_unit_label = QLabel(map_control)
+        self.a_unit_label.setObjectName(u"a_unit_label")
+
+        self.horizontalLayout_31.addWidget(self.a_unit_label)
+
+        self.b_label = QLabel(map_control)
+        self.b_label.setObjectName(u"b_label")
+        self.b_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_31.addWidget(self.b_label)
+
+        self.b_spinbox = QDoubleSpinBox(map_control)
+        self.b_spinbox.setObjectName(u"b_spinbox")
+
+        self.horizontalLayout_31.addWidget(self.b_spinbox)
+
+        self.b_unit_label = QLabel(map_control)
+        self.b_unit_label.setObjectName(u"b_unit_label")
+
+        self.horizontalLayout_31.addWidget(self.b_unit_label)
+
+        self.line_91 = QFrame(map_control)
+        self.line_91.setObjectName(u"line_91")
+        self.line_91.setFrameShape(QFrame.VLine)
+        self.line_91.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_31.addWidget(self.line_91)
+
+        self.label1 = QLabel(map_control)
+        self.label1.setObjectName(u"label1")
+        self.label1.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_31.addWidget(self.label1)
+
+        self.x1_spinbox = QDoubleSpinBox(map_control)
+        self.x1_spinbox.setObjectName(u"x1_spinbox")
+
+        self.horizontalLayout_31.addWidget(self.x1_spinbox)
+
+        self.label_51 = QLabel(map_control)
+        self.label_51.setObjectName(u"label_51")
+
+        self.horizontalLayout_31.addWidget(self.label_51)
+
+        self.label_27 = QLabel(map_control)
+        self.label_27.setObjectName(u"label_27")
+        self.label_27.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_31.addWidget(self.label_27)
+
+        self.y1_spinbox = QDoubleSpinBox(map_control)
+        self.y1_spinbox.setObjectName(u"y1_spinbox")
+
+        self.horizontalLayout_31.addWidget(self.y1_spinbox)
+
+        self.label_61 = QLabel(map_control)
+        self.label_61.setObjectName(u"label_61")
+
+        self.horizontalLayout_31.addWidget(self.label_61)
+
+        self.label_31 = QLabel(map_control)
+        self.label_31.setObjectName(u"label_31")
+        self.label_31.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_31.addWidget(self.label_31)
+
+        self.x2_spinbox = QDoubleSpinBox(map_control)
+        self.x2_spinbox.setObjectName(u"x2_spinbox")
+
+        self.horizontalLayout_31.addWidget(self.x2_spinbox)
+
+        self.label_71 = QLabel(map_control)
+        self.label_71.setObjectName(u"label_71")
+
+        self.horizontalLayout_31.addWidget(self.label_71)
+
+        self.label_41 = QLabel(map_control)
+        self.label_41.setObjectName(u"label_41")
+        self.label_41.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_31.addWidget(self.label_41)
+
+        self.y2_spinbox = QDoubleSpinBox(map_control)
+        self.y2_spinbox.setObjectName(u"y2_spinbox")
+
+        self.horizontalLayout_31.addWidget(self.y2_spinbox)
+
+        self.label_81 = QLabel(map_control)
+        self.label_81.setObjectName(u"label_81")
+
+        self.horizontalLayout_31.addWidget(self.label_81)
+
+        self.line_81 = QFrame(map_control)
+        self.line_81.setObjectName(u"line_81")
+        self.line_81.setFrameShape(QFrame.VLine)
+        self.line_81.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_31.addWidget(self.line_81)
+
+        self.horizontalSpacer_21 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_31.addItem(self.horizontalSpacer_21)
+
+        self.horizontalLayout_31.setStretch(22, 5)
+
+        self.verticalLayout.addLayout(self.horizontalLayout_31)
+
+        self.line_19 = QFrame(map_control)
+        self.line_19.setObjectName(u"line_19")
+        self.line_19.setFrameShape(QFrame.HLine)
+        self.line_19.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout.addWidget(self.line_19)
+
 
         self.retranslateUi(map_control)
 
@@ -356,6 +581,13 @@ class Ui_map_control(object):
         self.label_11.setText(QCoreApplication.translate("map_control", u"Step count:", None))
         self.label_13.setText(QCoreApplication.translate("map_control", u"Step size:", None))
         self.label_15.setText(QCoreApplication.translate("map_control", u"[V]", None))
+        self.label_22.setText(QCoreApplication.translate("map_control", u"<html><head/><body><p><span style=\" font-weight:600;\">Scale:</span></p></body></html>", None))
+        self.rf_u_scale_label.setText(QCoreApplication.translate("map_control", u"RF-to-Unit Scale:", None))
+        self.rf_u_scale_unit_label.setText(QCoreApplication.translate("map_control", u"[u/V]", None))
+        self.label_20.setText(QCoreApplication.translate("map_control", u"Mass:", None))
+        self.label_25.setText(QCoreApplication.translate("map_control", u"[u]", None))
+        self.label_24.setText(QCoreApplication.translate("map_control", u"RF:", None))
+        self.label_26.setText(QCoreApplication.translate("map_control", u"[V]", None))
         self.label_2.setText(QCoreApplication.translate("map_control", u"<html><head/><body><p><span style=\" font-weight:600;\">DC:</span></p></body></html>", None))
         self.label_4.setText(QCoreApplication.translate("map_control", u"Min:", None))
         self.label_6.setText(QCoreApplication.translate("map_control", u"[V]", None))
@@ -374,5 +606,18 @@ class Ui_map_control(object):
         self.full_time_label.setText(QCoreApplication.translate("map_control", u"00:00:00", None))
         self.start_push_button.setText(QCoreApplication.translate("map_control", u"Start", None))
         self.stop_push_button.setText(QCoreApplication.translate("map_control", u"Stop", None))
+        self.parameters_label.setText(QCoreApplication.translate("map_control", u"<html><head/><body><p><span style=\" font-weight:600;\">Scanline:</span></p></body></html>", None))
+        self.a_label.setText(QCoreApplication.translate("map_control", u"a:", None))
+        self.a_unit_label.setText(QCoreApplication.translate("map_control", u"[Vdc/Vrf]    ", None))
+        self.b_label.setText(QCoreApplication.translate("map_control", u"b:", None))
+        self.b_unit_label.setText(QCoreApplication.translate("map_control", u"[V]    ", None))
+        self.label1.setText(QCoreApplication.translate("map_control", u"X1:", None))
+        self.label_51.setText(QCoreApplication.translate("map_control", u"[Vrf]", None))
+        self.label_27.setText(QCoreApplication.translate("map_control", u"Y1:", None))
+        self.label_61.setText(QCoreApplication.translate("map_control", u"[Vdc]", None))
+        self.label_31.setText(QCoreApplication.translate("map_control", u"X2:", None))
+        self.label_71.setText(QCoreApplication.translate("map_control", u"[Vrf]", None))
+        self.label_41.setText(QCoreApplication.translate("map_control", u"Y2:", None))
+        self.label_81.setText(QCoreApplication.translate("map_control", u"[Vdc]", None))
     # retranslateUi
 

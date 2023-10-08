@@ -48,6 +48,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="autozero_button">
+       <property name="text">
+        <string>Auto zero</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="y_fullscale_button">
        <property name="text">
         <string>Full scale</string>

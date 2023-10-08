@@ -24,7 +24,7 @@ class Ui_spectrum_control(object):
     def setupUi(self, spectrum_control):
         if not spectrum_control.objectName():
             spectrum_control.setObjectName(u"spectrum_control")
-        spectrum_control.resize(1210, 128)
+        spectrum_control.resize(1236, 155)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -147,104 +147,6 @@ class Ui_spectrum_control(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        self.line_2 = QFrame(spectrum_control)
-        self.line_2.setObjectName(u"line_2")
-        self.line_2.setFrameShape(QFrame.HLine)
-        self.line_2.setFrameShadow(QFrame.Sunken)
-
-        self.verticalLayout.addWidget(self.line_2)
-
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.parameters_label = QLabel(spectrum_control)
-        self.parameters_label.setObjectName(u"parameters_label")
-
-        self.horizontalLayout_3.addWidget(self.parameters_label)
-
-        self.line_12 = QFrame(spectrum_control)
-        self.line_12.setObjectName(u"line_12")
-        self.line_12.setFrameShape(QFrame.VLine)
-        self.line_12.setFrameShadow(QFrame.Sunken)
-
-        self.horizontalLayout_3.addWidget(self.line_12)
-
-        self.a_label = QLabel(spectrum_control)
-        self.a_label.setObjectName(u"a_label")
-        self.a_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.horizontalLayout_3.addWidget(self.a_label)
-
-        self.a_spinbox = QDoubleSpinBox(spectrum_control)
-        self.a_spinbox.setObjectName(u"a_spinbox")
-
-        self.horizontalLayout_3.addWidget(self.a_spinbox)
-
-        self.a_unit_label = QLabel(spectrum_control)
-        self.a_unit_label.setObjectName(u"a_unit_label")
-
-        self.horizontalLayout_3.addWidget(self.a_unit_label)
-
-        self.line_8 = QFrame(spectrum_control)
-        self.line_8.setObjectName(u"line_8")
-        self.line_8.setFrameShape(QFrame.VLine)
-        self.line_8.setFrameShadow(QFrame.Sunken)
-
-        self.horizontalLayout_3.addWidget(self.line_8)
-
-        self.b_label = QLabel(spectrum_control)
-        self.b_label.setObjectName(u"b_label")
-        self.b_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.horizontalLayout_3.addWidget(self.b_label)
-
-        self.b_spinbox = QDoubleSpinBox(spectrum_control)
-        self.b_spinbox.setObjectName(u"b_spinbox")
-
-        self.horizontalLayout_3.addWidget(self.b_spinbox)
-
-        self.b_unit_label = QLabel(spectrum_control)
-        self.b_unit_label.setObjectName(u"b_unit_label")
-
-        self.horizontalLayout_3.addWidget(self.b_unit_label)
-
-        self.line_9 = QFrame(spectrum_control)
-        self.line_9.setObjectName(u"line_9")
-        self.line_9.setFrameShape(QFrame.VLine)
-        self.line_9.setFrameShadow(QFrame.Sunken)
-
-        self.horizontalLayout_3.addWidget(self.line_9)
-
-        self.rf_u_scale_label = QLabel(spectrum_control)
-        self.rf_u_scale_label.setObjectName(u"rf_u_scale_label")
-        self.rf_u_scale_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.horizontalLayout_3.addWidget(self.rf_u_scale_label)
-
-        self.rf_u_scale_spinbox = QDoubleSpinBox(spectrum_control)
-        self.rf_u_scale_spinbox.setObjectName(u"rf_u_scale_spinbox")
-
-        self.horizontalLayout_3.addWidget(self.rf_u_scale_spinbox)
-
-        self.rf_u_scale_unit_label = QLabel(spectrum_control)
-        self.rf_u_scale_unit_label.setObjectName(u"rf_u_scale_unit_label")
-
-        self.horizontalLayout_3.addWidget(self.rf_u_scale_unit_label)
-
-        self.line_10 = QFrame(spectrum_control)
-        self.line_10.setObjectName(u"line_10")
-        self.line_10.setFrameShape(QFrame.VLine)
-        self.line_10.setFrameShadow(QFrame.Sunken)
-
-        self.horizontalLayout_3.addWidget(self.line_10)
-
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
-
-        self.horizontalLayout_3.setStretch(14, 5)
-
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
-
         self.line = QFrame(spectrum_control)
         self.line.setObjectName(u"line")
         self.line.setFrameShape(QFrame.HLine)
@@ -294,13 +196,6 @@ class Ui_spectrum_control(object):
         self.step_count_label.setText(QCoreApplication.translate("spectrum_control", u"Step count:", None))
         self.step_size_label.setText(QCoreApplication.translate("spectrum_control", u"    Step size:", None))
         self.step_size_unit_label.setText(QCoreApplication.translate("spectrum_control", u"[u]", None))
-        self.parameters_label.setText(QCoreApplication.translate("spectrum_control", u"<html><head/><body><p><span style=\" font-weight:600;\">Parameters:</span></p></body></html>", None))
-        self.a_label.setText(QCoreApplication.translate("spectrum_control", u"a:", None))
-        self.a_unit_label.setText(QCoreApplication.translate("spectrum_control", u"[Vdc/Vrf]    ", None))
-        self.b_label.setText(QCoreApplication.translate("spectrum_control", u"b:", None))
-        self.b_unit_label.setText(QCoreApplication.translate("spectrum_control", u"[V]    ", None))
-        self.rf_u_scale_label.setText(QCoreApplication.translate("spectrum_control", u"RF-to-Unit Scale:", None))
-        self.rf_u_scale_unit_label.setText(QCoreApplication.translate("spectrum_control", u"[u/V]", None))
         self.repeating_checkbox.setText(QCoreApplication.translate("spectrum_control", u"Repeating", None))
         self.start_button.setText(QCoreApplication.translate("spectrum_control", u"Start  \u25b6", None))
         self.stop_button.setText(QCoreApplication.translate("spectrum_control", u"Stop", None))

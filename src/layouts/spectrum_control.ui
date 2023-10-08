@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1210</width>
-    <height>128</height>
+    <width>1236</width>
+    <height>155</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -146,125 +146,6 @@
      </item>
      <item>
       <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,5">
-     <item>
-      <widget class="QLabel" name="parameters_label">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Parameters:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="Line" name="line_12">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="a_label">
-       <property name="text">
-        <string>a:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="a_spinbox"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="a_unit_label">
-       <property name="text">
-        <string>[Vdc/Vrf]    </string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="Line" name="line_8">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="b_label">
-       <property name="text">
-        <string>b:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="b_spinbox"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="b_unit_label">
-       <property name="text">
-        <string>[V]    </string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="Line" name="line_9">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="rf_u_scale_label">
-       <property name="text">
-        <string>RF-to-Unit Scale:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDoubleSpinBox" name="rf_u_scale_spinbox"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="rf_u_scale_unit_label">
-       <property name="text">
-        <string>[u/V]</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="Line" name="line_10">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

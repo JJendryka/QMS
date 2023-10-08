@@ -54,6 +54,11 @@ class Ui_spectrum_plot(object):
 
         self.horizontalLayout.addWidget(self.y_axis_pA_label)
 
+        self.autozero_button = QPushButton(spectrum_plot)
+        self.autozero_button.setObjectName(u"autozero_button")
+
+        self.horizontalLayout.addWidget(self.autozero_button)
+
         self.y_fullscale_button = QPushButton(spectrum_plot)
         self.y_fullscale_button.setObjectName(u"y_fullscale_button")
 
@@ -159,6 +164,7 @@ class Ui_spectrum_plot(object):
         self.log_checkbox.setText(QCoreApplication.translate("spectrum_plot", u"Logarithmic", None))
         self.y_axis_offset_label.setText(QCoreApplication.translate("spectrum_plot", u"Offset:", None))
         self.y_axis_pA_label.setText(QCoreApplication.translate("spectrum_plot", u"pA", None))
+        self.autozero_button.setText(QCoreApplication.translate("spectrum_plot", u"Auto zero", None))
         self.y_fullscale_button.setText(QCoreApplication.translate("spectrum_plot", u"Full scale", None))
         self.x_axis_label.setText(QCoreApplication.translate("spectrum_plot", u"<html><head/><body><p><span style=\" font-weight:600;\">X Axis:</span></p></body></html>", None))
         self.x_unit_combobox.setItemText(0, QCoreApplication.translate("spectrum_plot", u"unit", None))
