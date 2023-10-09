@@ -21,3 +21,4 @@ line-length = 120
 [tool.mypy]
 exclude = ["build", ".venv", "src/layouts"]
 ignore_missing_imports = true
+explicit_package_bases = true
