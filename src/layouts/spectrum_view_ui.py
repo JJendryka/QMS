@@ -18,8 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QSizePolicy, QSplitter, QVBoxLayout,
     QWidget)
 
-from spectrum_control import SpectrumControl
-from spectrum_plot import SpectrumPlot
+from gui.spectrum_control import SpectrumControl
+from gui.spectrum_plot import SpectrumPlot
 
 class Ui_SpectrumView(object):
     def setupUi(self, SpectrumView):

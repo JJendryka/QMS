@@ -59,13 +59,13 @@
   <customwidget>
    <class>SpectrumPlot</class>
    <extends>QWidget</extends>
-   <header location="global">spectrum_plot.h</header>
+   <header location="global">gui/spectrum_plot.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>SpectrumControl</class>
    <extends>QWidget</extends>
-   <header location="global">spectrum_control.h</header>
+   <header location="global">gui/spectrum_control.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

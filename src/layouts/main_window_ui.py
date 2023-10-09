@@ -19,9 +19,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QMainWindow, QMenu,
     QMenuBar, QSizePolicy, QTabWidget, QWidget)
 
-from diagnostic_view import DiagnosticView
-from map_view import MapView
-from spectrum_view import SpectrumView
+from gui.diagnostic_view import DiagnosticView
+from gui.map_view import MapView
+from gui.spectrum_view import SpectrumView
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -59,8 +59,10 @@ class Ui_MainWindow(object):
         self.menubar.setGeometry(QRect(0, 0, 800, 30))
         self.profile_menu = QMenu(self.menubar)
         self.profile_menu.setObjectName(u"profile_menu")
+        self.profile_menu.setToolTipsVisible(True)
         self.connection_menu = QMenu(self.menubar)
         self.connection_menu.setObjectName(u"connection_menu")
+        self.connection_menu.setToolTipsVisible(True)
         MainWindow.setMenuBar(self.menubar)
 
         self.menubar.addAction(self.profile_menu.menuAction())
@@ -84,6 +86,6 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.stability_map_tab), QCoreApplication.translate("MainWindow", u"Stability Map", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.diagnostic_tab), QCoreApplication.translate("MainWindow", u"Diagnostics", None))
         self.profile_menu.setTitle(QCoreApplication.translate("MainWindow", u"Profile", None))
-        self.connection_menu.setTitle(QCoreApplication.translate("MainWindow", u"Connection", None))
+        self.connection_menu.setTitle(QCoreApplication.translate("MainWindow", u"Connect", None))
     # retranslateUi
 

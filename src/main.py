@@ -1,16 +1,15 @@
 import logging
 import argparse
+import signal
 
 from PySide6.QtWidgets import QApplication
 
 import custom_logging
-from main_window import MainWindow
-
-import signal
+from gui.main_window import MainWindow
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("main")
 
 
 def parse_args() -> argparse.Namespace:
@@ -31,6 +30,7 @@ def main() -> None:
     args = parse_args()
     custom_logging.setup_logging(args.log_level, logger)
 
+    logger.debug("Starting QApplication")
     app = QApplication()
     window = MainWindow()
     window.show()

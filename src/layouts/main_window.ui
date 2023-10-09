@@ -61,12 +61,18 @@
     <property name="title">
      <string>Profile</string>
     </property>
+    <property name="toolTipsVisible">
+     <bool>true</bool>
+    </property>
     <addaction name="load_profile_action"/>
     <addaction name="save_profile_action"/>
    </widget>
    <widget class="QMenu" name="connection_menu">
     <property name="title">
-     <string>Connection</string>
+     <string>Connect</string>
+    </property>
+    <property name="toolTipsVisible">
+     <bool>true</bool>
     </property>
    </widget>
    <addaction name="profile_menu"/>
@@ -87,19 +93,19 @@
   <customwidget>
    <class>SpectrumView</class>
    <extends>QWidget</extends>
-   <header location="global">spectrum_view.h</header>
+   <header location="global">gui/spectrum_view.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DiagnosticView</class>
    <extends>QWidget</extends>
-   <header location="global">diagnostic_view.h</header>
+   <header location="global">gui/diagnostic_view.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MapView</class>
    <extends>QWidget</extends>
-   <header location="global">map_view.h</header>
+   <header location="global">gui/map_view.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
