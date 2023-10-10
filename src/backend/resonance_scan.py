@@ -1,9 +1,12 @@
 import time
+import logging
 from backend.euromeasure import EuroMeasure
 
 from PySide6.QtCore import QRunnable, Slot, Signal, QObject
 
 import numpy as np
+
+logger = logging.getLogger("main")
 
 SLEEP_TIME = 0.2
 VOLTMETER_CHANNEL = 1
@@ -32,4 +35,5 @@ class ResonanceScanner(QRunnable):
             self.em.set_generator_frequency(GENERATOR_CHANNEL, frequency)
             time.sleep(SLEEP_TIME)
             result = self.em.get_voltmeter_voltage(VOLTMETER_CHANNEL)
+            logger.debug("Sending signal")
             self.signals.data_point_acquired.emit(frequency, result)

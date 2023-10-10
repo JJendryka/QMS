@@ -33,28 +33,28 @@ class EuroMeasure:
         self.num_of_receive_retries: int = num_of_receive_retries
 
     def set_pid_p(self, p: float) -> None:
-        self.__execute_command(f"PID:P {p:.6e}")
+        self.__execute_command(f"PID:SET P {p:.6e}")
 
     def set_pid_i(self, i: float) -> None:
-        self.__execute_command(f"PID:I {i:.6e}")
+        self.__execute_command(f"PID:SET I {i:.6e}")
 
     def set_pid_d(self, d: float) -> None:
-        self.__execute_command(f"PID:D {d:.6e}")
+        self.__execute_command(f"PID:SET D {d:.6e}")
 
     def set_pid_state(self, enabled: bool) -> None:
-        self.__execute_command(f"PID:ENABLE {1 if enabled else 0}")
+        self.__execute_command(f"PID:{'ENABLE' if enabled else 'DISABLE'}")
 
     def set_generator_amplitude(self, channel: int, amplitude: float) -> None:
-        self.__execute_command(f"GEN:SET:AMPL {channel} {amplitude:.6e}")
+        self.__execute_command(f"GEN:VOLTAGE {channel} {amplitude:.6e}")
 
     def set_generator_frequency(self, channel: int, frequency: float) -> None:
-        self.__execute_command(f"GEN:SET:FREQUENCY {channel} {frequency:.6e}")
+        self.__execute_command(f"GEN:FREQUENCY {channel} {frequency:.6e}")
 
     def set_hvpsu_voltage(self, channel: int, voltage: float) -> None:
         self.__execute_command(f"HVPSU:SET {channel} {voltage:.6e}")
 
     def set_source_psu_voltage(self, voltage: float) -> None:
-        self.__execute_command(f"SOURCE:SET:VOLTAGE {voltage:.6e}")
+        self.__execute_command(f"SOURCE:SET {voltage:.6e}")
 
     def set_source_psu_current(self, current: float) -> None:
         self.__execute_command(f"SOURCE:SET:CURRENT {current:.6e}")
@@ -74,7 +74,7 @@ class EuroMeasure:
             raise EMIncorrectResponseError("float", result) from exception
 
     def get_voltmeter_voltage(self, channel: int) -> float:
-        result = self.__execute_command(f"VOLTMETER:VOLTAGE {channel}")
+        result = self.__execute_command(f"VOLT:MEASURE {channel}")
         try:
             return float(result[0])
         except (ValueError, IndexError) as exception:
@@ -98,7 +98,7 @@ class EuroMeasure:
         if self.port is not None:
             self.port.close()
         self.port = None
-        logging.info("Disconnected from port: %s", self.__port_name)
+        logger.info("Disconnected from port: %s", self.__port_name)
         self.__port_name = None
 
     def __try_connect(self) -> None:
@@ -153,7 +153,7 @@ class EuroMeasure:
 
         for _ in range(self.num_of_receive_retries):
             try:
-                self.port.write(command + "\n")
+                self.port.write((command + "\n").encode())
                 logger.debug("Command sent: %s", command)
                 break
             except serial.SerialException as exception:
@@ -170,13 +170,13 @@ class EuroMeasure:
             raise EMNotConnectedError
 
         result_line = self.port.read_until(b"\n").decode()
-        logging.debug("Received result line: %s", result_line)
+        logger.debug("Received result line: %s", result_line.strip())
         status_line = self.port.read_until(b"\n").decode()
-        logging.debug("Received status line: %s", status_line)
+        logger.debug("Received status line: %s", status_line.strip())
 
         if "EM_OK" not in status_line:
             raise EMError(status_line)
-        return result_line.trim().split()
+        return result_line.strip().split()
 
 
 class EMConnectionError(Exception):
@@ -205,12 +205,12 @@ class EMCannotReceiveError(EMConnectionError):
 
 class EMError(Exception):
     def __init__(self, em_message):
-        super(EMCannotWriteError, self).__init__("Received error from EuroMeasure: %s", em_message)
+        super(EMError, self).__init__(f"Received error from EuroMeasure: {em_message}")
         self.em_message = em_message
 
 
 class EMIncorrectResponseError(Exception):
     def __init__(self, pattern, response):
         super(EMIncorrectResponseError, self).__init__(
-            "Incorrect response from EuroMeasure: response: %s matching pattern should be: %s", response, pattern
+            f"Incorrect response from EuroMeasure: response: {response} matching pattern should be: {pattern}"
         )

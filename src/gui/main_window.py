@@ -1,7 +1,7 @@
-from PySide6 import QtWidgets
-from PySide6 import QtGui
+from PySide6 import QtWidgets, QtGui, QtCore
 
 import serial.tools.list_ports
+from backend.euromeasure import EMCannotConnectError, EuroMeasure
 
 from layouts.main_window_ui import Ui_MainWindow
 
@@ -14,12 +14,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
         super(MainWindow, self).__init__()
         self.setupUi(self)
+
+        self.euromeasure: EuroMeasure | None = None
+        self.thread_pool = QtCore.QThreadPool(self)
+
+        self.setup_backreferences()
         self.showMaximized()
         self.setup_callbacks()
 
-        self.selected_port: str | None = None
-
         logger.debug("Finished main_window initialization")
+
+    def setup_backreferences(self) -> None:
+        self.diagnostic_tab.main_window = self
 
     def setup_callbacks(self) -> None:
         self.connection_menu.aboutToShow.connect(self.fill_connection_menu)
@@ -28,7 +34,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         for action in self.connection_menu.actions():
             self.connection_menu.removeAction(action)
 
-        if self.selected_port is None:
+        if self.euromeasure is None:
             logger.debug("Searching for ports")
             ports = serial.tools.list_ports.comports()
             for port, desc, hwid in sorted(ports):
@@ -36,6 +42,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 action = QtGui.QAction(f"{port} - {desc}", self)
                 action.triggered.connect((lambda a: lambda: self.connect_port(a))(port))
                 self.connection_menu.addAction(action)
+
+            if not ports:
+                logger.info("There are no ports found")
+                action = QtGui.QAction("No ports found", self)
+                action.setEnabled(False)
+                self.connection_menu.addAction(action)
+
         else:
             action = QtGui.QAction("Disconnect", self)
             action.triggered.connect(self.disconnect_port)
@@ -44,9 +57,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def connect_port(self, port: str) -> None:
         logger.info("Connecting to port: %s", port)
         self.connection_menu.setTitle(f"Connected to: {port}")
-        self.selected_port = port
+        if self.euromeasure is not None:
+            self.euromeasure.disconnect()
+            self.euromeasure = None
+            logger.warn("Connect when other port is already connected")
+        self.euromeasure = EuroMeasure()
+
+        try:
+            self.euromeasure.connect(port)
+        except EMCannotConnectError:
+            self.euromeasure = None
+            logger.error("Couldn't connect to port")
 
     def disconnect_port(self) -> None:
         logger.info("Disconnecting from serial port")
         self.connection_menu.setTitle("Connect")
-        self.selected_port = None
+        if self.euromeasure is not None:
+            self.euromeasure.disconnect()
+            self.euromeasure = None
+        else:
+            logger.warn("Trying to disconnect already disconnected port")

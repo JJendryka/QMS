@@ -14,7 +14,7 @@ class Canvas(FigureCanvasQTAgg):
         super(Canvas, self).__init__(figure)
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
 
-    def resizeEvent(self, event: QResizeEvent):
+    def resizeEvent(self, event: QResizeEvent):  # noqa: N802
         super(Canvas, self).resizeEvent(event)
         self.figure.tight_layout(pad=0.5)
 
