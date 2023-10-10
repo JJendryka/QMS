@@ -4,7 +4,7 @@ version = "0.0.0"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
 scripts = {qms = "main:main"}
-dependencies = ["pyside6", "matplotlib", "pyserial"]
+dependencies = ["pyside6", "matplotlib", "pyserial", "numpy"]
 
 [project.optional-dependencies]
 dev = ["mypy", "ruff", "black"]
