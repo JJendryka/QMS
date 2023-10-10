@@ -73,8 +73,8 @@ class EuroMeasure:
         except (ValueError, IndexError) as exception:
             raise EMIncorrectResponseError("float", result) from exception
 
-    def get_voltmeter_voltage(self) -> float:
-        result = self.__execute_command("VOLTMETER:VOLTAGE")
+    def get_voltmeter_voltage(self, channel: int) -> float:
+        result = self.__execute_command(f"VOLTMETER:VOLTAGE {channel}")
         try:
             return float(result[0])
         except (ValueError, IndexError) as exception:
@@ -149,7 +149,7 @@ class EuroMeasure:
 
     def __send_command(self, command: str) -> None:
         if self.port is None or self.__port_name is None:
-            raise EMNoPortSelectedError
+            raise EMNotConnectedError
 
         for _ in range(self.num_of_receive_retries):
             try:
@@ -167,7 +167,7 @@ class EuroMeasure:
 
     def __read_response(self) -> List[str]:
         if self.port is None or self.__port_name is None:
-            raise EMNoPortSelectedError
+            raise EMNotConnectedError
 
         result_line = self.port.read_until(b"\n").decode()
         logging.debug("Received result line: %s", result_line)
@@ -183,9 +183,9 @@ class EMConnectionError(Exception):
     pass
 
 
-class EMNoPortSelectedError(EMConnectionError):
+class EMNotConnectedError(EMConnectionError):
     def __init__(self):
-        super(EMNoPortSelectedError, self).__init__("No port selected")
+        super(EMNotConnectedError, self).__init__("No port selected")
 
 
 class EMCannotConnectError(EMConnectionError):
