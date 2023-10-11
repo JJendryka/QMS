@@ -1,6 +1,5 @@
 import logging
-from PySide6 import QtWidgets
-from PySide6.QtGui import QResizeEvent
+from PySide6 import QtWidgets, QtGui
 from backend.resonance_scan import ResonanceScanner
 
 from typing import TYPE_CHECKING
@@ -61,7 +60,7 @@ class MplCanvas(FigureCanvasQTAgg):
         super(MplCanvas, self).__init__(fig)
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
 
-    def resizeEvent(self, event: QResizeEvent):  # noqa: N802
+    def resizeEvent(self, event: QtGui.QResizeEvent):  # noqa: N802
         super(MplCanvas, self).resizeEvent(event)
         self.figure.tight_layout(pad=0.5)
 
@@ -101,7 +100,8 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
                 scanner.signals.data_point_acquired.connect(self.received_resonance_scan_point)
                 self.main_window.thread_pool.start(scanner)
             else:
-                logger.error("EuroMeasure system is not connected")
+                logger.error("Tried to start resonance scan when EuroMeasure system is not connected")
+                QtWidgets.QMessageBox.critical(self.main_window, "Error!", "EuroMeasure system is not connected")
         else:
             logger.error("Main window reference is not set")
 
