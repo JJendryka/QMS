@@ -29,7 +29,6 @@ class Plot(QtWidgets.QWidget):
         self.layout().addWidget(NavigationToolbar2QT(self.canvas, self))
 
     def add_point(self, x, y):
-        logger.debug("Adding point to graph")
         self.canvas.x_data.append(x)
         self.canvas.y_data.append(y)
 
@@ -93,6 +92,8 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
     def start_resonance_scan(self) -> None:
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
+                self.main_window.set_allow_new_scans(False, "Resonance scan is running")
+
                 self.voltage_at_maximum_resonance = -1e10
                 self.frequency_at_maximum_resonance = 0
                 self.resonance_plot.clear_points()
@@ -105,6 +106,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
                 )
                 scanner.signals.data_point_acquired.connect(self.received_resonance_scan_point)
                 scanner.signals.error_occured.connect(self.handle_em_exception)
+                scanner.signals.finished.connect(self.finished_scan)
                 self.main_window.thread_pool.start(scanner)
             else:
                 logger.error("Tried to start resonance scan when EuroMeasure system is not connected")
@@ -115,6 +117,8 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
     def start_rf_scan(self) -> None:
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
+                self.main_window.set_allow_new_scans(False, "RF scan is running")
+
                 self.rf_plot.clear_points()
                 scanner = RFScanner(
                     self.main_window.euromeasure,
@@ -124,6 +128,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
                 )
                 scanner.signals.data_point_acquired.connect(self.received_rf_scan_point)
                 scanner.signals.error_occured.connect(self.handle_em_exception)
+                scanner.signals.finished.connect(self.finished_scan)
                 self.main_window.thread_pool.start(scanner)
             else:
                 logger.error("Tried to start rf scan when EuroMeasure system is not connected")
@@ -167,4 +172,21 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
 
     def handle_em_exception(self, exception: Exception) -> None:
         if self.main_window is not None:
+            self.main_window.set_allow_new_scans(True)
             QtWidgets.QMessageBox.critical(self.main_window, "Error!", exception.args[0])
+
+    def finished_scan(self) -> None:
+        if self.main_window is not None:
+            self.main_window.set_allow_new_scans(True)
+
+    def set_allow_new_scans(self, allow=True, reason: str = ""):
+        self.resonance_scan_button.setEnabled(allow)
+        self.resonance_scan_button.setToolTip(reason)
+        self.rf_scan_button.setEnabled(allow)
+        self.rf_scan_button.setToolTip(reason)
+        self.rf_test_button.setEnabled(allow)
+        self.rf_test_button.setToolTip(reason)
+        self.source_scan_button.setEnabled(allow)
+        self.source_scan_button.setToolTip(reason)
+        self.source_test_button.setEnabled(allow)
+        self.source_test_button.setToolTip(reason)

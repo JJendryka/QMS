@@ -604,13 +604,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Test</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="Line" name="line_19">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -658,6 +651,13 @@
         </spacer>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rf_test_button">
+       <property name="text">
+        <string>Test</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="Line" name="line_15">
@@ -868,7 +868,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="source_scan_button">
        <property name="text">
         <string>Scan</string>
        </property>
@@ -895,7 +895,7 @@
       <widget class="QWidget" name="source_stability_chart" native="true"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="source_test_button">
        <property name="text">
         <string>Test</string>
        </property>

@@ -16,6 +16,7 @@ GENERATOR_CHANNEL = 2
 class RFScannerSignals(QObject):
     data_point_acquired = Signal(float, float)
     error_occured = Signal(Exception)
+    finished = Signal()
 
 
 class RFScanner(QRunnable):
@@ -38,5 +39,6 @@ class RFScanner(QRunnable):
                 time.sleep(SLEEP_TIME)
                 result = self.em.get_voltmeter_voltage(VOLTMETER_CHANNEL)
                 self.signals.data_point_acquired.emit(amplitude, result)
+            self.signals.finished.emit()
         except (EMError, EMConnectionError, EMIncorrectResponseError) as exc:
             self.signals.error_occured.emit(exc)

@@ -24,6 +24,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.showMaximized()
         self.setup_callbacks()
 
+        self.set_allow_new_scans(False, "EuroMeasure is not connected")
+
         logger.debug("Finished main_window initialization")
 
     def setup_backreferences(self) -> None:
@@ -75,6 +77,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         try:
             self.euromeasure.connect(port)
+            self.set_allow_new_scans(True)
         except EMCannotConnectError:
             self.euromeasure = None
             logger.error("Couldn't connect to port")
@@ -88,3 +91,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.euromeasure = None
         else:
             logger.warn("Trying to disconnect already disconnected port")
+        self.set_allow_new_scans(False, "EuroMeasure is not connected")
+
+    def set_allow_new_scans(self, allow=True, reason: str = "") -> None:
+        self.diagnostic_tab.set_allow_new_scans(allow, reason)
+        self.spectrum_tab.set_allow_new_scans(allow, reason)
+        self.stability_map_tab.set_allow_new_scans(allow, reason)

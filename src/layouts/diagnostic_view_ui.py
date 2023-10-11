@@ -438,11 +438,6 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_10.addWidget(self.line_18)
 
-        self.pushButton = QPushButton(diagnostic_view)
-        self.pushButton.setObjectName(u"pushButton")
-
-        self.horizontalLayout_10.addWidget(self.pushButton)
-
         self.line_19 = QFrame(diagnostic_view)
         self.line_19.setObjectName(u"line_19")
         self.line_19.setFrameShape(QFrame.VLine)
@@ -479,6 +474,11 @@ class Ui_diagnostic_view(object):
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_10)
+
+        self.rf_test_button = QPushButton(diagnostic_view)
+        self.rf_test_button.setObjectName(u"rf_test_button")
+
+        self.verticalLayout.addWidget(self.rf_test_button)
 
         self.line_15 = QFrame(diagnostic_view)
         self.line_15.setObjectName(u"line_15")
@@ -610,10 +610,10 @@ class Ui_diagnostic_view(object):
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_7)
 
-        self.pushButton_3 = QPushButton(diagnostic_view)
-        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.source_scan_button = QPushButton(diagnostic_view)
+        self.source_scan_button.setObjectName(u"source_scan_button")
 
-        self.verticalLayout_3.addWidget(self.pushButton_3)
+        self.verticalLayout_3.addWidget(self.source_scan_button)
 
         self.line_4 = QFrame(diagnostic_view)
         self.line_4.setObjectName(u"line_4")
@@ -633,10 +633,10 @@ class Ui_diagnostic_view(object):
 
         self.verticalLayout_3.addWidget(self.source_stability_chart)
 
-        self.pushButton_2 = QPushButton(diagnostic_view)
-        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.source_test_button = QPushButton(diagnostic_view)
+        self.source_test_button.setObjectName(u"source_test_button")
 
-        self.verticalLayout_3.addWidget(self.pushButton_2)
+        self.verticalLayout_3.addWidget(self.source_test_button)
 
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
@@ -730,9 +730,9 @@ class Ui_diagnostic_view(object):
         self.pid_i_spinbox.setText(QCoreApplication.translate("diagnostic_view", u"I:", None))
         self.pid_d_spinbox.setText(QCoreApplication.translate("diagnostic_view", u"D:", None))
         self.label_32.setText(QCoreApplication.translate("diagnostic_view", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">RF Stability</span></p></body></html>", None))
-        self.pushButton.setText(QCoreApplication.translate("diagnostic_view", u"Test", None))
         self.label_33.setText(QCoreApplication.translate("diagnostic_view", u"Setpoint:", None))
         self.label_34.setText(QCoreApplication.translate("diagnostic_view", u"[Vpp]", None))
+        self.rf_test_button.setText(QCoreApplication.translate("diagnostic_view", u"Test", None))
         self.label_3.setText(QCoreApplication.translate("diagnostic_view", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Source V-I</span></p></body></html>", None))
         self.label_17.setText(QCoreApplication.translate("diagnostic_view", u"Min:", None))
         self.label_18.setText(QCoreApplication.translate("diagnostic_view", u"[kV]", None))
@@ -741,9 +741,9 @@ class Ui_diagnostic_view(object):
         self.label_20.setText(QCoreApplication.translate("diagnostic_view", u"Step count:", None))
         self.label_15.setText(QCoreApplication.translate("diagnostic_view", u"Step size:", None))
         self.source_step_size_label.setText(QCoreApplication.translate("diagnostic_view", u"50 V", None))
-        self.pushButton_3.setText(QCoreApplication.translate("diagnostic_view", u"Scan", None))
+        self.source_scan_button.setText(QCoreApplication.translate("diagnostic_view", u"Scan", None))
         self.label_23.setText(QCoreApplication.translate("diagnostic_view", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Source Stability</span></p></body></html>", None))
-        self.pushButton_2.setText(QCoreApplication.translate("diagnostic_view", u"Test", None))
+        self.source_test_button.setText(QCoreApplication.translate("diagnostic_view", u"Test", None))
         self.radioButton.setText(QCoreApplication.translate("diagnostic_view", u"Constant Voltage", None))
         self.label_21.setText(QCoreApplication.translate("diagnostic_view", u"[V]", None))
         self.radioButton_2.setText(QCoreApplication.translate("diagnostic_view", u"Constant Current", None))

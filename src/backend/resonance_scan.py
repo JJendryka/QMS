@@ -17,6 +17,7 @@ GENERATOR_AMPLITUDE = 0.2
 class ResonanceScannerSignals(QObject):
     data_point_acquired = Signal(float, float)
     error_occured = Signal(Exception)
+    finished = Signal()
 
 
 class ResonanceScanner(QRunnable):
@@ -37,7 +38,7 @@ class ResonanceScanner(QRunnable):
                 self.em.set_generator_frequency(GENERATOR_CHANNEL, frequency)
                 time.sleep(SLEEP_TIME)
                 result = self.em.get_voltmeter_voltage(VOLTMETER_CHANNEL)
-                logger.debug("Sending signal")
                 self.signals.data_point_acquired.emit(frequency, result)
+            self.signals.finished.emit()
         except (EMError, EMConnectionError, EMIncorrectResponseError) as exc:
             self.signals.error_occured.emit(exc)
