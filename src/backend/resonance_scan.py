@@ -1,6 +1,6 @@
 import time
 import logging
-from backend.euromeasure import EuroMeasure
+from backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 
 from PySide6.QtCore import QRunnable, Slot, Signal, QObject
 
@@ -16,6 +16,7 @@ GENERATOR_AMPLITUDE = 0.2
 
 class ResonanceScannerSignals(QObject):
     data_point_acquired = Signal(float, float)
+    error_occured = Signal(Exception)
 
 
 class ResonanceScanner(QRunnable):
@@ -29,11 +30,14 @@ class ResonanceScanner(QRunnable):
 
     @Slot()
     def run(self):
-        self.em.set_pid_state(False)
-        self.em.set_generator_amplitude(GENERATOR_CHANNEL, GENERATOR_AMPLITUDE)
-        for frequency in np.linspace(self.start, self.stop, num=self.step_count):
-            self.em.set_generator_frequency(GENERATOR_CHANNEL, frequency)
-            time.sleep(SLEEP_TIME)
-            result = self.em.get_voltmeter_voltage(VOLTMETER_CHANNEL)
-            logger.debug("Sending signal")
-            self.signals.data_point_acquired.emit(frequency, result)
+        try:
+            self.em.set_pid_state(False)
+            self.em.set_generator_amplitude(GENERATOR_CHANNEL, GENERATOR_AMPLITUDE)
+            for frequency in np.linspace(self.start, self.stop, num=self.step_count):
+                self.em.set_generator_frequency(GENERATOR_CHANNEL, frequency)
+                time.sleep(SLEEP_TIME)
+                result = self.em.get_voltmeter_voltage(VOLTMETER_CHANNEL)
+                logger.debug("Sending signal")
+                self.signals.data_point_acquired.emit(frequency, result)
+        except (EMError, EMConnectionError, EMIncorrectResponseError) as exc:
+            self.signals.error_occured.emit(exc)

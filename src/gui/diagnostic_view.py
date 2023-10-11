@@ -98,6 +98,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
                     self.frequency_steps_spinbox.value(),
                 )
                 scanner.signals.data_point_acquired.connect(self.received_resonance_scan_point)
+                scanner.signals.error_occured.connect(self.handle_em_exception)
                 self.main_window.thread_pool.start(scanner)
             else:
                 logger.error("Tried to start resonance scan when EuroMeasure system is not connected")
@@ -135,3 +136,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             self.frequency_steps_spinbox.value() - 1
         )
         self.frequency_step_size_label.setText(f"{step_size:.3f} MHz")
+
+    def handle_em_exception(self, exception: Exception) -> None:
+        if self.main_window is not None:
+            QtWidgets.QMessageBox.critical(self.main_window, "Error!", exception.args[0])

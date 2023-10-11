@@ -78,6 +78,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         except EMCannotConnectError:
             self.euromeasure = None
             logger.error("Couldn't connect to port")
+            QtWidgets.QMessageBox.critical(self, "Error!", "Couldn't connect to EuroMeasure system on this port")
 
     def disconnect_port(self) -> None:
         logger.info("Disconnecting from serial port")
