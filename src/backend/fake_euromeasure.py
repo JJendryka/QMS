@@ -1,10 +1,12 @@
 import logging
 import numpy as np
 
+from backend.euromeasure import EuroMeasure
+
 logger = logging.getLogger("main")
 
 
-class EuroMeasure:
+class FakeEuroMeasure(EuroMeasure):
     def set_pid_p(self, p: float) -> None:
         logger.debug("Virtual EM: Setting PID P to: %f", p)
 

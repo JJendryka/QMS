@@ -5,6 +5,7 @@ import signal
 from PySide6.QtWidgets import QApplication
 
 import custom_logging
+from config import Config
 from gui.main_window import MainWindow
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -23,13 +24,14 @@ def parse_args() -> argparse.Namespace:
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
         default="INFO",
     )
+    parser.add_argument("-d", "--debug", dest="debug", action="store_true")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     custom_logging.setup_logging(args.log_level, logger)
-
+    _ = Config(args)
     logger.debug("Starting QApplication")
     app = QApplication()
     window = MainWindow()

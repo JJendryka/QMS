@@ -2,6 +2,8 @@ from PySide6 import QtWidgets, QtGui, QtCore
 
 import serial.tools.list_ports
 from backend.euromeasure import EMCannotConnectError, EuroMeasure
+from backend.fake_euromeasure import FakeEuroMeasure
+from config import Config
 
 from layouts.main_window_ui import Ui_MainWindow
 
@@ -49,6 +51,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 action.setEnabled(False)
                 self.connection_menu.addAction(action)
 
+            if Config.get().args.debug:
+                action = QtGui.QAction("Debug port", self)
+                action.triggered.connect((lambda a: lambda: self.connect_port(a))("debug/port"))
+                self.connection_menu.addAction(action)
+
         else:
             action = QtGui.QAction("Disconnect", self)
             action.triggered.connect(self.disconnect_port)
@@ -61,7 +68,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.euromeasure.disconnect()
             self.euromeasure = None
             logger.warn("Connect when other port is already connected")
-        self.euromeasure = EuroMeasure()
+        if Config.get().args.debug:
+            self.euromeasure = FakeEuroMeasure()
+        else:
+            self.euromeasure = EuroMeasure()
 
         try:
             self.euromeasure.connect(port)
