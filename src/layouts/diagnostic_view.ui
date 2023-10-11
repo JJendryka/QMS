@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1173</width>
+    <width>1660</width>
     <height>784</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,1,0,1">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0,0">
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0,0,0">
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -115,43 +115,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>[MHz]</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QLabel" name="label_8">
          <property name="text">
           <string>Step count:</string>
@@ -175,7 +138,14 @@
         </widget>
        </item>
        <item>
-        <widget class="Line" name="line_7">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>[MHz]</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_11">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -202,21 +172,7 @@
         </widget>
        </item>
        <item>
-        <widget class="Line" name="line_8">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="resonance_scan_button">
-         <property name="text">
-          <string>Scan</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
+        <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -229,6 +185,13 @@
         </spacer>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="resonance_scan_button">
+       <property name="text">
+        <string>Scan</string>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -244,6 +207,13 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="Line" name="line_8">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_12">
@@ -266,6 +236,13 @@
         </widget>
        </item>
        <item>
+        <widget class="Line" name="line_7">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer_3">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -279,6 +256,13 @@
         </spacer>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line_14">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer">
@@ -333,6 +317,13 @@
         </spacer>
        </item>
        <item>
+        <widget class="Line" name="line_21">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
           <string>Max:</string>
@@ -343,12 +334,80 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="rf_max_spinbox"/>
+        <widget class="QDoubleSpinBox" name="rf_max_spinbox">
+         <property name="maximum">
+          <double>6.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>4.000000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_11">
          <property name="text">
           <string>[Vpp]</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_22">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Step count:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="rf_step_count_spinbox">
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="value">
+          <number>81</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_23">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_29">
+         <property name="text">
+          <string>Step size:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="rf_step_size_label">
+         <property name="text">
+          <string>0.050 V</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_24">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
@@ -368,69 +427,11 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <item>
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>Step count:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="rf_step_count_spinbox"/>
-       </item>
-       <item>
-        <widget class="Line" name="line_11">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_29">
-         <property name="text">
-          <string>Step size:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="rf_step_size_label">
-         <property name="text">
-          <string>-</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_31">
-         <property name="text">
-          <string>Vpp</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Line" name="line_12">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="rf_scan_button">
-         <property name="text">
-          <string>Scan</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="rf_scan_button">
+       <property name="text">
+        <string>Scan</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="Line" name="line_5">
@@ -450,16 +451,40 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="use_pid_checkbox">
-       <property name="text">
-        <string>Use PID</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_13">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_14"/>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="Line" name="line_16">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="use_pid_checkbox">
+         <property name="text">
+          <string>Use PID</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_12">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_25">
@@ -515,7 +540,24 @@
         <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_15"/>
+        <widget class="Line" name="line_17">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>
@@ -540,16 +582,40 @@
       <widget class="QWidget" name="rf_stability_chart" native="true"/>
      </item>
      <item>
-      <widget class="QCheckBox" name="rf_enable_checkbox">
-       <property name="text">
-        <string>Test enable RF</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_10">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_16"/>
+        <spacer name="horizontalSpacer_13">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="Line" name="line_18">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Test</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_19">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_33">
@@ -572,9 +638,33 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_17"/>
+        <widget class="Line" name="line_20">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_14">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line_15">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer_2">
@@ -629,6 +719,19 @@
         </spacer>
        </item>
        <item>
+        <spacer name="horizontalSpacer_15">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="label_17">
          <property name="text">
           <string>Min:</string>
@@ -639,12 +742,22 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="source_min_spinbox"/>
+        <widget class="QDoubleSpinBox" name="source_min_spinbox">
+         <property name="minimum">
+          <double>-3.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>2.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_18">
          <property name="text">
-          <string>[V]</string>
+          <string>[kV]</string>
          </property>
         </widget>
        </item>
@@ -666,14 +779,78 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="source_max_spinbox"/>
+        <widget class="QDoubleSpinBox" name="source_max_spinbox">
+         <property name="maximum">
+          <double>2.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+         <property name="value">
+          <double>2.000000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_19">
          <property name="text">
-          <string>[V]</string>
+          <string>[kV]</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_25">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_20">
+         <property name="text">
+          <string>Step count:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="source_steps_spinbox">
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="value">
+          <number>41</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Step size:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="source_step_size_label">
+         <property name="text">
+          <string>50 V</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_16">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <spacer name="horizontalSpacer_10">
@@ -691,82 +868,38 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_8">
-       <item>
-        <spacer name="horizontalSpacer_11">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_20">
-         <property name="text">
-          <string>Step count:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="source_steps_spinbox"/>
-       </item>
-       <item>
-        <widget class="Line" name="line_14">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_15">
-         <property name="text">
-          <string>Step size:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_26">
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Line" name="line_15">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>Scan</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_12">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>Scan</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_23">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Source Stability&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QWidget" name="source_stability_chart" native="true"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>Test</string>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -820,32 +953,9 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_12"/>
-     </item>
-     <item>
-      <widget class="Line" name="line_4">
+      <widget class="Line" name="line_26">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_23">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Source Stability&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QWidget" name="source_stability_chart" native="true"/>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="source_enable_checkbox">
-       <property name="text">
-        <string>Test enable source</string>
        </property>
       </widget>
      </item>
