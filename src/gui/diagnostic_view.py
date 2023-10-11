@@ -4,18 +4,16 @@ from backend.resonance_scan import ResonanceScanner
 
 from typing import TYPE_CHECKING
 from backend.rf_scan import RFScanner
+from backend.source_scan import SourceScanner
 
 if TYPE_CHECKING:
     from gui.main_window import MainWindow
 
 from layouts.diagnostic_view_ui import Ui_diagnostic_view
 
-import matplotlib
-
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 
-matplotlib.use("TkAgg")
 
 logger = logging.getLogger("main")
 
@@ -72,6 +70,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.main_window: MainWindow | None = None
         self.resonance_plot = Plot(self)
         self.rf_plot = Plot(self)
+        self.source_plot = Plot(self)
 
         self.replace_charts()
         self.setup_signals()
@@ -88,6 +87,11 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.rf_scan_button.clicked.connect(self.start_rf_scan)
         self.rf_max_spinbox.valueChanged.connect(self.rf_updated)
         self.rf_step_count_spinbox.valueChanged.connect(self.rf_updated)
+
+        self.source_scan_button.clicked.connect(self.start_source_scan)
+        self.source_min_spinbox.valueChanged.connect(self.source_updated)
+        self.source_max_spinbox.valueChanged.connect(self.source_updated)
+        self.source_steps_spinbox.valueChanged.connect(self.source_updated)
 
     def start_resonance_scan(self) -> None:
         if self.main_window is not None:
@@ -136,6 +140,28 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         else:
             logger.error("Main window reference is not set")
 
+    def start_source_scan(self) -> None:
+        if self.main_window is not None:
+            if self.main_window.euromeasure is not None:
+                self.main_window.set_allow_new_scans(False, "Source scan is running")
+                self.source_plot.clear_points()
+
+                scanner = SourceScanner(
+                    self.main_window.euromeasure,
+                    self.source_min_spinbox.value() * 1e3,
+                    self.source_max_spinbox.value() * 1e3,
+                    self.source_steps_spinbox.value(),
+                )
+                scanner.signals.data_point_acquired.connect(self.received_source_scan_point)
+                scanner.signals.error_occured.connect(self.handle_em_exception)
+                scanner.signals.finished.connect(self.finished_scan)
+                self.main_window.thread_pool.start(scanner)
+            else:
+                logger.error("Tried to start source scan when EuroMeasure system is not connected")
+                QtWidgets.QMessageBox.critical(self.main_window, "Error!", "EuroMeasure system is not connected")
+        else:
+            logger.error("Main window reference is not set")
+
     def received_resonance_scan_point(self, frequency: float, voltage: float) -> None:
         self.resonance_plot.add_point(frequency, voltage)
 
@@ -147,15 +173,16 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
     def received_rf_scan_point(self, amplitude: float, monitor_voltage: float):
         self.rf_plot.add_point(amplitude, monitor_voltage)
 
+    def received_source_scan_point(self, voltage: float, current: float):
+        self.source_plot.add_point(voltage, current)
+
     def replace_charts(self) -> None:
         self.layout().replaceWidget(self.resonance_chart, self.resonance_plot)
         self.layout().replaceWidget(self.rf_chart, self.rf_plot)
+        self.layout().replaceWidget(self.source_chart, self.source_plot)
 
         rf_stability_chart = Plot(self)
         self.layout().replaceWidget(self.rf_stability_chart, rf_stability_chart)
-
-        source_chart = Plot(self)
-        self.layout().replaceWidget(self.source_chart, source_chart)
 
         source_stability_chart = Plot(self)
         self.layout().replaceWidget(self.source_stability_chart, source_stability_chart)
@@ -169,6 +196,12 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
     def rf_updated(self) -> None:
         step_size = self.rf_max_spinbox.value() / (self.rf_step_count_spinbox.value() - 1)
         self.rf_step_size_label.setText(f"{step_size:.3f} Vpp")
+
+    def source_updated(self) -> None:
+        step_size = (self.source_max_spinbox.value() - self.source_min_spinbox.value()) / (
+            self.source_steps_spinbox.value() - 1
+        )
+        self.source_step_size_label.setText(f"{int(step_size * 1e3)} V")
 
     def handle_em_exception(self, exception: Exception) -> None:
         if self.main_window is not None:
