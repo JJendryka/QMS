@@ -8,7 +8,7 @@ import numpy as np
 
 logger = logging.getLogger("main")
 
-SLEEP_TIME = 0.2
+SLEEP_TIME = 0.03
 VOLTMETER_CHANNEL = 1
 GENERATOR_CHANNEL = 2
 GENERATOR_AMPLITUDE = 0.2

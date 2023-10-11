@@ -10,8 +10,12 @@ if TYPE_CHECKING:
 
 from layouts.diagnostic_view_ui import Ui_diagnostic_view
 
-from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
+import matplotlib
+
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
+
+matplotlib.use("TkAgg")
 
 logger = logging.getLogger("main")
 
@@ -24,16 +28,16 @@ class Plot(QtWidgets.QWidget):
         self.layout().addWidget(self.canvas)
         self.layout().addWidget(NavigationToolbar2QT(self.canvas, self))
 
-        self.x_data = []
-        self.y_data = []
-
     def add_point(self, x, y):
         logger.debug("Adding point to graph")
         self.canvas.x_data.append(x)
         self.canvas.y_data.append(y)
 
-        self.canvas.line.set_xdata(self.x_data)
-        self.canvas.line.set_ydata(self.y_data)
+        self.canvas.line.set_xdata(self.canvas.x_data)
+        self.canvas.line.set_ydata(self.canvas.y_data)
+
+        self.canvas.axes.set_xlim(min(self.canvas.x_data), max(self.canvas.x_data))
+        self.canvas.axes.set_ylim(min(self.canvas.y_data), max(self.canvas.y_data))
 
         self.canvas.draw()
 
@@ -41,8 +45,8 @@ class Plot(QtWidgets.QWidget):
         self.canvas.x_data = []
         self.canvas.y_data = []
 
-        self.canvas.line.set_xdata(self.x_data)
-        self.canvas.line.set_ydata(self.y_data)
+        self.canvas.line.set_xdata(self.canvas.x_data)
+        self.canvas.line.set_ydata(self.canvas.y_data)
 
         self.canvas.draw()
 
@@ -72,17 +76,26 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.replace_charts()
         self.setup_signals()
 
+        self.frequency_at_maximum_resonance: float = 0
+        self.voltage_at_maximum_resonance: float = -1e10
+
     def setup_signals(self) -> None:
         self.resonance_scan_button.clicked.connect(self.start_resonance_scan)
+        self.min_frequency_spinbox.valueChanged.connect(self.resonance_updated)
+        self.max_frequency_spinbox.valueChanged.connect(self.resonance_updated)
+        self.frequency_steps_spinbox.valueChanged.connect(self.resonance_updated)
 
     def start_resonance_scan(self) -> None:
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
+                self.voltage_at_maximum_resonance = -1e10
+                self.frequency_at_maximum_resonance = 0
                 self.resonance_plot.clear_points()
+
                 scanner = ResonanceScanner(
                     self.main_window.euromeasure,
-                    float(self.min_frequency_lineedit.text()) * 1e6,
-                    float(self.max_frequency_lineedit.text()) * 1e6,
+                    float(self.min_frequency_spinbox.value()) * 1e6,
+                    float(self.max_frequency_spinbox.value()) * 1e6,
                     self.frequency_steps_spinbox.value(),
                 )
                 scanner.signals.data_point_acquired.connect(self.received_resonance_scan_point)
@@ -94,9 +107,13 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
 
     def received_resonance_scan_point(self, frequency: float, voltage: float) -> None:
         logger.debug("Received resonance scan point")
+
         self.resonance_plot.add_point(frequency, voltage)
 
-        # Find maximum here
+        if voltage > self.voltage_at_maximum_resonance:
+            self.voltage_at_maximum_resonance = voltage
+            self.frequency_at_maximum_resonance = frequency
+            self.working_frequency_spinbox.setValue(frequency / 1e6)
 
     def replace_charts(self) -> None:
         self.layout().replaceWidget(self.resonance_chart, self.resonance_plot)
@@ -112,3 +129,9 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
 
         source_stability_chart = Plot(self)
         self.layout().replaceWidget(self.source_stability_chart, source_stability_chart)
+
+    def resonance_updated(self) -> None:
+        step_size = (self.max_frequency_spinbox.value() - self.min_frequency_spinbox.value()) / (
+            self.frequency_steps_spinbox.value() - 1
+        )
+        self.frequency_step_size_label.setText(f"{step_size:.3f} MHz")

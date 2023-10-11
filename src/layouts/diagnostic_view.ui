@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,1,0,1">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0">
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0,0">
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -45,6 +45,19 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="label_5">
          <property name="text">
           <string>Min:</string>
@@ -55,12 +68,12 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="min_frequency_lineedit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+        <widget class="QDoubleSpinBox" name="min_frequency_spinbox">
+         <property name="minimum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>15.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -89,12 +102,15 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="max_frequency_lineedit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+        <widget class="QDoubleSpinBox" name="max_frequency_spinbox">
+         <property name="minimum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>15.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>15.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -105,10 +121,36 @@
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item>
         <widget class="QLabel" name="label_8">
          <property name="text">
@@ -120,7 +162,24 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="frequency_steps_spinbox"/>
+        <widget class="QSpinBox" name="frequency_steps_spinbox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="value">
+          <number>281</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_7">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_14">
@@ -135,7 +194,7 @@
        <item>
         <widget class="QLabel" name="frequency_step_size_label">
          <property name="text">
-          <string>-</string>
+          <string>0.05 MHz</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -143,9 +202,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_28">
-         <property name="text">
-          <string>MHz</string>
+        <widget class="Line" name="line_8">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
@@ -156,10 +215,36 @@
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item>
         <widget class="QLabel" name="label_12">
          <property name="text">
@@ -171,14 +256,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="working_frequency_lineedit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
+        <widget class="QDoubleSpinBox" name="working_frequency_spinbox"/>
        </item>
        <item>
         <widget class="QLabel" name="label_13">
@@ -187,7 +265,33 @@
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -216,6 +320,19 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
           <string>Max:</string>
@@ -235,6 +352,19 @@
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="horizontalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </item>
      <item>
@@ -251,6 +381,13 @@
        </item>
        <item>
         <widget class="QSpinBox" name="rf_step_count_spinbox"/>
+       </item>
+       <item>
+        <widget class="Line" name="line_11">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_29">
@@ -276,6 +413,13 @@
         <widget class="QLabel" name="label_31">
          <property name="text">
           <string>Vpp</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_12">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
@@ -315,6 +459,9 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_13">
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_14"/>
+       </item>
+       <item>
         <widget class="QLabel" name="label_25">
          <property name="text">
           <string>P:</string>
@@ -326,6 +473,13 @@
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="pid_p_spinbox"/>
+       </item>
+       <item>
+        <widget class="Line" name="line_9">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="pid_i_spinbox">
@@ -341,6 +495,13 @@
         <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
        </item>
        <item>
+        <widget class="Line" name="line_10">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="pid_d_spinbox">
          <property name="text">
           <string>D:</string>
@@ -352,6 +513,9 @@
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_15"/>
        </item>
       </layout>
      </item>
@@ -385,6 +549,9 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_10">
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_16"/>
+       </item>
+       <item>
         <widget class="QLabel" name="label_33">
          <property name="text">
           <string>Setpoint:</string>
@@ -404,7 +571,23 @@
          </property>
         </widget>
        </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_17"/>
+       </item>
       </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -433,6 +616,19 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
+        <spacer name="horizontalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="label_17">
          <property name="text">
           <string>Min:</string>
@@ -449,6 +645,13 @@
         <widget class="QLabel" name="label_18">
          <property name="text">
           <string>[V]</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_13">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
@@ -472,14 +675,40 @@
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="horizontalSpacer_10">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_8">
        <item>
+        <spacer name="horizontalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="label_20">
          <property name="text">
-          <string>Steps:</string>
+          <string>Step count:</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -490,11 +719,52 @@
         <widget class="QSpinBox" name="source_steps_spinbox"/>
        </item>
        <item>
+        <widget class="Line" name="line_14">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Step size:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_26">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_15">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButton_3">
          <property name="text">
           <string>Scan</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_12">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>
@@ -578,6 +848,19 @@
         <string>Test enable source</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>

@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QFrame,
-    QHBoxLayout, QLabel, QLineEdit, QPushButton,
-    QRadioButton, QSizePolicy, QSpinBox, QVBoxLayout,
+    QHBoxLayout, QLabel, QPushButton, QRadioButton,
+    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
     QWidget)
 
 class Ui_diagnostic_view(object):
@@ -49,21 +49,22 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer_6)
+
         self.label_5 = QLabel(diagnostic_view)
         self.label_5.setObjectName(u"label_5")
         self.label_5.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.horizontalLayout_2.addWidget(self.label_5)
 
-        self.min_frequency_lineedit = QLineEdit(diagnostic_view)
-        self.min_frequency_lineedit.setObjectName(u"min_frequency_lineedit")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.min_frequency_lineedit.sizePolicy().hasHeightForWidth())
-        self.min_frequency_lineedit.setSizePolicy(sizePolicy1)
+        self.min_frequency_spinbox = QDoubleSpinBox(diagnostic_view)
+        self.min_frequency_spinbox.setObjectName(u"min_frequency_spinbox")
+        self.min_frequency_spinbox.setMinimum(1.000000000000000)
+        self.min_frequency_spinbox.setMaximum(15.000000000000000)
 
-        self.horizontalLayout_2.addWidget(self.min_frequency_lineedit)
+        self.horizontalLayout_2.addWidget(self.min_frequency_spinbox)
 
         self.label_6 = QLabel(diagnostic_view)
         self.label_6.setObjectName(u"label_6")
@@ -83,23 +84,32 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_2.addWidget(self.label_4)
 
-        self.max_frequency_lineedit = QLineEdit(diagnostic_view)
-        self.max_frequency_lineedit.setObjectName(u"max_frequency_lineedit")
-        sizePolicy1.setHeightForWidth(self.max_frequency_lineedit.sizePolicy().hasHeightForWidth())
-        self.max_frequency_lineedit.setSizePolicy(sizePolicy1)
+        self.max_frequency_spinbox = QDoubleSpinBox(diagnostic_view)
+        self.max_frequency_spinbox.setObjectName(u"max_frequency_spinbox")
+        self.max_frequency_spinbox.setMinimum(1.000000000000000)
+        self.max_frequency_spinbox.setMaximum(15.000000000000000)
+        self.max_frequency_spinbox.setValue(15.000000000000000)
 
-        self.horizontalLayout_2.addWidget(self.max_frequency_lineedit)
+        self.horizontalLayout_2.addWidget(self.max_frequency_spinbox)
 
         self.label_7 = QLabel(diagnostic_view)
         self.label_7.setObjectName(u"label_7")
 
         self.horizontalLayout_2.addWidget(self.label_7)
 
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer)
+
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer_4)
+
         self.label_8 = QLabel(diagnostic_view)
         self.label_8.setObjectName(u"label_8")
         self.label_8.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
@@ -108,8 +118,18 @@ class Ui_diagnostic_view(object):
 
         self.frequency_steps_spinbox = QSpinBox(diagnostic_view)
         self.frequency_steps_spinbox.setObjectName(u"frequency_steps_spinbox")
+        self.frequency_steps_spinbox.setMinimum(1)
+        self.frequency_steps_spinbox.setMaximum(1000)
+        self.frequency_steps_spinbox.setValue(281)
 
         self.horizontalLayout_3.addWidget(self.frequency_steps_spinbox)
+
+        self.line_7 = QFrame(diagnostic_view)
+        self.line_7.setObjectName(u"line_7")
+        self.line_7.setFrameShape(QFrame.VLine)
+        self.line_7.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_3.addWidget(self.line_7)
 
         self.label_14 = QLabel(diagnostic_view)
         self.label_14.setObjectName(u"label_14")
@@ -123,41 +143,57 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_3.addWidget(self.frequency_step_size_label)
 
-        self.label_28 = QLabel(diagnostic_view)
-        self.label_28.setObjectName(u"label_28")
+        self.line_8 = QFrame(diagnostic_view)
+        self.line_8.setObjectName(u"line_8")
+        self.line_8.setFrameShape(QFrame.VLine)
+        self.line_8.setFrameShadow(QFrame.Sunken)
 
-        self.horizontalLayout_3.addWidget(self.label_28)
+        self.horizontalLayout_3.addWidget(self.line_8)
 
         self.resonance_scan_button = QPushButton(diagnostic_view)
         self.resonance_scan_button.setObjectName(u"resonance_scan_button")
 
         self.horizontalLayout_3.addWidget(self.resonance_scan_button)
 
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
+
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_5)
+
         self.label_12 = QLabel(diagnostic_view)
         self.label_12.setObjectName(u"label_12")
         self.label_12.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.horizontalLayout_5.addWidget(self.label_12)
 
-        self.working_frequency_lineedit = QLineEdit(diagnostic_view)
-        self.working_frequency_lineedit.setObjectName(u"working_frequency_lineedit")
-        sizePolicy1.setHeightForWidth(self.working_frequency_lineedit.sizePolicy().hasHeightForWidth())
-        self.working_frequency_lineedit.setSizePolicy(sizePolicy1)
+        self.working_frequency_spinbox = QDoubleSpinBox(diagnostic_view)
+        self.working_frequency_spinbox.setObjectName(u"working_frequency_spinbox")
 
-        self.horizontalLayout_5.addWidget(self.working_frequency_lineedit)
+        self.horizontalLayout_5.addWidget(self.working_frequency_spinbox)
 
         self.label_13 = QLabel(diagnostic_view)
         self.label_13.setObjectName(u"label_13")
 
         self.horizontalLayout_5.addWidget(self.label_13)
 
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_3)
+
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_5)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_2.addItem(self.verticalSpacer)
 
 
         self.horizontalLayout.addLayout(self.verticalLayout_2)
@@ -184,6 +220,10 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer_7)
+
         self.label_9 = QLabel(diagnostic_view)
         self.label_9.setObjectName(u"label_9")
         self.label_9.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
@@ -199,6 +239,10 @@ class Ui_diagnostic_view(object):
         self.label_11.setObjectName(u"label_11")
 
         self.horizontalLayout_4.addWidget(self.label_11)
+
+        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer_8)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_4)
@@ -216,6 +260,13 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_6.addWidget(self.rf_step_count_spinbox)
 
+        self.line_11 = QFrame(diagnostic_view)
+        self.line_11.setObjectName(u"line_11")
+        self.line_11.setFrameShape(QFrame.VLine)
+        self.line_11.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_6.addWidget(self.line_11)
+
         self.label_29 = QLabel(diagnostic_view)
         self.label_29.setObjectName(u"label_29")
         self.label_29.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
@@ -232,6 +283,13 @@ class Ui_diagnostic_view(object):
         self.label_31.setObjectName(u"label_31")
 
         self.horizontalLayout_6.addWidget(self.label_31)
+
+        self.line_12 = QFrame(diagnostic_view)
+        self.line_12.setObjectName(u"line_12")
+        self.line_12.setFrameShape(QFrame.VLine)
+        self.line_12.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_6.addWidget(self.line_12)
 
         self.rf_scan_button = QPushButton(diagnostic_view)
         self.rf_scan_button.setObjectName(u"rf_scan_button")
@@ -261,6 +319,11 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_13 = QHBoxLayout()
         self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.horizontalLayout_14 = QHBoxLayout()
+        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
+
+        self.horizontalLayout_13.addLayout(self.horizontalLayout_14)
+
         self.label_25 = QLabel(diagnostic_view)
         self.label_25.setObjectName(u"label_25")
         self.label_25.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
@@ -271,6 +334,13 @@ class Ui_diagnostic_view(object):
         self.pid_p_spinbox.setObjectName(u"pid_p_spinbox")
 
         self.horizontalLayout_13.addWidget(self.pid_p_spinbox)
+
+        self.line_9 = QFrame(diagnostic_view)
+        self.line_9.setObjectName(u"line_9")
+        self.line_9.setFrameShape(QFrame.VLine)
+        self.line_9.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_13.addWidget(self.line_9)
 
         self.pid_i_spinbox = QLabel(diagnostic_view)
         self.pid_i_spinbox.setObjectName(u"pid_i_spinbox")
@@ -283,6 +353,13 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_13.addWidget(self.doubleSpinBox_2)
 
+        self.line_10 = QFrame(diagnostic_view)
+        self.line_10.setObjectName(u"line_10")
+        self.line_10.setFrameShape(QFrame.VLine)
+        self.line_10.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_13.addWidget(self.line_10)
+
         self.pid_d_spinbox = QLabel(diagnostic_view)
         self.pid_d_spinbox.setObjectName(u"pid_d_spinbox")
         self.pid_d_spinbox.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
@@ -293,6 +370,11 @@ class Ui_diagnostic_view(object):
         self.doubleSpinBox_3.setObjectName(u"doubleSpinBox_3")
 
         self.horizontalLayout_13.addWidget(self.doubleSpinBox_3)
+
+        self.horizontalLayout_15 = QHBoxLayout()
+        self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
+
+        self.horizontalLayout_13.addLayout(self.horizontalLayout_15)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_13)
@@ -322,6 +404,11 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_10 = QHBoxLayout()
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_16 = QHBoxLayout()
+        self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
+
+        self.horizontalLayout_10.addLayout(self.horizontalLayout_16)
+
         self.label_33 = QLabel(diagnostic_view)
         self.label_33.setObjectName(u"label_33")
         self.label_33.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
@@ -338,8 +425,17 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_10.addWidget(self.label_34)
 
+        self.horizontalLayout_17 = QHBoxLayout()
+        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+
+        self.horizontalLayout_10.addLayout(self.horizontalLayout_17)
+
 
         self.verticalLayout.addLayout(self.horizontalLayout_10)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer_2)
 
 
         self.horizontalLayout.addLayout(self.verticalLayout)
@@ -366,6 +462,10 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_7.addItem(self.horizontalSpacer_9)
+
         self.label_17 = QLabel(diagnostic_view)
         self.label_17.setObjectName(u"label_17")
         self.label_17.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
@@ -381,6 +481,13 @@ class Ui_diagnostic_view(object):
         self.label_18.setObjectName(u"label_18")
 
         self.horizontalLayout_7.addWidget(self.label_18)
+
+        self.line_13 = QFrame(diagnostic_view)
+        self.line_13.setObjectName(u"line_13")
+        self.line_13.setFrameShape(QFrame.VLine)
+        self.line_13.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_7.addWidget(self.line_13)
 
         self.label_16 = QLabel(diagnostic_view)
         self.label_16.setObjectName(u"label_16")
@@ -398,11 +505,19 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_7.addWidget(self.label_19)
 
+        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_7.addItem(self.horizontalSpacer_10)
+
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_7)
 
         self.horizontalLayout_8 = QHBoxLayout()
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_8.addItem(self.horizontalSpacer_11)
+
         self.label_20 = QLabel(diagnostic_view)
         self.label_20.setObjectName(u"label_20")
         self.label_20.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
@@ -414,10 +529,38 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_8.addWidget(self.source_steps_spinbox)
 
+        self.line_14 = QFrame(diagnostic_view)
+        self.line_14.setObjectName(u"line_14")
+        self.line_14.setFrameShape(QFrame.VLine)
+        self.line_14.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_8.addWidget(self.line_14)
+
+        self.label_15 = QLabel(diagnostic_view)
+        self.label_15.setObjectName(u"label_15")
+
+        self.horizontalLayout_8.addWidget(self.label_15)
+
+        self.label_26 = QLabel(diagnostic_view)
+        self.label_26.setObjectName(u"label_26")
+
+        self.horizontalLayout_8.addWidget(self.label_26)
+
+        self.line_15 = QFrame(diagnostic_view)
+        self.line_15.setObjectName(u"line_15")
+        self.line_15.setFrameShape(QFrame.VLine)
+        self.line_15.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout_8.addWidget(self.line_15)
+
         self.pushButton_3 = QPushButton(diagnostic_view)
         self.pushButton_3.setObjectName(u"pushButton_3")
 
         self.horizontalLayout_8.addWidget(self.pushButton_3)
+
+        self.horizontalSpacer_12 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_8.addItem(self.horizontalSpacer_12)
 
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_8)
@@ -493,6 +636,10 @@ class Ui_diagnostic_view(object):
 
         self.verticalLayout_3.addWidget(self.source_enable_checkbox)
 
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer_3)
+
 
         self.horizontalLayout.addLayout(self.verticalLayout_3)
 
@@ -514,8 +661,7 @@ class Ui_diagnostic_view(object):
         self.label_7.setText(QCoreApplication.translate("diagnostic_view", u"[MHz]", None))
         self.label_8.setText(QCoreApplication.translate("diagnostic_view", u"Step count:", None))
         self.label_14.setText(QCoreApplication.translate("diagnostic_view", u"Step size:", None))
-        self.frequency_step_size_label.setText(QCoreApplication.translate("diagnostic_view", u"-", None))
-        self.label_28.setText(QCoreApplication.translate("diagnostic_view", u"MHz", None))
+        self.frequency_step_size_label.setText(QCoreApplication.translate("diagnostic_view", u"0.05 MHz", None))
         self.resonance_scan_button.setText(QCoreApplication.translate("diagnostic_view", u"Scan", None))
         self.label_12.setText(QCoreApplication.translate("diagnostic_view", u"Working frequency:", None))
         self.label_13.setText(QCoreApplication.translate("diagnostic_view", u"[MHz]", None))
@@ -541,7 +687,9 @@ class Ui_diagnostic_view(object):
         self.label_18.setText(QCoreApplication.translate("diagnostic_view", u"[V]", None))
         self.label_16.setText(QCoreApplication.translate("diagnostic_view", u"Max:", None))
         self.label_19.setText(QCoreApplication.translate("diagnostic_view", u"[V]", None))
-        self.label_20.setText(QCoreApplication.translate("diagnostic_view", u"Steps:", None))
+        self.label_20.setText(QCoreApplication.translate("diagnostic_view", u"Step count:", None))
+        self.label_15.setText(QCoreApplication.translate("diagnostic_view", u"Step size:", None))
+        self.label_26.setText(QCoreApplication.translate("diagnostic_view", u"TextLabel", None))
         self.pushButton_3.setText(QCoreApplication.translate("diagnostic_view", u"Scan", None))
         self.radioButton.setText(QCoreApplication.translate("diagnostic_view", u"Constant Voltage", None))
         self.label_21.setText(QCoreApplication.translate("diagnostic_view", u"[V]", None))
