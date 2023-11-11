@@ -532,7 +532,7 @@ class Ui_diagnostic_view(object):
 
         self.source_min_spinbox = QDoubleSpinBox(diagnostic_view)
         self.source_min_spinbox.setObjectName(u"source_min_spinbox")
-        self.source_min_spinbox.setMinimum(-3.000000000000000)
+        self.source_min_spinbox.setMinimum(0.000000000000000)
         self.source_min_spinbox.setMaximum(2.000000000000000)
         self.source_min_spinbox.setSingleStep(0.100000000000000)
 

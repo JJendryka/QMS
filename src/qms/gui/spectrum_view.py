@@ -1,11 +1,11 @@
 from PySide6 import QtWidgets
 
-from layouts.map_view_ui import Ui_map_view
+from qms.layouts.spectrum_view_ui import Ui_SpectrumView
 
 
-class MapView(QtWidgets.QWidget, Ui_map_view):
+class SpectrumView(QtWidgets.QWidget, Ui_SpectrumView):
     def __init__(self, *args, **kwargs) -> None:
-        super(MapView, self).__init__(*args, **kwargs)
+        super(SpectrumView, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
     def set_allow_new_scans(self, allow=True, reason: str = ""):

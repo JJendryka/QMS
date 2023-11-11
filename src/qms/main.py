@@ -4,9 +4,9 @@ import signal
 
 from PySide6.QtWidgets import QApplication
 
-import custom_logging
-from config import Config
-from gui.main_window import MainWindow
+import qms.custom_logging as custom_logging
+from qms.config import Config
+from qms.gui.main_window import MainWindow
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 

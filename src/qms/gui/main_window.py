@@ -1,11 +1,11 @@
 from PySide6 import QtWidgets, QtGui, QtCore
 
 import serial.tools.list_ports
-from backend.euromeasure import EMCannotConnectError, EuroMeasure
-from backend.fake_euromeasure import FakeEuroMeasure
-from config import Config
+from qms.backend.euromeasure import EMCannotConnectError, EuroMeasure
+from qms.backend.fake_euromeasure import FakeEuroMeasure
+from qms.config import Config
 
-from layouts.main_window_ui import Ui_MainWindow
+from qms.layouts.main_window_ui import Ui_MainWindow
 
 import logging
 

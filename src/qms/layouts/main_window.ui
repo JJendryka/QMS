@@ -93,19 +93,19 @@
   <customwidget>
    <class>SpectrumView</class>
    <extends>QWidget</extends>
-   <header location="global">gui/spectrum_view.h</header>
+   <header location="global">qms/gui/spectrum_view.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DiagnosticView</class>
    <extends>QWidget</extends>
-   <header location="global">gui/diagnostic_view.h</header>
+   <header location="global">qms/gui/diagnostic_view.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MapView</class>
    <extends>QWidget</extends>
-   <header location="global">gui/map_view.h</header>
+   <header location="global">qms/gui/map_view.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

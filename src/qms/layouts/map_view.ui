@@ -40,13 +40,13 @@
   <customwidget>
    <class>MapPlot</class>
    <extends>QWidget</extends>
-   <header location="global">gui/map_plot.h</header>
+   <header location="global">qms/gui/map_plot.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MapControl</class>
    <extends>QWidget</extends>
-   <header location="global">gui/map_control.h</header>
+   <header location="global">qms/gui/map_control.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -1,16 +1,17 @@
 import logging
 from PySide6 import QtWidgets, QtGui
-from backend.resonance_scan import ResonanceScanner
+from qms.backend.resonance_scan import ResonanceScanner
+
+from qms.backend.rf_scan import RFScanner
+from qms.backend.rf_test import RFTester
+from qms.backend.source_scan import SourceScanner
 
 from typing import TYPE_CHECKING
-from backend.rf_scan import RFScanner
-from backend.rf_test import RFTester
-from backend.source_scan import SourceScanner
 
 if TYPE_CHECKING:
-    from gui.main_window import MainWindow
+    from qms.gui.main_window import MainWindow
 
-from layouts.diagnostic_view_ui import Ui_diagnostic_view
+from qms.layouts.diagnostic_view_ui import Ui_diagnostic_view
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure

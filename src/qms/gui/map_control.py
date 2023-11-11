@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from layouts.map_control_ui import Ui_map_control
+from qms.layouts.map_control_ui import Ui_map_control
 
 
 class MapControl(QtWidgets.QWidget, Ui_map_control):

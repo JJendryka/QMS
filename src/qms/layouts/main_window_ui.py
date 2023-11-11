@@ -19,9 +19,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QMainWindow, QMenu,
     QMenuBar, QSizePolicy, QTabWidget, QWidget)
 
-from gui.diagnostic_view import DiagnosticView
-from gui.map_view import MapView
-from gui.spectrum_view import SpectrumView
+from qms.gui.diagnostic_view import DiagnosticView
+from qms.gui.map_view import MapView
+from qms.gui.spectrum_view import SpectrumView
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):

@@ -1,6 +1,6 @@
-from backend.euromeasure import EuroMeasure
-from config import Config
-from consts import MAX_SOURCE_CURRENT, MAX_SOURCE_VOLTAGE
+from qms.backend.euromeasure import EuroMeasure
+from qms.config import Config
+from qms.consts import MAX_SOURCE_CURRENT, MAX_SOURCE_VOLTAGE
 
 
 def upload_configuration(em: EuroMeasure):

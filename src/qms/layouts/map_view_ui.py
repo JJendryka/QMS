@@ -17,8 +17,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QSizePolicy, QVBoxLayout, QWidget)
 
-from gui.map_control import MapControl
-from gui.map_plot import MapPlot
+from qms.gui.map_control import MapControl
+from qms.gui.map_plot import MapPlot
 
 class Ui_map_view(object):
     def setupUi(self, map_view):

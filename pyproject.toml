@@ -1,9 +1,13 @@
+[build-system]
+requires = ["setuptools >= 65", "wheel >= 0.38"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "QMS"
 version = "0.0.0"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
-scripts = {qms = "main:main"}
+scripts = {qms = "qms.main:main"}
 dependencies = ["pyside6", "matplotlib", "pyserial", "numpy"]
 
 [project.optional-dependencies]
@@ -19,6 +23,6 @@ exclude = ["build", ".venv", "src/layouts"]
 line-length = 120
 
 [tool.mypy]
-exclude = ["build", ".venv", "src/layouts"]
+exclude = ["build", ".venv", "src/qms/layouts"]
 ignore_missing_imports = true
 explicit_package_bases = true

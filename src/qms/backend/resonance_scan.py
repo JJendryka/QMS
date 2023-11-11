@@ -1,12 +1,12 @@
 import time
 import logging
-from backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 
 from PySide6.QtCore import QRunnable, Slot, Signal, QObject
-
 import numpy as np
 
-from consts import GENERATOR_AMPLITUDE_RF_TEST, MONITOR_VOLTMETER_CHANNEL, QUADRUPOLE_GENERATOR_CHANNEL
+from qms.backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
+from qms.consts import GENERATOR_AMPLITUDE_RF_TEST, MONITOR_VOLTMETER_CHANNEL, QUADRUPOLE_GENERATOR_CHANNEL
+
 
 logger = logging.getLogger("main")
 

@@ -1,10 +1,10 @@
 import time
 import logging
-from backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 
 from PySide6.QtCore import QRunnable, Slot, Signal, QObject
 
-from consts import MONITOR_VOLTMETER_CHANNEL
+from qms.backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
+from qms.consts import MONITOR_VOLTMETER_CHANNEL
 
 logger = logging.getLogger("main")
 

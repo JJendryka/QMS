@@ -1,7 +1,7 @@
 from PySide6 import QtWidgets
 from PySide6.QtGui import QResizeEvent
 
-from layouts.map_plot_ui import Ui_map_plot
+from qms.layouts.map_plot_ui import Ui_map_plot
 
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure

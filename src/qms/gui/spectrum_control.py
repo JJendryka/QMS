@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from layouts.spectrum_control_ui import Ui_spectrum_control
+from qms.layouts.spectrum_control_ui import Ui_spectrum_control
 
 
 class SpectrumControl(QtWidgets.QWidget, Ui_spectrum_control):
