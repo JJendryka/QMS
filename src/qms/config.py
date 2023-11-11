@@ -33,6 +33,7 @@ class Config:
         self.args = args
         self.__class__.__instance = self
         self.spectrometer_config = SpectrometerConfig()
+        self.state = State()
 
 
 class SpectrometerConfig:
@@ -46,22 +47,34 @@ class SpectrometerConfig:
         self.pid_d: float = 0
         self.frequency: float = 0
 
-    def load_from_json(self, json_object: Any):
+    def load_from_json(self, json_object: Dict):
         self.source_cc = safely_get(json_object, ["source", "cc"], bool, False)
-        self.source_voltage = safely_get(json_object, ["source", "voltage"], (float, NoneType), None)
-        self.source_current = safely_get(json_object, ["source", "current"], (float, NoneType), None)
+        self.source_voltage = safely_get(json_object, ["source", "voltage"], (int, float, NoneType), 0)
+        self.source_current = safely_get(json_object, ["source", "current"], (int, float, NoneType), 0)
         self.pid_enabled = safely_get(json_object, ["pid", "enabled"], bool, True)
-        self.pid_p = safely_get(json_object, ["pid", "p"], float, 1)
-        self.pid_i = safely_get(json_object, ["pid", "i"], float, 1)
-        self.pid_d = safely_get(json_object, ["pid", "d"], float, 1)
-        self.frequency = safely_get(json_object, ["frequency"], float, 6e6)
+        self.pid_p = float(safely_get(json_object, ["pid", "p"], (int, float), 1))
+        self.pid_i = float(safely_get(json_object, ["pid", "i"], (int, float), 1))
+        self.pid_d = float(safely_get(json_object, ["pid", "d"], (int, float), 1))
+        self.frequency = float(safely_get(json_object, ["frequency"], (int, float), 6e6))
 
-    def dump_to_json(self) -> Any:
+    def dump_to_json(self) -> Dict:
         return {
             "source": {"cc": self.source_cc, "voltage": self.source_voltage, "current": self.source_current},
             "pid": {"p": self.pid_p, "i": self.pid_i, "d": self.pid_d, "enabled": self.pid_enabled},
             "frequency": self.frequency,
         }
+
+
+class State:
+    def __init__(self) -> None:
+        self.loaded_profile: str | None = None
+        self.previous_profile: str | None = None
+
+    def load_from_json(self, json_object: Dict):
+        self.previous_profile = safely_get(json_object, ["loaded_config"], (str, NoneType), "")
+
+    def dump_to_json(self) -> Dict:
+        return {"loaded_config": self.loaded_profile if self.loaded_profile is not None else self.previous_profile}
 
 
 def safely_get(
