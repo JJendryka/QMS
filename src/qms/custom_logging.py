@@ -1,7 +1,8 @@
 import logging
 import sys
 import time
-from pathlib import Path
+
+from qms.misc import get_home_dir
 
 
 class ColoredFormatter(logging.Formatter):
@@ -40,7 +41,7 @@ def setup_logging(level: str, logger: logging.Logger) -> None:
 
     file_formatter = logging.Formatter("%(asctime)s %(levelname)s [%(filename)s:%(lineno)s] %(message)s")
 
-    path = Path("logs")
+    path = get_home_dir() / "logs"
     path.mkdir(exist_ok=True)
     file_handler = logging.FileHandler(filename=path / time.strftime("%Y_%m_%d-%H_%M_%S.log"))
     file_handler.setLevel(logging.DEBUG)
