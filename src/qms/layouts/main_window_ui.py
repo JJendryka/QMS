@@ -32,6 +32,8 @@ class Ui_MainWindow(object):
         self.load_profile_action.setObjectName(u"load_profile_action")
         self.save_profile_action = QAction(MainWindow)
         self.save_profile_action.setObjectName(u"save_profile_action")
+        self.save_profile_as_action = QAction(MainWindow)
+        self.save_profile_as_action.setObjectName(u"save_profile_as_action")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -69,6 +71,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.connection_menu.menuAction())
         self.profile_menu.addAction(self.load_profile_action)
         self.profile_menu.addAction(self.save_profile_action)
+        self.profile_menu.addAction(self.save_profile_as_action)
 
         self.retranslateUi(MainWindow)
 
@@ -82,6 +85,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.load_profile_action.setText(QCoreApplication.translate("MainWindow", u"Load profile", None))
         self.save_profile_action.setText(QCoreApplication.translate("MainWindow", u"Save profile", None))
+        self.save_profile_as_action.setText(QCoreApplication.translate("MainWindow", u"Save profile as...", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.spectrum_tab), QCoreApplication.translate("MainWindow", u"Spectrum", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.stability_map_tab), QCoreApplication.translate("MainWindow", u"Stability Map", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.diagnostic_tab), QCoreApplication.translate("MainWindow", u"Diagnostics", None))

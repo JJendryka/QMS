@@ -45,6 +45,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.connection_menu.aboutToShow.connect(self.fill_connection_menu)
         self.load_profile_action.triggered.connect(self.open_profile)
         self.save_profile_action.triggered.connect(self.save_profile)
+        self.save_profile_as_action.triggered.connect(self.save_profile_as)
 
     def fill_connection_menu(self) -> None:
         for action in self.connection_menu.actions():
@@ -135,6 +136,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 json_object = json.load(json_file)
                 Config.get().spectrometer_config.load_from_json(json_object["spectrometer"])
 
+        profile_name = Path(opened_profile).stem
+        self.profile_menu.setTitle(f"Profile: {profile_name}")
+
     def save_profile(self):
         profile_filename = Config.get().state.loaded_profile
         if profile_filename is not None:
@@ -142,6 +146,25 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             json_object = {"spectrometer": Config.get().spectrometer_config.dump_to_json()}
             with open(profile_filename, "w") as json_file:
                 json.dump(json_object, json_file)
+
+    def save_profile_as(self):
+        filename = save_profile_as_dialog(self)
+        if filename is not None:
+            self.save_profile()
+            profile_name = Path(Config.get().state.loaded_profile).stem
+            self.profile_menu.setTitle(f"Profile: {profile_name}")
+
+
+def save_profile_as_dialog(parent) -> None | str:
+    path = get_home_dir() / "profiles"
+    path.mkdir(exist_ok=True, parents=True)
+    filename, _ = QtWidgets.QFileDialog.getSaveFileName(parent, "Save profile to...", str(path), "JSON files (*.json)")
+    if filename is not None and filename:
+        path = Path(filename)
+        path = path.with_suffix(".json")
+        Config.get().state.loaded_profile = str(path)
+        return str(path)
+    return None
 
 
 class ProfileOpenDialog(QtWidgets.QDialog):
@@ -173,15 +196,8 @@ class ProfileOpenDialog(QtWidgets.QDialog):
             h_layout.addWidget(self.load_last_button)
 
     def on_create_new(self):
-        path = get_home_dir() / "profiles"
-        path.mkdir(exist_ok=True, parents=True)
-        filename, _ = QtWidgets.QFileDialog.getSaveFileName(
-            self.parent(), "Save profile to...", str(path), "JSON files (*.json)"
-        )
-        if filename is not None and filename:
-            path = Path(filename)
-            path = path.with_suffix(".json")
-            Config.get().state.loaded_profile = str(path)
+        save_profile_as_dialog(self.parent())
+        if Config.get().state.loaded_profile is not None and Config.get().state.loaded_profile:
             self.close()
 
     def on_load_existing(self):
