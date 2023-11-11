@@ -4,6 +4,7 @@ from backend.resonance_scan import ResonanceScanner
 
 from typing import TYPE_CHECKING
 from backend.rf_scan import RFScanner
+from backend.rf_test import RFTester
 from backend.source_scan import SourceScanner
 
 if TYPE_CHECKING:
@@ -71,6 +72,9 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.resonance_plot = Plot(self)
         self.rf_plot = Plot(self)
         self.source_plot = Plot(self)
+        self.rf_test_plot = Plot(self)
+
+        self.rf_tester: RFTester | None = None
 
         self.replace_charts()
         self.setup_signals()
@@ -93,7 +97,10 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.source_max_spinbox.valueChanged.connect(self.source_updated)
         self.source_steps_spinbox.valueChanged.connect(self.source_updated)
 
+        self.rf_test_button.clicked.connect(self.start_rf_test)
+
     def start_resonance_scan(self) -> None:
+        logger.info("Resonance scan starting")
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
                 self.main_window.set_allow_new_scans(False, "Resonance scan is running")
@@ -119,6 +126,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             logger.error("Main window reference is not set")
 
     def start_rf_scan(self) -> None:
+        logger.info("RF scan starting")
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
                 self.main_window.set_allow_new_scans(False, "RF scan is running")
@@ -141,6 +149,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             logger.error("Main window reference is not set")
 
     def start_source_scan(self) -> None:
+        logger.info("Source scan starting")
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
                 self.main_window.set_allow_new_scans(False, "Source scan is running")
@@ -162,6 +171,40 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         else:
             logger.error("Main window reference is not set")
 
+    def start_rf_test(self) -> None:
+        logger.info("RF test starting")
+        if self.main_window is not None:
+            if self.main_window.euromeasure is not None:
+                self.main_window.set_allow_new_scans(False, "RF test is running")
+                self.rf_test_button.setText("Stop")
+                self.rf_test_button.setToolTip("")
+                self.rf_test_button.setEnabled(True)
+                self.rf_test_button.clicked.disconnect(self.start_rf_test)
+                self.rf_test_button.clicked.connect(self.stop_rf_test)
+
+                self.rf_test_plot.clear_points()
+
+                self.rf_tester = RFTester(self.main_window.euromeasure)
+                self.rf_tester.signals.data_point_acquired.connect(self.received_rf_test_point)
+                self.rf_tester.signals.error_occured.connect(self.handle_em_exception)
+                self.rf_tester.signals.finished.connect(self.finished_scan)
+                self.main_window.thread_pool.start(self.rf_tester)
+            else:
+                logger.error("Tried to start source scan when EuroMeasure system is not connected")
+                QtWidgets.QMessageBox.critical(self.main_window, "Error!", "EuroMeasure system is not connected")
+        else:
+            logger.error("Main window reference is not set")
+
+    def stop_rf_test(self) -> None:
+        if self.rf_tester is not None:
+            self.rf_tester.signals.stop()
+            self.rf_test_button.setText("Test")
+            self.rf_test_button.setToolTip("")
+            self.rf_test_button.clicked.disconnect(self.stop_rf_test)
+            self.rf_test_button.clicked.connect(self.start_rf_test)
+        else:
+            logger.error("RF test stop even though rf_tester not initalized")
+
     def received_resonance_scan_point(self, frequency: float, voltage: float) -> None:
         self.resonance_plot.add_point(frequency, voltage)
 
@@ -176,13 +219,14 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
     def received_source_scan_point(self, voltage: float, current: float):
         self.source_plot.add_point(voltage, current)
 
+    def received_rf_test_point(self, time_elapsed: float, monitor_voltage: float):
+        self.rf_test_plot.add_point(time_elapsed, monitor_voltage)
+
     def replace_charts(self) -> None:
         self.layout().replaceWidget(self.resonance_chart, self.resonance_plot)
         self.layout().replaceWidget(self.rf_chart, self.rf_plot)
         self.layout().replaceWidget(self.source_chart, self.source_plot)
-
-        rf_stability_chart = Plot(self)
-        self.layout().replaceWidget(self.rf_stability_chart, rf_stability_chart)
+        self.layout().replaceWidget(self.rf_stability_chart, self.rf_test_plot)
 
         source_stability_chart = Plot(self)
         self.layout().replaceWidget(self.source_stability_chart, source_stability_chart)
