@@ -4,11 +4,11 @@ from backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseE
 
 from PySide6.QtCore import QRunnable, Slot, Signal, QObject
 
+from consts import MONITOR_VOLTMETER_CHANNEL
+
 logger = logging.getLogger("main")
 
 SLEEP_TIME = 0.03
-VOLTMETER_CHANNEL = 3
-GENERATOR_CHANNEL = 2
 
 
 class RFTesterSignals(QObject):
@@ -36,7 +36,7 @@ class RFTester(QRunnable):
         try:
             while not self.signals.stopped:
                 time.sleep(SLEEP_TIME)
-                result = self.em.get_voltmeter_voltage(VOLTMETER_CHANNEL)
+                result = self.em.get_voltmeter_voltage(MONITOR_VOLTMETER_CHANNEL)
                 self.signals.data_point_acquired.emit(time.time(), result)
             self.signals.finished.emit()
         except (EMError, EMConnectionError, EMIncorrectResponseError) as exc:

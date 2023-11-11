@@ -6,12 +6,11 @@ from PySide6.QtCore import QRunnable, Slot, Signal, QObject
 
 import numpy as np
 
+from consts import GENERATOR_AMPLITUDE_RF_TEST, MONITOR_VOLTMETER_CHANNEL, QUADRUPOLE_GENERATOR_CHANNEL
+
 logger = logging.getLogger("main")
 
 SLEEP_TIME = 0.03
-VOLTMETER_CHANNEL = 1
-GENERATOR_CHANNEL = 2
-GENERATOR_AMPLITUDE = 0.2
 
 
 class ResonanceScannerSignals(QObject):
@@ -33,11 +32,11 @@ class ResonanceScanner(QRunnable):
     def run(self):
         try:
             self.em.set_pid_state(False)
-            self.em.set_generator_amplitude(GENERATOR_CHANNEL, GENERATOR_AMPLITUDE)
+            self.em.set_generator_amplitude(QUADRUPOLE_GENERATOR_CHANNEL, GENERATOR_AMPLITUDE_RF_TEST)
             for frequency in np.linspace(self.start, self.stop, num=self.step_count):
-                self.em.set_generator_frequency(GENERATOR_CHANNEL, frequency)
+                self.em.set_generator_frequency(QUADRUPOLE_GENERATOR_CHANNEL, frequency)
                 time.sleep(SLEEP_TIME)
-                result = self.em.get_voltmeter_voltage(VOLTMETER_CHANNEL)
+                result = self.em.get_voltmeter_voltage(MONITOR_VOLTMETER_CHANNEL)
                 self.signals.data_point_acquired.emit(frequency, result)
             self.signals.finished.emit()
         except (EMError, EMConnectionError, EMIncorrectResponseError) as exc:
