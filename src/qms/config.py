@@ -53,7 +53,7 @@ class SpectrometerConfig:
         self.pid_d: float = 0
         self.frequency: float = 0
 
-    def load_from_json(self, json_object: Dict):
+    def load_from_json(self, json_object: Dict) -> None:
         self.source_cc = safely_get(json_object, ["source", "cc"], bool, False)
         self.source_voltage = safely_get(json_object, ["source", "voltage"], (int, float, NoneType), 0)
         self.source_current = safely_get(json_object, ["source", "current"], (int, float, NoneType), 0)
@@ -76,7 +76,7 @@ class State:
         self.loaded_profile: Path | None = None
         self.recent_profiles: List[Tuple[Path, float]] = []
 
-    def load_last_state(self):
+    def load_last_state(self) -> None:
         path = get_home_dir() / LAST_STATE_FILENAME
         if path.exists():
             logger.debug("Loading last state")
@@ -106,10 +106,10 @@ class State:
     def dump_to_json(self) -> Dict:
         return {"recent_profiles": [(str(recent[0]), recent[1]) for recent in self.recent_profiles]}
 
-    def add_recent_profile(self, path):
+    def add_recent_profile(self, path: Path) -> None:
         for index, (exitsting_path, _) in enumerate(self.recent_profiles):
             if path == exitsting_path:
-                self.recent_profiles[index][1] = time.time()
+                self.recent_profiles[index] = (path, time.time())
                 break
         else:
             self.recent_profiles.append((path, time.time()))
@@ -121,7 +121,7 @@ def safely_get(
     json_object: Any,
     path: List[str | int],
     kind: type | Tuple[type, ...],
-    default=None,
+    default: Any = None,
 ) -> Any:
     """Gracefully look for value in object."""
     for name in path:

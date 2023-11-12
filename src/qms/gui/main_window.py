@@ -103,12 +103,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             logger.warn("Trying to disconnect already disconnected port")
         self.set_allow_new_scans(False, "EuroMeasure is not connected")
 
-    def set_allow_new_scans(self, allow=True, reason: str = "") -> None:
+    def set_allow_new_scans(self, allow: bool = True, reason: str = "") -> None:
         self.diagnostic_tab.set_allow_new_scans(allow, reason)
         self.spectrum_tab.set_allow_new_scans(allow, reason)
         self.stability_map_tab.set_allow_new_scans(allow, reason)
 
-    def closeEvent(self, event: QtGui.QCloseEvent):  # noqa: N802
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:  # noqa: N802
         logger.debug("Saving state to file")
         json_object = Config.get().state.dump_to_json()
 
@@ -119,7 +119,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         super().closeEvent(event)
 
-    def set_loaded_profile(self, path):
+    def set_loaded_profile(self, path: Path) -> None:
         """Set currently loaded profile to path. Don't actually load the profile."""
         if path is not None and path.exists():
             Config.get().state.loaded_profile = path

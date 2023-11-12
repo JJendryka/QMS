@@ -3,7 +3,7 @@ from qms.config import Config
 from qms.consts import MAX_SOURCE_CURRENT, MAX_SOURCE_VOLTAGE
 
 
-def upload_configuration(em: EuroMeasure):
+def upload_configuration(em: EuroMeasure) -> None:
     conf = Config.get().spectrometer_config
 
     if conf.source_cc:

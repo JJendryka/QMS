@@ -27,7 +27,7 @@ class SourceScanner(QRunnable):
         self.signals = SourceScannerSignals()
 
     @Slot()
-    def run(self):
+    def run(self) -> None:
         try:
             for voltage in np.linspace(self.start, self.stop, num=self.step_count):
                 self.em.set_source_psu_voltage(voltage)

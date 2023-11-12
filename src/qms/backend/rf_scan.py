@@ -28,7 +28,7 @@ class RFScanner(QRunnable):
         self.signals = RFScannerSignals()
 
     @Slot()
-    def run(self):
+    def run(self) -> None:
         try:
             self.em.set_pid_state(False)
             self.em.set_generator_frequency(QUADRUPOLE_GENERATOR_CHANNEL, self.frequency)

@@ -184,33 +184,33 @@ class EMConnectionError(Exception):
 
 
 class EMNotConnectedError(EMConnectionError):
-    def __init__(self):
+    def __init__(self) -> None:
         super(EMNotConnectedError, self).__init__("No port selected")
 
 
 class EMCannotConnectError(EMConnectionError):
-    def __init__(self):
+    def __init__(self) -> None:
         super(EMCannotConnectError, self).__init__("Cannot connect to serial port after retries")
 
 
 class EMCannotWriteError(EMConnectionError):
-    def __init__(self):
+    def __init__(self) -> None:
         super(EMCannotWriteError, self).__init__("Cannot write to serial port after retries")
 
 
 class EMCannotReceiveError(EMConnectionError):
-    def __init__(self):
+    def __init__(self) -> None:
         super(EMCannotReceiveError, self).__init__("Cannot receive from serial port after retries")
 
 
 class EMError(Exception):
-    def __init__(self, em_message):
+    def __init__(self, em_message: str) -> None:
         super(EMError, self).__init__(f"Received error from EuroMeasure: {em_message}")
         self.em_message = em_message
 
 
 class EMIncorrectResponseError(Exception):
-    def __init__(self, pattern, response):
+    def __init__(self, pattern: str, response: list[str]) -> None:
         super(EMIncorrectResponseError, self).__init__(
             f"Incorrect response from EuroMeasure: response: {response} matching pattern should be: {pattern}"
         )

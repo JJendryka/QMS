@@ -2,6 +2,7 @@ import time
 import logging
 
 from PySide6.QtCore import QRunnable, Slot, Signal, QObject
+from PySide6 import QtWidgets
 
 from qms.backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 from qms.consts import MONITOR_VOLTMETER_CHANNEL
@@ -16,12 +17,12 @@ class RFTesterSignals(QObject):
     error_occured = Signal(Exception)
     finished = Signal()
 
-    def __init__(self, parent=None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None):
         super(RFTesterSignals, self).__init__(parent)
         self.stopped = False
 
     @Slot()
-    def stop(self):
+    def stop(self) -> None:
         self.stopped = True
 
 
@@ -32,7 +33,7 @@ class RFTester(QRunnable):
         self.signals = RFTesterSignals()
 
     @Slot()
-    def run(self):
+    def run(self) -> None:
         try:
             while not self.signals.stopped:
                 time.sleep(SLEEP_TIME)

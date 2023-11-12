@@ -1,3 +1,4 @@
+from typing import Any
 from PySide6 import QtWidgets
 from PySide6.QtGui import QResizeEvent
 
@@ -8,19 +9,19 @@ from matplotlib.figure import Figure
 
 
 class Canvas(FigureCanvasQTAgg):
-    def __init__(self, parent=None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None):
         figure = Figure()
         self.axes = figure.add_subplot(111)
         super(Canvas, self).__init__(figure)
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
 
-    def resizeEvent(self, event: QResizeEvent):  # noqa: N802
+    def resizeEvent(self, event: QResizeEvent) -> None:  # noqa: N802
         super(Canvas, self).resizeEvent(event)
         self.figure.tight_layout(pad=0.5)
 
 
 class SpectrumPlot(QtWidgets.QWidget, Ui_spectrum_plot):
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super(SpectrumPlot, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.canvas = Canvas(self)

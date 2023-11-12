@@ -33,7 +33,7 @@ class SourceScanner(QRunnable):
         self.signals = SourceScannerSignals()
 
     @Slot()
-    def run(self):
+    def run(self) -> None:
         try:
             self.em.set_pid_state(False)
             self.em.set_generator_amplitude(QUADRUPOLE_GENERATOR_CHANNEL, 0)

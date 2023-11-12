@@ -6,7 +6,7 @@ from qms.backend.rf_scan import RFScanner
 from qms.backend.rf_test import RFTester
 from qms.backend.source_scan import SourceScanner
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, List
 
 if TYPE_CHECKING:
     from qms.gui.main_window import MainWindow
@@ -21,14 +21,14 @@ logger = logging.getLogger("main")
 
 
 class Plot(QtWidgets.QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None):
         super(Plot, self).__init__(parent)
         self.setLayout(QtWidgets.QVBoxLayout())
         self.canvas = MplCanvas(self)
         self.layout().addWidget(self.canvas)
         self.layout().addWidget(NavigationToolbar2QT(self.canvas, self))
 
-    def add_point(self, x, y):
+    def add_point(self, x: float, y: float) -> None:
         self.canvas.x_data.append(x)
         self.canvas.y_data.append(y)
 
@@ -40,7 +40,7 @@ class Plot(QtWidgets.QWidget):
 
         self.canvas.draw()
 
-    def clear_points(self):
+    def clear_points(self) -> None:
         self.canvas.x_data = []
         self.canvas.y_data = []
 
@@ -51,22 +51,22 @@ class Plot(QtWidgets.QWidget):
 
 
 class MplCanvas(FigureCanvasQTAgg):
-    def __init__(self, parent=None):
-        self.x_data = []
-        self.y_data = []
+    def __init__(self, parent: QtWidgets.QWidget | None = None):
+        self.x_data: List[float] = []
+        self.y_data: List[float] = []
         fig = Figure()
         self.axes = fig.add_subplot(111)
         (self.line,) = self.axes.plot(self.x_data, self.y_data)
         super(MplCanvas, self).__init__(fig)
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
 
-    def resizeEvent(self, event: QtGui.QResizeEvent):  # noqa: N802
+    def resizeEvent(self, event: QtGui.QResizeEvent) -> None:  # noqa: N802
         super(MplCanvas, self).resizeEvent(event)
         self.figure.tight_layout(pad=0.5)
 
 
 class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any):
         super(DiagnosticView, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.main_window: MainWindow | None = None
@@ -214,13 +214,13 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             self.frequency_at_maximum_resonance = frequency
             self.working_frequency_spinbox.setValue(frequency / 1e6)
 
-    def received_rf_scan_point(self, amplitude: float, monitor_voltage: float):
+    def received_rf_scan_point(self, amplitude: float, monitor_voltage: float) -> None:
         self.rf_plot.add_point(amplitude, monitor_voltage)
 
-    def received_source_scan_point(self, voltage: float, current: float):
+    def received_source_scan_point(self, voltage: float, current: float) -> None:
         self.source_plot.add_point(voltage, current)
 
-    def received_rf_test_point(self, time_elapsed: float, monitor_voltage: float):
+    def received_rf_test_point(self, time_elapsed: float, monitor_voltage: float) -> None:
         self.rf_test_plot.add_point(time_elapsed, monitor_voltage)
 
     def replace_charts(self) -> None:
@@ -257,7 +257,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         if self.main_window is not None:
             self.main_window.set_allow_new_scans(True)
 
-    def set_allow_new_scans(self, allow=True, reason: str = ""):
+    def set_allow_new_scans(self, allow: bool = True, reason: str = "") -> None:
         self.resonance_scan_button.setEnabled(allow)
         self.resonance_scan_button.setToolTip(reason)
         self.rf_scan_button.setEnabled(allow)
