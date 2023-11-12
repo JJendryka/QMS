@@ -507,7 +507,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="pid_i_spinbox">
+        <widget class="QLabel" name="pid_i_label">
          <property name="text">
           <string>I:</string>
          </property>
@@ -517,7 +517,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+        <widget class="QDoubleSpinBox" name="pid_i_spinbox"/>
        </item>
        <item>
         <widget class="Line" name="line_10">
@@ -527,7 +527,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="pid_d_spinbox">
+        <widget class="QLabel" name="pid_d_label">
          <property name="text">
           <string>D:</string>
          </property>
@@ -537,7 +537,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
+        <widget class="QDoubleSpinBox" name="pid_d_spinbox"/>
        </item>
        <item>
         <widget class="Line" name="line_17">
@@ -904,13 +904,16 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_9">
        <item>
-        <widget class="QRadioButton" name="radioButton">
+        <widget class="QRadioButton" name="cv_radiobutton">
          <property name="text">
           <string>Constant Voltage</string>
          </property>
          <property name="checked">
           <bool>true</bool>
          </property>
+         <attribute name="buttonGroup">
+          <string notr="true">source_buttongroup</string>
+         </attribute>
         </widget>
        </item>
        <item>
@@ -919,7 +922,7 @@
        <item>
         <widget class="QLabel" name="label_21">
          <property name="text">
-          <string>[V]</string>
+          <string>[kV]</string>
          </property>
         </widget>
        </item>
@@ -928,9 +931,9 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_11">
        <item>
-        <widget class="QRadioButton" name="radioButton_2">
+        <widget class="QRadioButton" name="cc_radiobutton">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="text">
           <string>Constant Current</string>
@@ -938,6 +941,9 @@
          <property name="checkable">
           <bool>true</bool>
          </property>
+         <attribute name="buttonGroup">
+          <string notr="true">source_buttongroup</string>
+         </attribute>
         </widget>
        </item>
        <item>
@@ -978,4 +984,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="source_buttongroup"/>
+ </buttongroups>
 </ui>

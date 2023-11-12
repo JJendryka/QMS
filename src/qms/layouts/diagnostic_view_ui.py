@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QDoubleSpinBox, QFrame,
-    QHBoxLayout, QLabel, QPushButton, QRadioButton,
-    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QButtonGroup, QCheckBox, QDoubleSpinBox,
+    QFrame, QHBoxLayout, QLabel, QPushButton,
+    QRadioButton, QSizePolicy, QSpacerItem, QSpinBox,
+    QVBoxLayout, QWidget)
 
 class Ui_diagnostic_view(object):
     def setupUi(self, diagnostic_view):
@@ -364,16 +364,16 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_13.addWidget(self.line_9)
 
-        self.pid_i_spinbox = QLabel(diagnostic_view)
+        self.pid_i_label = QLabel(diagnostic_view)
+        self.pid_i_label.setObjectName(u"pid_i_label")
+        self.pid_i_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_13.addWidget(self.pid_i_label)
+
+        self.pid_i_spinbox = QDoubleSpinBox(diagnostic_view)
         self.pid_i_spinbox.setObjectName(u"pid_i_spinbox")
-        self.pid_i_spinbox.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.horizontalLayout_13.addWidget(self.pid_i_spinbox)
-
-        self.doubleSpinBox_2 = QDoubleSpinBox(diagnostic_view)
-        self.doubleSpinBox_2.setObjectName(u"doubleSpinBox_2")
-
-        self.horizontalLayout_13.addWidget(self.doubleSpinBox_2)
 
         self.line_10 = QFrame(diagnostic_view)
         self.line_10.setObjectName(u"line_10")
@@ -382,16 +382,16 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_13.addWidget(self.line_10)
 
-        self.pid_d_spinbox = QLabel(diagnostic_view)
+        self.pid_d_label = QLabel(diagnostic_view)
+        self.pid_d_label.setObjectName(u"pid_d_label")
+        self.pid_d_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_13.addWidget(self.pid_d_label)
+
+        self.pid_d_spinbox = QDoubleSpinBox(diagnostic_view)
         self.pid_d_spinbox.setObjectName(u"pid_d_spinbox")
-        self.pid_d_spinbox.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.horizontalLayout_13.addWidget(self.pid_d_spinbox)
-
-        self.doubleSpinBox_3 = QDoubleSpinBox(diagnostic_view)
-        self.doubleSpinBox_3.setObjectName(u"doubleSpinBox_3")
-
-        self.horizontalLayout_13.addWidget(self.doubleSpinBox_3)
 
         self.line_17 = QFrame(diagnostic_view)
         self.line_17.setObjectName(u"line_17")
@@ -640,11 +640,14 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.radioButton = QRadioButton(diagnostic_view)
-        self.radioButton.setObjectName(u"radioButton")
-        self.radioButton.setChecked(True)
+        self.cv_radiobutton = QRadioButton(diagnostic_view)
+        self.source_buttongroup = QButtonGroup(diagnostic_view)
+        self.source_buttongroup.setObjectName(u"source_buttongroup")
+        self.source_buttongroup.addButton(self.cv_radiobutton)
+        self.cv_radiobutton.setObjectName(u"cv_radiobutton")
+        self.cv_radiobutton.setChecked(True)
 
-        self.horizontalLayout_9.addWidget(self.radioButton)
+        self.horizontalLayout_9.addWidget(self.cv_radiobutton)
 
         self.source_voltage_spinbox = QDoubleSpinBox(diagnostic_view)
         self.source_voltage_spinbox.setObjectName(u"source_voltage_spinbox")
@@ -661,12 +664,13 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_11 = QHBoxLayout()
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.radioButton_2 = QRadioButton(diagnostic_view)
-        self.radioButton_2.setObjectName(u"radioButton_2")
-        self.radioButton_2.setEnabled(False)
-        self.radioButton_2.setCheckable(True)
+        self.cc_radiobutton = QRadioButton(diagnostic_view)
+        self.source_buttongroup.addButton(self.cc_radiobutton)
+        self.cc_radiobutton.setObjectName(u"cc_radiobutton")
+        self.cc_radiobutton.setEnabled(True)
+        self.cc_radiobutton.setCheckable(True)
 
-        self.horizontalLayout_11.addWidget(self.radioButton_2)
+        self.horizontalLayout_11.addWidget(self.cc_radiobutton)
 
         self.source_current_spinbox = QDoubleSpinBox(diagnostic_view)
         self.source_current_spinbox.setObjectName(u"source_current_spinbox")
@@ -727,8 +731,8 @@ class Ui_diagnostic_view(object):
         self.label_24.setText(QCoreApplication.translate("diagnostic_view", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">PID Setup</span></p></body></html>", None))
         self.use_pid_checkbox.setText(QCoreApplication.translate("diagnostic_view", u"Use PID", None))
         self.label_25.setText(QCoreApplication.translate("diagnostic_view", u"P:", None))
-        self.pid_i_spinbox.setText(QCoreApplication.translate("diagnostic_view", u"I:", None))
-        self.pid_d_spinbox.setText(QCoreApplication.translate("diagnostic_view", u"D:", None))
+        self.pid_i_label.setText(QCoreApplication.translate("diagnostic_view", u"I:", None))
+        self.pid_d_label.setText(QCoreApplication.translate("diagnostic_view", u"D:", None))
         self.label_32.setText(QCoreApplication.translate("diagnostic_view", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">RF Stability</span></p></body></html>", None))
         self.label_33.setText(QCoreApplication.translate("diagnostic_view", u"Setpoint:", None))
         self.label_34.setText(QCoreApplication.translate("diagnostic_view", u"[Vpp]", None))
@@ -744,9 +748,9 @@ class Ui_diagnostic_view(object):
         self.source_scan_button.setText(QCoreApplication.translate("diagnostic_view", u"Scan", None))
         self.label_23.setText(QCoreApplication.translate("diagnostic_view", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Source Stability</span></p></body></html>", None))
         self.source_test_button.setText(QCoreApplication.translate("diagnostic_view", u"Test", None))
-        self.radioButton.setText(QCoreApplication.translate("diagnostic_view", u"Constant Voltage", None))
-        self.label_21.setText(QCoreApplication.translate("diagnostic_view", u"[V]", None))
-        self.radioButton_2.setText(QCoreApplication.translate("diagnostic_view", u"Constant Current", None))
+        self.cv_radiobutton.setText(QCoreApplication.translate("diagnostic_view", u"Constant Voltage", None))
+        self.label_21.setText(QCoreApplication.translate("diagnostic_view", u"[kV]", None))
+        self.cc_radiobutton.setText(QCoreApplication.translate("diagnostic_view", u"Constant Current", None))
         self.label_22.setText(QCoreApplication.translate("diagnostic_view", u"[mA]", None))
     # retranslateUi
 

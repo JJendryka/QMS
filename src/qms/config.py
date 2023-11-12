@@ -8,7 +8,6 @@ import sys
 import time
 from argparse import Namespace
 from pathlib import Path
-from types import NoneType
 from typing import Any
 
 from qms.consts import LAST_STATE_FILENAME
@@ -60,8 +59,8 @@ class SpectrometerConfig:
     def load_from_json(self, json_object: dict) -> None:
         """Update object with data from json_object."""
         self.source_cc = safely_get(json_object, ["source", "cc"], bool, False)
-        self.source_voltage = safely_get(json_object, ["source", "voltage"], (int, float, NoneType), 0)
-        self.source_current = safely_get(json_object, ["source", "current"], (int, float, NoneType), 0)
+        self.source_voltage = safely_get(json_object, ["source", "voltage"], (int, float), 0)
+        self.source_current = safely_get(json_object, ["source", "current"], (int, float), 0)
         self.pid_enabled = safely_get(json_object, ["pid", "enabled"], bool, True)
         self.pid_p = float(safely_get(json_object, ["pid", "p"], (int, float), 1))
         self.pid_i = float(safely_get(json_object, ["pid", "i"], (int, float), 1))

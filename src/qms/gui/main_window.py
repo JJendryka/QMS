@@ -188,6 +188,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     json_object = json.load(json_file)
                     Config.get().spectrometer_config.load_from_json(json_object["spectrometer"])
                 self.set_loaded_profile(path)
+                self.diagnostic_tab.load_profile()
             except OSError as e:
                 logger.error("Cannot load profile: %s, os error: %s", path, e.strerror)
         else:

@@ -15,6 +15,8 @@ from qms.backend.rf_scan import RFScanner
 from qms.backend.rf_test import RFTester
 from qms.backend.source_scan import SourceScanner
 from qms.backend.source_test import SourceTester
+from qms.backend.upload_config import upload_configuration
+from qms.config import Config
 from qms.layouts.diagnostic_view_ui import Ui_diagnostic_view
 
 if TYPE_CHECKING:
@@ -140,6 +142,8 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.frequency_at_maximum_resonance: float = 0
         self.voltage_at_maximum_resonance: float = -1e10
 
+        self.spectrometer_config_update_paused: bool = False
+
     def setup_signals(self) -> None:
         """Connect all signals in the widget."""
         self.resonance_scan_button.clicked.connect(self.start_resonance_scan)
@@ -158,6 +162,15 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
 
         self.rf_test_button.clicked.connect(self.start_rf_test)
         self.source_test_button.clicked.connect(self.start_source_test)
+
+        self.working_frequency_spinbox.valueChanged.connect(self.spectrometer_config_updated)
+        self.use_pid_checkbox.clicked.connect(self.spectrometer_config_updated)
+        self.pid_p_spinbox.valueChanged.connect(self.spectrometer_config_updated)
+        self.pid_i_spinbox.valueChanged.connect(self.spectrometer_config_updated)
+        self.pid_d_spinbox.valueChanged.connect(self.spectrometer_config_updated)
+        self.source_voltage_spinbox.valueChanged.connect(self.spectrometer_config_updated)
+        self.source_current_spinbox.valueChanged.connect(self.spectrometer_config_updated)
+        self.source_buttongroup.buttonToggled.connect(self.spectrometer_config_updated)
 
     def start_resonance_scan(self) -> None:
         """Start RF amplitude vs frequency scan."""
@@ -391,3 +404,39 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.source_scan_button.setToolTip(reason)
         self.source_test_button.setEnabled(allow)
         self.source_test_button.setToolTip(reason)
+
+    def load_profile(self) -> None:
+        """Load data from currently loaded profile."""
+        # Need to pause spectrometer config update as it would cause the loaded config to be overwritten.
+        self.spectrometer_config_update_paused = True
+        config = Config.get().spectrometer_config
+        self.working_frequency_spinbox.setValue(config.frequency)
+        self.use_pid_checkbox.setChecked(config.pid_enabled)
+        self.pid_p_spinbox.setValue(config.pid_p)
+        self.pid_i_spinbox.setValue(config.pid_i)
+        self.pid_d_spinbox.setValue(config.pid_d)
+        self.cc_radiobutton.setChecked(config.source_cc)
+        self.cv_radiobutton.setChecked(not config.source_cc)
+        self.source_voltage_spinbox.setValue(config.source_voltage)
+        self.source_current_spinbox.setValue(config.source_current)
+
+        self.spectrometer_config_update_paused = False
+
+    def spectrometer_config_updated(self) -> None:
+        """Handle spectrometer configuration parameter update.
+
+        Save all params to config object.
+        """
+        if not self.spectrometer_config_update_paused:
+            logger.info("Spectrometer config changed, uploading new values")
+            config = Config.get().spectrometer_config
+            config.frequency = self.working_frequency_spinbox.value() * 1e6
+            config.pid_enabled = self.use_pid_checkbox.isChecked()
+            config.pid_p = self.pid_p_spinbox.value()
+            config.pid_i = self.pid_i_spinbox.value()
+            config.pid_d = self.pid_d_spinbox.value()
+            config.source_cc = self.cc_radiobutton.isChecked()
+            config.source_voltage = self.source_voltage_spinbox.value() * 1e3
+            config.source_current = self.source_current_spinbox.value() * 1e-3
+            if self.main_window is not None and self.main_window.euromeasure is not None:
+                upload_configuration(self.main_window.euromeasure)
