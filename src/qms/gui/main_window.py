@@ -33,9 +33,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setup_callbacks()
         logger.debug("Finished main_window initialization")
 
-        load_last_state()
-        self.open_profile()
-
         self.set_allow_new_scans(False, "EuroMeasure is not connected")
 
     def setup_backreferences(self) -> None:
@@ -43,7 +40,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def setup_callbacks(self) -> None:
         self.connection_menu.aboutToShow.connect(self.fill_connection_menu)
-        self.load_profile_action.triggered.connect(self.open_profile)
+        self.load_profile_action.triggered.connect(self.load_profile)
         self.save_profile_action.triggered.connect(self.save_profile)
         self.save_profile_as_action.triggered.connect(self.save_profile_as)
 
@@ -117,110 +114,80 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         with open(get_home_dir() / LAST_STATE_FILENAME, "w") as json_file:
             json_file.write(json.dumps(json_object))
-        self.save_profile()
+
+        # TODO: Ask user whether to save profile
 
         super().closeEvent(event)
 
-    def open_profile(self):
-        dialog = ProfileOpenDialog(self)
-        dialog.finished.connect(self.open_profile_finished)
-        dialog.exec()
-
-    def open_profile_finished(self):
-        opened_profile = Config.get().state.loaded_profile
-        if (opened_profile is None or not opened_profile) and self.isVisible():
-            self.open_profile()
-
-        if opened_profile is not None and Path(opened_profile).exists():
-            with open(opened_profile, "r") as json_file:
-                json_object = json.load(json_file)
-                Config.get().spectrometer_config.load_from_json(json_object["spectrometer"])
-
-        profile_name = Path(opened_profile).stem
-        self.profile_menu.setTitle(f"Profile: {profile_name}")
-
-    def save_profile(self):
-        profile_filename = Config.get().state.loaded_profile
-        if profile_filename is not None:
-            logger.debug(f"Saving config to {profile_filename}")
-            json_object = {"spectrometer": Config.get().spectrometer_config.dump_to_json()}
-            with open(profile_filename, "w") as json_file:
-                json.dump(json_object, json_file)
-
-    def save_profile_as(self):
-        filename = save_profile_as_dialog(self)
-        if filename is not None:
-            self.save_profile()
-            profile_name = Path(Config.get().state.loaded_profile).stem
+    def set_loaded_profile(self, path):
+        """Set currently loaded profile to path. Don't actually load the profile."""
+        if path is not None and path.exists():
+            Config.get().state.loaded_profile = path
+            Config.get().state.add_recent_profile(path)
+            profile_name = path.stem
             self.profile_menu.setTitle(f"Profile: {profile_name}")
 
+    def load_profile(self) -> None:
+        """Load profile from path selected by user."""
+        path = self.load_profile_dialog()
+        if path is not None:
+            self.load_profile_from(path)
 
-def save_profile_as_dialog(parent) -> None | str:
-    path = get_home_dir() / "profiles"
-    path.mkdir(exist_ok=True, parents=True)
-    filename, _ = QtWidgets.QFileDialog.getSaveFileName(parent, "Save profile to...", str(path), "JSON files (*.json)")
-    if filename is not None and filename:
-        path = Path(filename)
-        path = path.with_suffix(".json")
-        Config.get().state.loaded_profile = str(path)
-        return str(path)
-    return None
-
-
-class ProfileOpenDialog(QtWidgets.QDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None = None) -> None:
-        super().__init__(parent)
-        self.setWindowTitle("Open profile...")
-        v_layout = QtWidgets.QVBoxLayout()
-        h_layout = QtWidgets.QHBoxLayout()
-        message = QtWidgets.QLabel(parent=parent, text="Select which profile to open...")
-        v_layout.addWidget(message)
-        v_layout.addLayout(h_layout)
-        self.create_new_button = QtWidgets.QPushButton(parent=parent, text="Create new")
-        self.load_other_button = QtWidgets.QPushButton(parent=parent, text="Load other")
-        self.create_new_button.clicked.connect(self.on_create_new)
-        self.load_other_button.clicked.connect(self.on_load_existing)
-        h_layout.addWidget(self.load_other_button)
-        h_layout.addWidget(self.create_new_button)
-        self.setLayout(v_layout)
-        self.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
-
-        if Config.get().state.loaded_profile is None:
-            self.setWindowFlags(QtCore.Qt.WindowType.Dialog | QtCore.Qt.WindowType.FramelessWindowHint)
-
-        previous_profile = Config.get().state.previous_profile
-        if previous_profile is not None and previous_profile and Path(previous_profile).exists():
-            name = Path(Config.get().state.previous_profile).stem
-            self.load_last_button = QtWidgets.QPushButton(parent=parent, text=f"Load last: {name}")
-            self.load_last_button.clicked.connect(self.on_load_last)
-            h_layout.addWidget(self.load_last_button)
-
-    def on_create_new(self):
-        save_profile_as_dialog(self.parent())
-        if Config.get().state.loaded_profile is not None and Config.get().state.loaded_profile:
-            self.close()
-
-    def on_load_existing(self):
+    def load_profile_dialog(self) -> None | Path:
+        """Ask user for path of the profile to load."""
         path = get_home_dir() / "profiles"
         path.mkdir(exist_ok=True, parents=True)
         filename, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self.parent(), "Load profile from...", str(path), "JSON files (*.json)"
+            self, "Load profile from...", str(path), "JSON files (*.json)"
         )
         if filename is not None and filename:
-            Config.get().state.loaded_profile = filename
-            self.close()
+            return Path(filename).with_suffix(".json")
+        return None
 
-    def on_load_last(self):
-        Config.get().state.loaded_profile = Config.get().state.previous_profile
-        self.close()
+    def load_profile_from(self, path: Path) -> None:
+        """Load profile from path."""
+        if path is not None and path.exists():
+            logger.info(f"Opening profile: {path}")
+            try:
+                with open(path, "r") as json_file:
+                    json_object = json.load(json_file)
+                    Config.get().spectrometer_config.load_from_json(json_object["spectrometer"])
+                self.set_loaded_profile(path)
+            except OSError as e:
+                logger.error(f"Cannot load profile: {path}, os error: {e.strerror}")
+        else:
+            logger.error(f"Cannot load profile {path}, file doesn't exist")
 
+    def save_profile(self) -> None:
+        """Save profile to currently loaded profile file."""
+        path = Config.get().state.loaded_profile
+        self.save_profile_to(path)
 
-def load_last_state():
-    file = get_home_dir() / LAST_STATE_FILENAME
-    if file.exists():
-        logger.debug("Loading last state")
-        with open(file, "r") as json_file:
-            json_object = json.load(json_file)
-            Config.get().state.load_from_json(json_object)
-    else:
-        logger.info("There is no previous state found. Initializing with defaults")
+    def save_profile_to(self, path: Path) -> None:
+        """Save profile to path."""
+        if path is not None:
+            logger.info(f"Saving profile to: {path}")
+            json_object = {"spectrometer": Config.get().spectrometer_config.dump_to_json()}
+            try:
+                with open(path, "w") as json_file:
+                    json.dump(json_object, json_file)
+            except OSError as e:
+                logger.error(f"Cannot save profile to: {path}. OS Error: {e.strerror}")
+
+    def save_profile_as(self) -> None:
+        """Save profile to path selected by user."""
+        path = self.save_profile_as_dialog()
+        if path is not None:
+            self.save_profile_to(path)
+            self.set_loaded_profile(path)
+
+    def save_profile_as_dialog(self) -> None | Path:
+        """Ask user about the path to save the profile to."""
+        path = get_home_dir() / "profiles"
+        path.mkdir(exist_ok=True, parents=True)
+        filename, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self, "Save profile to...", str(path), "JSON files (*.json)"
+        )
+        if filename is not None and filename:
+            return Path(filename).with_suffix(".json")
+        return None

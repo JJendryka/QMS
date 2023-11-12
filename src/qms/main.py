@@ -32,6 +32,7 @@ def main() -> None:
     args = parse_args()
     custom_logging.setup_logging(args.log_level, logger)
     _ = Config(args)
+    Config.get().state.load_last_state()
     logger.debug("Starting QApplication")
     app = QApplication()
     window = MainWindow()

@@ -65,6 +65,8 @@
      <bool>true</bool>
     </property>
     <addaction name="load_profile_action"/>
+    <addaction name="load_recent_profile_action"/>
+    <addaction name="separator"/>
     <addaction name="save_profile_action"/>
     <addaction name="save_profile_as_action"/>
    </widget>
@@ -81,17 +83,22 @@
   </widget>
   <action name="load_profile_action">
    <property name="text">
-    <string>Load profile</string>
+    <string>Load...</string>
    </property>
   </action>
   <action name="save_profile_action">
    <property name="text">
-    <string>Save profile</string>
+    <string>Save</string>
    </property>
   </action>
   <action name="save_profile_as_action">
    <property name="text">
-    <string>Save profile as...</string>
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="load_recent_profile_action">
+   <property name="text">
+    <string>Load recent</string>
    </property>
   </action>
  </widget>

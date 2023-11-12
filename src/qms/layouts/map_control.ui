@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1304</width>
-    <height>195</height>
+    <height>222</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="Line" name="line_3">
+    <widget class="Line" name="line_121">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -24,21 +24,21 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="rf_label">
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;RF:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_14">
+      <widget class="Line" name="line_100">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="rf_min_label">
        <property name="text">
         <string>Min:</string>
        </property>
@@ -51,21 +51,21 @@
       <widget class="QDoubleSpinBox" name="rf_min_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="rf_min_unit_label">
        <property name="text">
         <string>[V]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_4">
+      <widget class="Line" name="line_104">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_7">
+      <widget class="QLabel" name="rf_max_label">
        <property name="text">
         <string>Max:</string>
        </property>
@@ -78,21 +78,21 @@
       <widget class="QDoubleSpinBox" name="rf_max_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_9">
+      <widget class="QLabel" name="rf_max_unit_label">
        <property name="text">
         <string>[V]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_6">
+      <widget class="Line" name="line_105">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_11">
+      <widget class="QLabel" name="rf_step_count_label">
        <property name="text">
         <string>Step count:</string>
        </property>
@@ -105,14 +105,14 @@
       <widget class="QSpinBox" name="rf_step_count_spinbox"/>
      </item>
      <item>
-      <widget class="Line" name="line_8">
+      <widget class="Line" name="line_106">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_13">
+      <widget class="QLabel" name="rf_step_size_label">
        <property name="text">
         <string>Step size:</string>
        </property>
@@ -125,35 +125,28 @@
       <widget class="QDoubleSpinBox" name="rf_step_size_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_15">
+      <widget class="QLabel" name="rf_step_size_unit_label">
        <property name="text">
         <string>[V]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_16">
+      <widget class="Line" name="line_102">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_10">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_22">
+      <widget class="QLabel" name="scale_label">
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Scale:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_17">
+      <widget class="Line" name="line_103">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -180,14 +173,14 @@
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_15">
+      <widget class="Line" name="line_101">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_20">
+      <widget class="QLabel" name="scale_mass_label">
        <property name="text">
         <string>Mass:</string>
        </property>
@@ -197,14 +190,14 @@
       <widget class="QDoubleSpinBox" name="mass_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_25">
+      <widget class="QLabel" name="scale_mass_unit_label">
        <property name="text">
         <string>[u]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_24">
+      <widget class="QLabel" name="scale_rf_label">
        <property name="text">
         <string>RF:</string>
        </property>
@@ -214,7 +207,7 @@
       <widget class="QDoubleSpinBox" name="rf_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_26">
+      <widget class="QLabel" name="scale_rf_unit_label">
        <property name="text">
         <string>[V]</string>
        </property>
@@ -236,7 +229,7 @@
     </layout>
    </item>
    <item>
-    <widget class="Line" name="line_2">
+    <widget class="Line" name="line_119">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -245,21 +238,21 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="dc_label">
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;DC:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_13">
+      <widget class="Line" name="line_109">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="dc_min_label">
        <property name="text">
         <string>Min:</string>
        </property>
@@ -272,21 +265,21 @@
       <widget class="QDoubleSpinBox" name="dc_min_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="dc_max_label">
        <property name="text">
         <string>[V]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_5">
+      <widget class="Line" name="line_110">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_8">
+      <widget class="QLabel" name="dc_max_label_2">
        <property name="text">
         <string>Max:</string>
        </property>
@@ -299,21 +292,21 @@
       <widget class="QDoubleSpinBox" name="dc_max_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_10">
+      <widget class="QLabel" name="dc_max_unit_label">
        <property name="text">
         <string>[V]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_7">
+      <widget class="Line" name="line_111">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_12">
+      <widget class="QLabel" name="dc_step_count_label">
        <property name="text">
         <string>Step count:</string>
        </property>
@@ -326,14 +319,14 @@
       <widget class="QSpinBox" name="dc_step_count_spinbox"/>
      </item>
      <item>
-      <widget class="Line" name="line_9">
+      <widget class="Line" name="line_112">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_14">
+      <widget class="QLabel" name="dc_step_size_label">
        <property name="text">
         <string>Step size:</string>
        </property>
@@ -346,21 +339,21 @@
       <widget class="QDoubleSpinBox" name="dc_step_size_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_16">
+      <widget class="QLabel" name="dc_step_size_unit_label">
        <property name="text">
         <string>[V]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_11">
+      <widget class="Line" name="line_107">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_17">
+      <widget class="QLabel" name="dc_offset_map_label">
        <property name="text">
         <string>Offset proportional to RF:</string>
        </property>
@@ -373,14 +366,14 @@
       <widget class="QDoubleSpinBox" name="dc_offset_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_18">
+      <widget class="QLabel" name="dc_offset_map_unit_label">
        <property name="text">
         <string>[Vdc/Vrf]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_12">
+      <widget class="Line" name="line_108">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -402,7 +395,7 @@
     </layout>
    </item>
    <item>
-    <widget class="Line" name="line">
+    <widget class="Line" name="line_116">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -411,12 +404,19 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QLabel" name="label_23">
+      <widget class="QLabel" name="steps_label">
        <property name="text">
         <string>Steps:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="steps_label_value_label">
+       <property name="text">
+        <string>0/0</string>
        </property>
       </widget>
      </item>
@@ -428,14 +428,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="steps_label">
-       <property name="text">
-        <string>0/0</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_19">
+      <widget class="QLabel" name="time_left_label_2">
        <property name="text">
         <string>Time left:</string>
        </property>
@@ -452,7 +445,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_21">
+      <widget class="QLabel" name="full_time_label">
        <property name="text">
         <string>Full time:</string>
        </property>
@@ -462,7 +455,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="full_time_label">
+      <widget class="QLabel" name="full_time_value_label">
        <property name="text">
         <string>00:00:00</string>
        </property>
@@ -485,21 +478,21 @@
     </layout>
    </item>
    <item>
-    <widget class="Line" name="line_18">
+    <widget class="Line" name="line_117">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="Line" name="line_20">
+    <widget class="Line" name="line_120">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5">
+    <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5">
      <item>
       <widget class="QLabel" name="parameters_label">
        <property name="text">
@@ -508,7 +501,7 @@
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_12">
+      <widget class="Line" name="line_113">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -555,14 +548,14 @@
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_9">
+      <widget class="Line" name="line_115">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="x1_label">
        <property name="text">
         <string>X1:</string>
        </property>
@@ -575,14 +568,14 @@
       <widget class="QDoubleSpinBox" name="x1_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="x1_unit_label">
        <property name="text">
         <string>[Vrf]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="y1_label">
        <property name="text">
         <string>Y1:</string>
        </property>
@@ -595,14 +588,14 @@
       <widget class="QDoubleSpinBox" name="y1_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="y1_unit_label">
        <property name="text">
         <string>[Vdc]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="x2_label">
        <property name="text">
         <string>X2:</string>
        </property>
@@ -615,14 +608,14 @@
       <widget class="QDoubleSpinBox" name="x2_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_7">
+      <widget class="QLabel" name="x2_unit_label">
        <property name="text">
         <string>[Vrf]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="y2_label">
        <property name="text">
         <string>Y2:</string>
        </property>
@@ -635,21 +628,21 @@
       <widget class="QDoubleSpinBox" name="y2_spinbox"/>
      </item>
      <item>
-      <widget class="QLabel" name="label_8">
+      <widget class="QLabel" name="y2_unit_label">
        <property name="text">
         <string>[Vdc]</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_8">
+      <widget class="Line" name="line_114">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_2">
+      <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -664,7 +657,7 @@
     </layout>
    </item>
    <item>
-    <widget class="Line" name="line_19">
+    <widget class="Line" name="line_118">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

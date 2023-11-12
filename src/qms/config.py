@@ -1,10 +1,16 @@
 from __future__ import annotations
 from argparse import Namespace
+import json
 
 import logging
+from pathlib import Path
 import sys
+import time
 from types import NoneType
 from typing import Any, Dict, List, Tuple
+from qms.consts import LAST_STATE_FILENAME
+
+from qms.misc import get_home_dir
 
 
 logger = logging.getLogger("__main__")
@@ -67,14 +73,48 @@ class SpectrometerConfig:
 
 class State:
     def __init__(self) -> None:
-        self.loaded_profile: str | None = None
-        self.previous_profile: str | None = None
+        self.loaded_profile: Path | None = None
+        self.recent_profiles: List[Tuple[Path, float]] = []
 
-    def load_from_json(self, json_object: Dict):
-        self.previous_profile = safely_get(json_object, ["loaded_config"], (str, NoneType), "")
+    def load_last_state(self):
+        path = get_home_dir() / LAST_STATE_FILENAME
+        if path.exists():
+            logger.debug("Loading last state")
+            try:
+                with open(path, "r") as json_file:
+                    json_object = json.load(json_file)
+                    self.load_from_json(json_object)
+            except OSError as e:
+                logger.error(f"Couldn't load last state. OS Error {e.strerror}")
+        else:
+            logger.info("There is no previous state found. Initializing with defaults")
+
+    def load_from_json(self, json_object: Dict) -> None:
+        recent_profiles = safely_get(json_object, ["recent_profiles"], List, [])
+        if recent_profiles is not None:
+            for recent in recent_profiles:
+                if (
+                    isinstance(recent, list)
+                    and len(recent) == 2
+                    and isinstance(recent[0], str)
+                    and (isinstance(recent[1], float) or isinstance(recent[1], int))
+                ):
+                    self.recent_profiles.append((Path(recent[0]), float(recent[1])))
+                else:
+                    logger.warning("Incorrect type in recent profiles in state file. Ignoring")
 
     def dump_to_json(self) -> Dict:
-        return {"loaded_config": self.loaded_profile if self.loaded_profile is not None else self.previous_profile}
+        return {"recent_profiles": [(str(recent[0]), recent[1]) for recent in self.recent_profiles]}
+
+    def add_recent_profile(self, path):
+        for index, (exitsting_path, _) in enumerate(self.recent_profiles):
+            if path == exitsting_path:
+                self.recent_profiles[index][1] = time.time()
+                break
+        else:
+            self.recent_profiles.append((path, time.time()))
+            if len(self.recent_profiles) > 8:
+                self.recent_profiles.remove(min(self.recent_profiles, key=lambda x: x[1]))
 
 
 def safely_get(
