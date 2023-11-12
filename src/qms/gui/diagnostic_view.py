@@ -1,10 +1,13 @@
 """Contains DiagnosticView widget."""
 
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
+from matplotlib import pyplot as plt
+from matplotlib.axes import Axes
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
+from matplotlib.lines import Line2D
 from PySide6 import QtGui, QtWidgets
 
 from qms.backend.resonance_scan import ResonanceScanner
@@ -22,55 +25,93 @@ logger = logging.getLogger("main")
 class Plot(QtWidgets.QWidget):
     """Custom Plot widget used in DiagnosticView."""
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None, line_count: int = 1):
         """Initialize with GUI."""
         super().__init__(parent)
         self.setLayout(QtWidgets.QVBoxLayout())
-        self.canvas = MplCanvas(self)
+        self.canvas = MplCanvas(self, line_count)
         self.layout().addWidget(self.canvas)
         self.layout().addWidget(NavigationToolbar2QT(self.canvas, self))
 
-    def add_point(self, x: float, y: float) -> None:
+    def add_point(self, x: float, y: float, line_index: int = 0) -> None:
         """Add new data point to plot."""
-        self.canvas.x_data.append(x)
-        self.canvas.y_data.append(y)
+        self.canvas.x_data[line_index].append(x)
+        self.canvas.y_data[line_index].append(y)
 
-        self.canvas.line.set_xdata(self.canvas.x_data)
-        self.canvas.line.set_ydata(self.canvas.y_data)
+        self.canvas.lines[line_index].set_xdata(self.canvas.x_data[line_index])
+        self.canvas.lines[line_index].set_ydata(self.canvas.y_data[line_index])
 
-        self.canvas.axes.set_xlim(min(self.canvas.x_data), max(self.canvas.x_data))
-        self.canvas.axes.set_ylim(min(self.canvas.y_data), max(self.canvas.y_data))
+        self.canvas.axes[0].set_xlim(min(self.canvas.x_data[0]), max(self.canvas.x_data[0]))
+        self.canvas.axes[line_index].set_ylim(min(self.canvas.y_data[line_index]), max(self.canvas.y_data[line_index]))
 
         self.canvas.draw()
 
     def clear_points(self) -> None:
         """Clear all points from plot."""
-        self.canvas.x_data = []
-        self.canvas.y_data = []
+        for i in range(len(self.canvas.y_data)):
+            self.canvas.x_data[i] = []
+            self.canvas.lines[i].set_xdata(self.canvas.x_data[i])
 
-        self.canvas.line.set_xdata(self.canvas.x_data)
-        self.canvas.line.set_ydata(self.canvas.y_data)
+            self.canvas.y_data[i] = []
+            self.canvas.lines[i].set_ydata(self.canvas.y_data[i])
 
         self.canvas.draw()
+
+
+def get_color_from_cycle(index: int) -> str:
+    """Return color from default color cycle by index."""
+    colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
+    return colors[index]
 
 
 class MplCanvas(FigureCanvasQTAgg):
     """Custom matplotlib canvas used in DiagnosticView."""
 
-    def __init__(self, parent: QtWidgets.QWidget | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None, count: int = 1):
         """Initialize with defaults."""
-        self.x_data: list[float] = []
-        self.y_data: list[float] = []
+        # Initialize data
+        self.x_data: list[list[float]] = []
+        self.y_data: list[list[float]] = []
+        for _ in range(count):
+            self.x_data.append([])
+            self.y_data.append([])
+
+        # Initialize figure and axes
         fig = Figure()
-        self.axes = fig.add_subplot(111)
-        (self.line,) = self.axes.plot(self.x_data, self.y_data)
+        self.axes: list[Axes] = []
+        self.axes.append(fig.add_subplot(111))
+        self.axes[0].tick_params(axis="y", colors=get_color_from_cycle(0))
+        for i in range(count - 1):
+            axes = self.axes[0].twinx()
+            if axes is not None:
+                self.axes.append(cast(Axes, axes))
+                axes.tick_params(axis="y", colors=get_color_from_cycle(i + 1))
+
+        # Initialize lines
+        self.lines: list[Line2D] = []
+        for i in range(count):
+            (line,) = self.axes[i].plot(self.x_data[i], self.y_data[i])
+            line.set_color(get_color_from_cycle(i))
+            self.lines.append(line)
         super().__init__(fig)
+
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
 
+    # Commented out for now as it throws an error with multiple axes
     def resizeEvent(self, event: QtGui.QResizeEvent) -> None:  # noqa: N802
-        """Handle resizeEvent - update layout."""
+        """Handle resize event - update layout."""
         super().resizeEvent(event)
-        self.figure.tight_layout(pad=0.5)
+        (x, y) = self.figure.get_size_inches()
+        x_scale = 1 / x
+        y_scale = 1 / y
+        left = 0.5 * x_scale
+        bottom = 0.3 * y_scale
+        width = 1 - left - ((0.5 * (len(self.axes) - 1) + 0.05) * x_scale)
+        height = 1 - bottom - (0.05 * y_scale)
+        self.axes[0].set_position((left, bottom, width, height))
+
+        for index, axes in enumerate(self.axes[1:]):
+            axes.spines.right.set_position(("outward", index * 40))
 
 
 class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
@@ -83,8 +124,9 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.main_window: MainWindow | None = None
         self.resonance_plot = Plot(self)
         self.rf_plot = Plot(self)
-        self.source_plot = Plot(self)
+        self.source_plot = Plot(self, 2)
         self.rf_test_plot = Plot(self)
+        self.source_test_plot = Plot(self, 3)
 
         self.rf_tester: RFTester | None = None
 
@@ -236,9 +278,10 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         """Handle new point received from rf scan."""
         self.rf_plot.add_point(amplitude, monitor_voltage)
 
-    def received_source_scan_point(self, voltage: float, current: float) -> None:
+    def received_source_scan_point(self, voltage: float, source_current: float, detector_current: float) -> None:
         """Handle new point received from source scan."""
-        self.source_plot.add_point(voltage, current)
+        self.source_plot.add_point(voltage, source_current)
+        self.source_plot.add_point(voltage, detector_current, 1)
 
     def received_rf_test_point(self, time_elapsed: float, monitor_voltage: float) -> None:
         """Handle new point received from rf stability test scan."""
@@ -250,9 +293,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.layout().replaceWidget(self.rf_chart, self.rf_plot)
         self.layout().replaceWidget(self.source_chart, self.source_plot)
         self.layout().replaceWidget(self.rf_stability_chart, self.rf_test_plot)
-
-        source_stability_chart = Plot(self)
-        self.layout().replaceWidget(self.source_stability_chart, source_stability_chart)
+        self.layout().replaceWidget(self.source_stability_chart, self.source_test_plot)
 
     def resonance_updated(self) -> None:
         """Handle resonance scan parameters update."""
