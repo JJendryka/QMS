@@ -18,5 +18,7 @@ class FakeEuroMeasure(EuroMeasure):
     def disconnect(self) -> None:
         """Disable any disconnect logic."""
 
-    def __execute_command(self, command: str) -> list[str]:
+    # Dirty trick for overriding private method behaviour
+    def _EuroMeasure__execute_command(self, command: str) -> list[str]:  # noqa: N802
+        logger.debug("Virtual command received: %s", command)
         return [str(np.random.random())]
