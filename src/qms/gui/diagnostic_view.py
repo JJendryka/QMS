@@ -14,6 +14,7 @@ from qms.backend.resonance_scan import ResonanceScanner
 from qms.backend.rf_scan import RFScanner
 from qms.backend.rf_test import RFTester
 from qms.backend.source_scan import SourceScanner
+from qms.backend.source_test import SourceTester
 from qms.layouts.diagnostic_view_ui import Ui_diagnostic_view
 
 if TYPE_CHECKING:
@@ -44,6 +45,8 @@ class Plot(QtWidgets.QWidget):
         self.canvas.axes[0].set_xlim(min(self.canvas.x_data[0]), max(self.canvas.x_data[0]))
         self.canvas.axes[line_index].set_ylim(min(self.canvas.y_data[line_index]), max(self.canvas.y_data[line_index]))
 
+    def update_drawing(self) -> None:
+        """Update drawn plot."""
         self.canvas.draw()
 
     def clear_points(self) -> None:
@@ -129,6 +132,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.source_test_plot = Plot(self, 3)
 
         self.rf_tester: RFTester | None = None
+        self.source_tester: SourceTester | None = None
 
         self.replace_charts()
         self.setup_signals()
@@ -153,6 +157,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.source_steps_spinbox.valueChanged.connect(self.source_updated)
 
         self.rf_test_button.clicked.connect(self.start_rf_test)
+        self.source_test_button.clicked.connect(self.start_source_test)
 
     def start_resonance_scan(self) -> None:
         """Start RF amplitude vs frequency scan."""
@@ -265,9 +270,46 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         else:
             logger.error("RF test stop even though rf_tester not initalized")
 
+    def start_source_test(self) -> None:
+        """Start source stability test."""
+        logger.info("Source test starting")
+        if self.main_window is not None:
+            if self.main_window.euromeasure is not None:
+                self.main_window.set_allow_new_scans(False, "Source test is running")
+                self.source_test_button.setText("Stop")
+                self.source_test_button.setToolTip("")
+                self.source_test_button.setEnabled(True)
+                self.source_test_button.clicked.disconnect(self.start_source_test)
+                self.source_test_button.clicked.connect(self.stop_source_test)
+
+                self.source_test_plot.clear_points()
+
+                self.source_tester = SourceTester(self.main_window.euromeasure)
+                self.source_tester.signals.data_point_acquired.connect(self.received_source_test_point)
+                self.source_tester.signals.error_occured.connect(self.handle_em_exception)
+                self.source_tester.signals.finished.connect(self.finished_scan)
+                self.main_window.thread_pool.start(self.source_tester)
+            else:
+                logger.error("Tried to start source scan when EuroMeasure system is not connected")
+                QtWidgets.QMessageBox.critical(self.main_window, "Error!", "EuroMeasure system is not connected")
+        else:
+            logger.error("Main window reference is not set")
+
+    def stop_source_test(self) -> None:
+        """Stop already running source stability test."""
+        if self.source_tester is not None:
+            self.source_tester.signals.stop()
+            self.source_test_button.setText("Test")
+            self.source_test_button.setToolTip("")
+            self.source_test_button.clicked.disconnect(self.stop_source_test)
+            self.source_test_button.clicked.connect(self.start_source_test)
+        else:
+            logger.error("Source test stop even though source_tester not initalized")
+
     def received_resonance_scan_point(self, frequency: float, voltage: float) -> None:
         """Handle new point received from resonance scan."""
         self.resonance_plot.add_point(frequency, voltage)
+        self.resonance_plot.update_drawing()
 
         if voltage > self.voltage_at_maximum_resonance:
             self.voltage_at_maximum_resonance = voltage
@@ -277,15 +319,27 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
     def received_rf_scan_point(self, amplitude: float, monitor_voltage: float) -> None:
         """Handle new point received from rf scan."""
         self.rf_plot.add_point(amplitude, monitor_voltage)
+        self.rf_plot.update_drawing()
 
     def received_source_scan_point(self, voltage: float, source_current: float, detector_current: float) -> None:
         """Handle new point received from source scan."""
-        self.source_plot.add_point(voltage, source_current)
+        self.source_plot.add_point(voltage, source_current, 0)
         self.source_plot.add_point(voltage, detector_current, 1)
+        self.source_plot.update_drawing()
 
     def received_rf_test_point(self, time_elapsed: float, monitor_voltage: float) -> None:
         """Handle new point received from rf stability test scan."""
         self.rf_test_plot.add_point(time_elapsed, monitor_voltage)
+        self.rf_test_plot.update_drawing()
+
+    def received_source_test_point(
+        self, time_elapsed: float, voltage: float, current: float, detector_current: float
+    ) -> None:
+        """Handle new point received from rf stability test scan."""
+        self.source_test_plot.add_point(time_elapsed, voltage, 0)
+        self.source_test_plot.add_point(time_elapsed, current, 1)
+        self.source_test_plot.add_point(time_elapsed, detector_current, 2)
+        self.source_test_plot.update_drawing()
 
     def replace_charts(self) -> None:
         """Insert plot widgets into correct places."""

@@ -36,10 +36,10 @@ class SourceTesterSignals(QtCore.QObject):
         self.stopped = True
 
 
-class SourceScanner(QtCore.QRunnable):
+class SourceTester(QtCore.QRunnable):
     """SourceTester QRunnable used to preform source current vs voltage scan."""
 
-    def __init__(self, euromeasure: EuroMeasure, start: float, stop: float, step_count: int):
+    def __init__(self, euromeasure: EuroMeasure):
         """Initialize with test config parameters."""
         super().__init__()
         self.em = euromeasure
