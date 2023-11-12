@@ -64,8 +64,14 @@
     <property name="toolTipsVisible">
      <bool>true</bool>
     </property>
+    <widget class="QMenu" name="load_recent_profile_menu">
+     <property name="title">
+      <string>Load recent</string>
+     </property>
+     <addaction name="actiontest"/>
+    </widget>
     <addaction name="load_profile_action"/>
-    <addaction name="load_recent_profile_action"/>
+    <addaction name="load_recent_profile_menu"/>
     <addaction name="separator"/>
     <addaction name="save_profile_action"/>
     <addaction name="save_profile_as_action"/>
@@ -90,15 +96,24 @@
    <property name="text">
     <string>Save</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
   </action>
   <action name="save_profile_as_action">
    <property name="text">
     <string>Save as...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
   </action>
-  <action name="load_recent_profile_action">
+  <action name="actiontest">
    <property name="text">
-    <string>Load recent</string>
+    <string>test</string>
    </property>
   </action>
  </widget>

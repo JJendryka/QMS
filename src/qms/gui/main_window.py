@@ -3,6 +3,7 @@
 import json
 import logging
 from pathlib import Path
+from numpy import save
 
 import serial.tools.list_ports
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -10,7 +11,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from qms.backend.euromeasure import EMCannotConnectError, EuroMeasure
 from qms.backend.fake_euromeasure import FakeEuroMeasure
 from qms.config import Config
-from qms.consts import LAST_STATE_FILENAME
+from qms.consts import AUTOSAVE_PERIOD, BACKUP_FILENAME, LAST_STATE_FILENAME
 from qms.layouts.main_window_ui import Ui_MainWindow
 from qms.misc import get_home_dir
 
@@ -32,7 +33,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.thread_pool = QtCore.QThreadPool(self)
 
         self.setup_backreferences()
+        self.setup_actions()
         self.setup_callbacks()
+        self.start_autosaving()
 
         logger.debug("Finished main_window initialization")
 
@@ -45,9 +48,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def setup_callbacks(self) -> None:
         """Setup needed callbacks."""  # noqa: D401
         self.connection_menu.aboutToShow.connect(self.fill_connection_menu)
+        self.load_recent_profile_menu.aboutToShow.connect(self.fill_recent_menu)
         self.load_profile_action.triggered.connect(self.load_profile)
         self.save_profile_action.triggered.connect(self.save_profile)
         self.save_profile_as_action.triggered.connect(self.save_profile_as)
+
+    def setup_actions(self) -> None:
+        """Setup actions by adding them to self."""  # noqa: D401
+        self.addAction(self.save_profile_action)
+        self.addAction(self.save_profile_as_action)
+        self.addAction(self.load_profile_action)
 
     def fill_connection_menu(self) -> None:
         """Fill connection menu with available devices.
@@ -127,12 +137,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.stability_map_tab.set_allow_new_scans(allow, reason)
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:  # noqa: N802
-        """Handle clode event. Save state and ask user to save profile."""
-        logger.debug("Saving state to file")
-        json_object = Config.get().state.dump_to_json()
-
-        with (get_home_dir() / LAST_STATE_FILENAME).open("w") as json_file:
-            json_file.write(json.dumps(json_object))
+        """Handle close event. Save state and ask user to save profile."""
+        self.autosave()
 
         # TODO: Ask user whether to save profile
 
@@ -179,8 +185,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def save_profile(self) -> None:
         """Save profile to currently loaded profile file."""
+        logger.debug("Save_profile triggered")
         path = Config.get().state.loaded_profile
-        self.save_profile_to(path)
+        if path is not None:
+            self.save_profile_to(path)
+        else:
+            self.save_profile_as()
 
     def save_profile_to(self, path: Path) -> None:
         """Save profile to path."""
@@ -210,3 +220,27 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if filename is not None and filename:
             return Path(filename).with_suffix(".json")
         return None
+
+    def fill_recent_menu(self) -> None:
+        """Fill load recent profile menu with recently loaded profiles."""
+        actions = self.load_recent_profile_menu.actions()
+        for action in actions:
+            self.load_recent_profile_menu.removeAction(action)
+        for path, _ in sorted(Config.get().state.recent_profiles, key=lambda x: x[1], reverse=True):
+            action = QtGui.QAction(str(path), self)
+            action.triggered.connect((lambda a: lambda: self.load_profile_from(a))(path))
+            self.load_recent_profile_menu.addAction(action)
+
+    def start_autosaving(self) -> None:
+        """Periodically autosave state and backups."""
+        QtCore.QTimer.singleShot(AUTOSAVE_PERIOD * 1000, self.start_autosaving)
+        self.autosave()
+
+    def autosave(self) -> None:
+        """Perform autosave of state and backup files."""
+        logger.debug("Saving state to file")
+        json_object = Config.get().state.dump_to_json()
+        with (get_home_dir() / LAST_STATE_FILENAME).open("w") as json_file:
+            json_file.write(json.dumps(json_object))
+
+        self.save_profile_to(get_home_dir() / BACKUP_FILENAME)
