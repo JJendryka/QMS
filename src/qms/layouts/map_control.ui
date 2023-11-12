@@ -163,7 +163,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="rf_u_scale_spinbox"/>
+      <widget class="QDoubleSpinBox" name="rf_u_scale_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="rf_u_scale_unit_label">
@@ -187,7 +191,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="mass_spinbox"/>
+      <widget class="QDoubleSpinBox" name="mass_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="scale_mass_unit_label">
@@ -204,7 +212,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="rf_spinbox"/>
+      <widget class="QDoubleSpinBox" name="rf_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="scale_rf_unit_label">
@@ -363,7 +375,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="dc_offset_spinbox"/>
+      <widget class="QDoubleSpinBox" name="dc_offset_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="dc_offset_map_unit_label">
@@ -422,8 +438,11 @@
      </item>
      <item>
       <widget class="QProgressBar" name="progessbar">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="value">
-        <number>24</number>
+        <number>0</number>
        </property>
       </widget>
      </item>
@@ -463,6 +482,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="start_push_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Start</string>
        </property>
@@ -470,6 +492,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="stop_push_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Stop</string>
        </property>
@@ -518,7 +543,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="a_spinbox"/>
+      <widget class="QDoubleSpinBox" name="a_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="a_unit_label">
@@ -538,7 +567,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="b_spinbox"/>
+      <widget class="QDoubleSpinBox" name="b_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="b_unit_label">
@@ -565,7 +598,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="x1_spinbox"/>
+      <widget class="QDoubleSpinBox" name="x1_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="x1_unit_label">
@@ -585,7 +622,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="y1_spinbox"/>
+      <widget class="QDoubleSpinBox" name="y1_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="y1_unit_label">
@@ -605,7 +646,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="x2_spinbox"/>
+      <widget class="QDoubleSpinBox" name="x2_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="x2_unit_label">
@@ -625,7 +670,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="y2_spinbox"/>
+      <widget class="QDoubleSpinBox" name="y2_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="y2_unit_label">

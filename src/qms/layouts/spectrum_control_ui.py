@@ -61,6 +61,7 @@ class Ui_spectrum_control(object):
 
         self.min_spinbox = QDoubleSpinBox(spectrum_control)
         self.min_spinbox.setObjectName(u"min_spinbox")
+        self.min_spinbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.min_spinbox)
 
@@ -84,6 +85,7 @@ class Ui_spectrum_control(object):
 
         self.max_spinbox = QDoubleSpinBox(spectrum_control)
         self.max_spinbox.setObjectName(u"max_spinbox")
+        self.max_spinbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.max_spinbox)
 
@@ -107,6 +109,7 @@ class Ui_spectrum_control(object):
 
         self.spinBox = QSpinBox(spectrum_control)
         self.spinBox.setObjectName(u"spinBox")
+        self.spinBox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.spinBox)
 
@@ -125,6 +128,7 @@ class Ui_spectrum_control(object):
 
         self.step_size_spinbox = QDoubleSpinBox(spectrum_control)
         self.step_size_spinbox.setObjectName(u"step_size_spinbox")
+        self.step_size_spinbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.step_size_spinbox)
 
@@ -158,22 +162,26 @@ class Ui_spectrum_control(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.repeating_checkbox = QCheckBox(spectrum_control)
         self.repeating_checkbox.setObjectName(u"repeating_checkbox")
+        self.repeating_checkbox.setEnabled(False)
 
         self.horizontalLayout_2.addWidget(self.repeating_checkbox)
 
         self.progressbar = QProgressBar(spectrum_control)
         self.progressbar.setObjectName(u"progressbar")
-        self.progressbar.setValue(24)
+        self.progressbar.setEnabled(False)
+        self.progressbar.setValue(0)
 
         self.horizontalLayout_2.addWidget(self.progressbar)
 
         self.start_button = QPushButton(spectrum_control)
         self.start_button.setObjectName(u"start_button")
+        self.start_button.setEnabled(False)
 
         self.horizontalLayout_2.addWidget(self.start_button)
 
         self.stop_button = QPushButton(spectrum_control)
         self.stop_button.setObjectName(u"stop_button")
+        self.stop_button.setEnabled(False)
 
         self.horizontalLayout_2.addWidget(self.stop_button)
 

@@ -54,7 +54,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="min_spinbox"/>
+      <widget class="QDoubleSpinBox" name="min_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="min_unit_label">
@@ -81,7 +85,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="max_spinbox"/>
+      <widget class="QDoubleSpinBox" name="max_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="max_unit_lable">
@@ -108,7 +116,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBox"/>
+      <widget class="QSpinBox" name="spinBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="Line" name="line_6">
@@ -128,7 +140,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="step_size_spinbox"/>
+      <widget class="QDoubleSpinBox" name="step_size_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="step_size_unit_label">
@@ -170,6 +186,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QCheckBox" name="repeating_checkbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Repeating</string>
        </property>
@@ -177,13 +196,19 @@
      </item>
      <item>
       <widget class="QProgressBar" name="progressbar">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="value">
-        <number>24</number>
+        <number>0</number>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="start_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Start  ▶</string>
        </property>
@@ -191,6 +216,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="stop_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Stop</string>
        </property>

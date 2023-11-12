@@ -36,6 +36,7 @@ class Ui_spectrum_plot(object):
 
         self.log_checkbox = QCheckBox(spectrum_plot)
         self.log_checkbox.setObjectName(u"log_checkbox")
+        self.log_checkbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.log_checkbox)
 
@@ -46,6 +47,7 @@ class Ui_spectrum_plot(object):
 
         self.offset_spinbox = QDoubleSpinBox(spectrum_plot)
         self.offset_spinbox.setObjectName(u"offset_spinbox")
+        self.offset_spinbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.offset_spinbox)
 
@@ -56,11 +58,13 @@ class Ui_spectrum_plot(object):
 
         self.autozero_button = QPushButton(spectrum_plot)
         self.autozero_button.setObjectName(u"autozero_button")
+        self.autozero_button.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.autozero_button)
 
         self.y_fullscale_button = QPushButton(spectrum_plot)
         self.y_fullscale_button.setObjectName(u"y_fullscale_button")
+        self.y_fullscale_button.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.y_fullscale_button)
 
@@ -80,11 +84,13 @@ class Ui_spectrum_plot(object):
         self.x_unit_combobox.addItem("")
         self.x_unit_combobox.addItem("")
         self.x_unit_combobox.setObjectName(u"x_unit_combobox")
+        self.x_unit_combobox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.x_unit_combobox)
 
         self.x_fullscale_button = QPushButton(spectrum_plot)
         self.x_fullscale_button.setObjectName(u"x_fullscale_button")
+        self.x_fullscale_button.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.x_fullscale_button)
 
@@ -105,6 +111,7 @@ class Ui_spectrum_plot(object):
         self.plot_type_combobox.addItem("")
         self.plot_type_combobox.addItem("")
         self.plot_type_combobox.setObjectName(u"plot_type_combobox")
+        self.plot_type_combobox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.plot_type_combobox)
 
@@ -127,6 +134,7 @@ class Ui_spectrum_plot(object):
 
         self.peak_search_count_spinbox = QSpinBox(spectrum_plot)
         self.peak_search_count_spinbox.setObjectName(u"peak_search_count_spinbox")
+        self.peak_search_count_spinbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.peak_search_count_spinbox)
 
@@ -167,8 +175,8 @@ class Ui_spectrum_plot(object):
         self.autozero_button.setText(QCoreApplication.translate("spectrum_plot", u"Auto zero", None))
         self.y_fullscale_button.setText(QCoreApplication.translate("spectrum_plot", u"Full scale", None))
         self.x_axis_label.setText(QCoreApplication.translate("spectrum_plot", u"<html><head/><body><p><span style=\" font-weight:600;\">X Axis:</span></p></body></html>", None))
-        self.x_unit_combobox.setItemText(0, QCoreApplication.translate("spectrum_plot", u"unit", None))
-        self.x_unit_combobox.setItemText(1, QCoreApplication.translate("spectrum_plot", u"volt", None))
+        self.x_unit_combobox.setItemText(0, QCoreApplication.translate("spectrum_plot", u"volt", None))
+        self.x_unit_combobox.setItemText(1, QCoreApplication.translate("spectrum_plot", u"unit", None))
 
         self.x_fullscale_button.setText(QCoreApplication.translate("spectrum_plot", u"Full scale", None))
         self.plot_label.setText(QCoreApplication.translate("spectrum_plot", u"<html><head/><body><p><span style=\" font-weight:600;\">Plot:</span></p></body></html>", None))

@@ -154,6 +154,7 @@ class Ui_map_control(object):
 
         self.rf_u_scale_spinbox = QDoubleSpinBox(map_control)
         self.rf_u_scale_spinbox.setObjectName(u"rf_u_scale_spinbox")
+        self.rf_u_scale_spinbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.rf_u_scale_spinbox)
 
@@ -176,6 +177,7 @@ class Ui_map_control(object):
 
         self.mass_spinbox = QDoubleSpinBox(map_control)
         self.mass_spinbox.setObjectName(u"mass_spinbox")
+        self.mass_spinbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.mass_spinbox)
 
@@ -191,6 +193,7 @@ class Ui_map_control(object):
 
         self.rf_spinbox = QDoubleSpinBox(map_control)
         self.rf_spinbox.setObjectName(u"rf_spinbox")
+        self.rf_spinbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.rf_spinbox)
 
@@ -322,6 +325,7 @@ class Ui_map_control(object):
 
         self.dc_offset_spinbox = QDoubleSpinBox(map_control)
         self.dc_offset_spinbox.setObjectName(u"dc_offset_spinbox")
+        self.dc_offset_spinbox.setEnabled(False)
 
         self.horizontalLayout_2.addWidget(self.dc_offset_spinbox)
 
@@ -366,7 +370,8 @@ class Ui_map_control(object):
 
         self.progessbar = QProgressBar(map_control)
         self.progessbar.setObjectName(u"progessbar")
-        self.progessbar.setValue(24)
+        self.progessbar.setEnabled(False)
+        self.progessbar.setValue(0)
 
         self.horizontalLayout_3.addWidget(self.progessbar)
 
@@ -394,11 +399,13 @@ class Ui_map_control(object):
 
         self.start_push_button = QPushButton(map_control)
         self.start_push_button.setObjectName(u"start_push_button")
+        self.start_push_button.setEnabled(False)
 
         self.horizontalLayout_3.addWidget(self.start_push_button)
 
         self.stop_push_button = QPushButton(map_control)
         self.stop_push_button.setObjectName(u"stop_push_button")
+        self.stop_push_button.setEnabled(False)
 
         self.horizontalLayout_3.addWidget(self.stop_push_button)
 
@@ -441,6 +448,7 @@ class Ui_map_control(object):
 
         self.a_spinbox = QDoubleSpinBox(map_control)
         self.a_spinbox.setObjectName(u"a_spinbox")
+        self.a_spinbox.setEnabled(False)
 
         self.horizontalLayout_4.addWidget(self.a_spinbox)
 
@@ -457,6 +465,7 @@ class Ui_map_control(object):
 
         self.b_spinbox = QDoubleSpinBox(map_control)
         self.b_spinbox.setObjectName(u"b_spinbox")
+        self.b_spinbox.setEnabled(False)
 
         self.horizontalLayout_4.addWidget(self.b_spinbox)
 
@@ -480,6 +489,7 @@ class Ui_map_control(object):
 
         self.x1_spinbox = QDoubleSpinBox(map_control)
         self.x1_spinbox.setObjectName(u"x1_spinbox")
+        self.x1_spinbox.setEnabled(False)
 
         self.horizontalLayout_4.addWidget(self.x1_spinbox)
 
@@ -496,6 +506,7 @@ class Ui_map_control(object):
 
         self.y1_spinbox = QDoubleSpinBox(map_control)
         self.y1_spinbox.setObjectName(u"y1_spinbox")
+        self.y1_spinbox.setEnabled(False)
 
         self.horizontalLayout_4.addWidget(self.y1_spinbox)
 
@@ -512,6 +523,7 @@ class Ui_map_control(object):
 
         self.x2_spinbox = QDoubleSpinBox(map_control)
         self.x2_spinbox.setObjectName(u"x2_spinbox")
+        self.x2_spinbox.setEnabled(False)
 
         self.horizontalLayout_4.addWidget(self.x2_spinbox)
 
@@ -528,6 +540,7 @@ class Ui_map_control(object):
 
         self.y2_spinbox = QDoubleSpinBox(map_control)
         self.y2_spinbox.setObjectName(u"y2_spinbox")
+        self.y2_spinbox.setEnabled(False)
 
         self.horizontalLayout_4.addWidget(self.y2_spinbox)
 

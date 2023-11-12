@@ -23,13 +23,14 @@ class Ui_map_plot(object):
     def setupUi(self, map_plot):
         if not map_plot.objectName():
             map_plot.setObjectName(u"map_plot")
-        map_plot.resize(1045, 542)
+        map_plot.resize(1051, 542)
         self.verticalLayout = QVBoxLayout(map_plot)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.log_checkbox = QCheckBox(map_plot)
         self.log_checkbox.setObjectName(u"log_checkbox")
+        self.log_checkbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.log_checkbox)
 
@@ -47,6 +48,7 @@ class Ui_map_plot(object):
 
         self.current_min_lineedit = QLineEdit(map_plot)
         self.current_min_lineedit.setObjectName(u"current_min_lineedit")
+        self.current_min_lineedit.setEnabled(False)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -74,6 +76,7 @@ class Ui_map_plot(object):
 
         self.current_max_lineedit = QLineEdit(map_plot)
         self.current_max_lineedit.setObjectName(u"current_max_lineedit")
+        self.current_max_lineedit.setEnabled(False)
         sizePolicy.setHeightForWidth(self.current_max_lineedit.sizePolicy().hasHeightForWidth())
         self.current_max_lineedit.setSizePolicy(sizePolicy)
 
@@ -93,21 +96,25 @@ class Ui_map_plot(object):
 
         self.scale_current_button = QPushButton(map_plot)
         self.scale_current_button.setObjectName(u"scale_current_button")
+        self.scale_current_button.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.scale_current_button)
 
         self.scale_rf_button = QPushButton(map_plot)
         self.scale_rf_button.setObjectName(u"scale_rf_button")
+        self.scale_rf_button.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.scale_rf_button)
 
         self.scale_dc_button = QPushButton(map_plot)
         self.scale_dc_button.setObjectName(u"scale_dc_button")
+        self.scale_dc_button.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.scale_dc_button)
 
         self.scanline_checkbox = QCheckBox(map_plot)
         self.scanline_checkbox.setObjectName(u"scanline_checkbox")
+        self.scanline_checkbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.scanline_checkbox)
 

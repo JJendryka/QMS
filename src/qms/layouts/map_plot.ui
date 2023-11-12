@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1045</width>
+    <width>1051</width>
     <height>542</height>
    </rect>
   </property>
@@ -18,6 +18,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QCheckBox" name="log_checkbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Log Current</string>
        </property>
@@ -39,6 +42,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="current_min_lineedit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -70,6 +76,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="current_max_lineedit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -94,6 +103,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="scale_current_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Scale Current</string>
        </property>
@@ -101,6 +113,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="scale_rf_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Scale RF</string>
        </property>
@@ -108,6 +123,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="scale_dc_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Scale DC</string>
        </property>
@@ -115,6 +133,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="scanline_checkbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Show Scanline</string>
        </property>

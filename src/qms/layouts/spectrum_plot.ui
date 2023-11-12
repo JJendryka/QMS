@@ -25,6 +25,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="log_checkbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Logarithmic</string>
        </property>
@@ -38,7 +41,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="offset_spinbox"/>
+      <widget class="QDoubleSpinBox" name="offset_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="y_axis_pA_label">
@@ -49,6 +56,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="autozero_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Auto zero</string>
        </property>
@@ -56,6 +66,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="y_fullscale_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Full scale</string>
        </property>
@@ -77,20 +90,26 @@
      </item>
      <item>
       <widget class="QComboBox" name="x_unit_combobox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <item>
         <property name="text">
-         <string>unit</string>
+         <string>volt</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>volt</string>
+         <string>unit</string>
         </property>
        </item>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="x_fullscale_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Full scale</string>
        </property>
@@ -112,6 +131,9 @@
      </item>
      <item>
       <widget class="QComboBox" name="plot_type_combobox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <item>
         <property name="text">
          <string>Line</string>
@@ -151,7 +173,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="peak_search_count_spinbox"/>
+      <widget class="QSpinBox" name="peak_search_count_spinbox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer">
