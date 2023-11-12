@@ -3,7 +3,6 @@
 import json
 import logging
 from pathlib import Path
-from numpy import save
 
 import serial.tools.list_ports
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -140,9 +139,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Handle close event. Save state and ask user to save profile."""
         self.autosave()
 
-        # TODO: Ask user whether to save profile
-
-        super().closeEvent(event)
+        event.ignore()
+        result = QtWidgets.QMessageBox.question(
+            self,
+            "Closing",
+            "Are you sure if you want to exit? Any unsaved changes will be lost.",
+            QtWidgets.QMessageBox.StandardButton.Cancel,
+            QtWidgets.QMessageBox.StandardButton.Yes,
+        )
+        if result == QtWidgets.QMessageBox.StandardButton.Yes:
+            event.accept()
+            super().closeEvent(event)
 
     def set_loaded_profile(self, path: Path) -> None:
         """Set currently loaded profile to path. Don't actually load the profile."""
@@ -189,13 +196,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         path = Config.get().state.loaded_profile
         if path is not None:
             self.save_profile_to(path)
+            logger.info("Saving profile to: %s", path)
         else:
             self.save_profile_as()
 
     def save_profile_to(self, path: Path) -> None:
         """Save profile to path."""
         if path is not None:
-            logger.info("Saving profile to: %s", path)
+            logger.debug("Saving profile to: %s", path)
             json_object = {"spectrometer": Config.get().spectrometer_config.dump_to_json()}
             try:
                 with path.open("w") as json_file:
@@ -207,6 +215,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Save profile to path selected by user."""
         path = self.save_profile_as_dialog()
         if path is not None:
+            logger.info("Saving profile as: %s", path)
             self.save_profile_to(path)
             self.set_loaded_profile(path)
 
