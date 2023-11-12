@@ -55,8 +55,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def setup_actions(self) -> None:
         """Setup actions by adding them to self."""  # noqa: D401
         self.addAction(self.save_profile_action)
+        self.save_profile_action.setShortcutContext(QtCore.Qt.ShortcutContext.ApplicationShortcut)
         self.addAction(self.save_profile_as_action)
+        self.save_profile_as_action.setShortcutContext(QtCore.Qt.ShortcutContext.ApplicationShortcut)
         self.addAction(self.load_profile_action)
+        self.load_profile_action.setShortcutContext(QtCore.Qt.ShortcutContext.ApplicationShortcut)
 
     def fill_connection_menu(self) -> None:
         """Fill connection menu with available devices.

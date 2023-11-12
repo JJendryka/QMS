@@ -92,6 +92,9 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.load_profile_action.setText(QCoreApplication.translate("MainWindow", u"Load...", None))
+#if QT_CONFIG(shortcut)
+        self.load_profile_action.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+O", None))
+#endif // QT_CONFIG(shortcut)
         self.save_profile_action.setText(QCoreApplication.translate("MainWindow", u"Save", None))
 #if QT_CONFIG(shortcut)
         self.save_profile_action.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+S", None))
