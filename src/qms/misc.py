@@ -1,7 +1,9 @@
+"""Contains misc methods: get_home_dir."""
+
 import logging
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import xdg_base_dirs
 
@@ -9,6 +11,7 @@ logger = logging.getLogger("main")
 
 
 def get_home_dir() -> Path:
+    """Return directory where all application files are stored."""
     if os.name == "nt":
         path = Path("%APPDATA%") / "QMS"
     elif os.name == "posix":

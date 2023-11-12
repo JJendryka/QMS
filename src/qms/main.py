@@ -1,5 +1,6 @@
-import logging
+"""Main file of the application."""
 import argparse
+import logging
 import signal
 
 from PySide6.QtWidgets import QApplication
@@ -14,6 +15,7 @@ logger = logging.getLogger("main")
 
 
 def parse_args() -> argparse.Namespace:
+    """Parse arguments from the command line."""
     parser = argparse.ArgumentParser(
         prog="QMS", description="Quadrupole Management Software - used to controll a quadrupole mass spectrometer"
     )
@@ -29,6 +31,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """Entry point to the program."""
     args = parse_args()
     custom_logging.setup_logging(args.log_level, logger)
     _ = Config(args)

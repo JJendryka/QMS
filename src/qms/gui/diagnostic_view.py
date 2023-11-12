@@ -1,34 +1,37 @@
+"""Contains DiagnosticView widget."""
+
 import logging
-from PySide6 import QtWidgets, QtGui
-from qms.backend.resonance_scan import ResonanceScanner
-
-from qms.backend.rf_scan import RFScanner
-from qms.backend.rf_test import RFTester
-from qms.backend.source_scan import SourceScanner
-
-from typing import TYPE_CHECKING, Any, List
-
-if TYPE_CHECKING:
-    from qms.gui.main_window import MainWindow
-
-from qms.layouts.diagnostic_view_ui import Ui_diagnostic_view
+from typing import TYPE_CHECKING, Any
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
+from PySide6 import QtGui, QtWidgets
 
+from qms.backend.resonance_scan import ResonanceScanner
+from qms.backend.rf_scan import RFScanner
+from qms.backend.rf_test import RFTester
+from qms.backend.source_scan import SourceScanner
+from qms.layouts.diagnostic_view_ui import Ui_diagnostic_view
+
+if TYPE_CHECKING:
+    from qms.gui.main_window import MainWindow
 
 logger = logging.getLogger("main")
 
 
 class Plot(QtWidgets.QWidget):
+    """Custom Plot widget used in DiagnosticView."""
+
     def __init__(self, parent: QtWidgets.QWidget | None = None):
-        super(Plot, self).__init__(parent)
+        """Initialize with GUI."""
+        super().__init__(parent)
         self.setLayout(QtWidgets.QVBoxLayout())
         self.canvas = MplCanvas(self)
         self.layout().addWidget(self.canvas)
         self.layout().addWidget(NavigationToolbar2QT(self.canvas, self))
 
     def add_point(self, x: float, y: float) -> None:
+        """Add new data point to plot."""
         self.canvas.x_data.append(x)
         self.canvas.y_data.append(y)
 
@@ -41,6 +44,7 @@ class Plot(QtWidgets.QWidget):
         self.canvas.draw()
 
     def clear_points(self) -> None:
+        """Clear all points from plot."""
         self.canvas.x_data = []
         self.canvas.y_data = []
 
@@ -51,23 +55,30 @@ class Plot(QtWidgets.QWidget):
 
 
 class MplCanvas(FigureCanvasQTAgg):
+    """Custom matplotlib canvas used in DiagnosticView."""
+
     def __init__(self, parent: QtWidgets.QWidget | None = None):
-        self.x_data: List[float] = []
-        self.y_data: List[float] = []
+        """Initialize with defaults."""
+        self.x_data: list[float] = []
+        self.y_data: list[float] = []
         fig = Figure()
         self.axes = fig.add_subplot(111)
         (self.line,) = self.axes.plot(self.x_data, self.y_data)
-        super(MplCanvas, self).__init__(fig)
+        super().__init__(fig)
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
 
     def resizeEvent(self, event: QtGui.QResizeEvent) -> None:  # noqa: N802
-        super(MplCanvas, self).resizeEvent(event)
+        """Handle resizeEvent - update layout."""
+        super().resizeEvent(event)
         self.figure.tight_layout(pad=0.5)
 
 
 class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
+    """Widget for running different diagnostics on spectrometer."""
+
     def __init__(self, *args: Any, **kwargs: Any):
-        super(DiagnosticView, self).__init__(*args, **kwargs)
+        """Initialize GUI and all children."""
+        super().__init__(*args, **kwargs)
         self.setupUi(self)
         self.main_window: MainWindow | None = None
         self.resonance_plot = Plot(self)
@@ -84,6 +95,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.voltage_at_maximum_resonance: float = -1e10
 
     def setup_signals(self) -> None:
+        """Connect all signals in the widget."""
         self.resonance_scan_button.clicked.connect(self.start_resonance_scan)
         self.min_frequency_spinbox.valueChanged.connect(self.resonance_updated)
         self.max_frequency_spinbox.valueChanged.connect(self.resonance_updated)
@@ -101,6 +113,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.rf_test_button.clicked.connect(self.start_rf_test)
 
     def start_resonance_scan(self) -> None:
+        """Start RF amplitude vs frequency scan."""
         logger.info("Resonance scan starting")
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
@@ -127,6 +140,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             logger.error("Main window reference is not set")
 
     def start_rf_scan(self) -> None:
+        """Start RF output vs input amplitude scan."""
         logger.info("RF scan starting")
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
@@ -150,6 +164,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             logger.error("Main window reference is not set")
 
     def start_source_scan(self) -> None:
+        """Start source current vs voltage scan."""
         logger.info("Source scan starting")
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
@@ -173,6 +188,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             logger.error("Main window reference is not set")
 
     def start_rf_test(self) -> None:
+        """Start RF stability test."""
         logger.info("RF test starting")
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
@@ -197,6 +213,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             logger.error("Main window reference is not set")
 
     def stop_rf_test(self) -> None:
+        """Stop already running RF stability test."""
         if self.rf_tester is not None:
             self.rf_tester.signals.stop()
             self.rf_test_button.setText("Test")
@@ -207,6 +224,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             logger.error("RF test stop even though rf_tester not initalized")
 
     def received_resonance_scan_point(self, frequency: float, voltage: float) -> None:
+        """Handle new point received from resonance scan."""
         self.resonance_plot.add_point(frequency, voltage)
 
         if voltage > self.voltage_at_maximum_resonance:
@@ -215,15 +233,19 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             self.working_frequency_spinbox.setValue(frequency / 1e6)
 
     def received_rf_scan_point(self, amplitude: float, monitor_voltage: float) -> None:
+        """Handle new point received from rf scan."""
         self.rf_plot.add_point(amplitude, monitor_voltage)
 
     def received_source_scan_point(self, voltage: float, current: float) -> None:
+        """Handle new point received from source scan."""
         self.source_plot.add_point(voltage, current)
 
     def received_rf_test_point(self, time_elapsed: float, monitor_voltage: float) -> None:
+        """Handle new point received from rf stability test scan."""
         self.rf_test_plot.add_point(time_elapsed, monitor_voltage)
 
     def replace_charts(self) -> None:
+        """Insert plot widgets into correct places."""
         self.layout().replaceWidget(self.resonance_chart, self.resonance_plot)
         self.layout().replaceWidget(self.rf_chart, self.rf_plot)
         self.layout().replaceWidget(self.source_chart, self.source_plot)
@@ -233,31 +255,37 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.layout().replaceWidget(self.source_stability_chart, source_stability_chart)
 
     def resonance_updated(self) -> None:
+        """Handle resonance scan parameters update."""
         step_size = (self.max_frequency_spinbox.value() - self.min_frequency_spinbox.value()) / (
             self.frequency_steps_spinbox.value() - 1
         )
         self.frequency_step_size_label.setText(f"{step_size:.3f} MHz")
 
     def rf_updated(self) -> None:
+        """Handle rf scan parameters update."""
         step_size = self.rf_max_spinbox.value() / (self.rf_step_count_spinbox.value() - 1)
         self.rf_step_size_label.setText(f"{step_size:.3f} Vpp")
 
     def source_updated(self) -> None:
+        """Handle source scan parameters update."""
         step_size = (self.source_max_spinbox.value() - self.source_min_spinbox.value()) / (
             self.source_steps_spinbox.value() - 1
         )
         self.source_step_size_label.setText(f"{int(step_size * 1e3)} V")
 
     def handle_em_exception(self, exception: Exception) -> None:
+        """Handle exception from EuroMeasure. Display it to user."""
         if self.main_window is not None:
             self.main_window.set_allow_new_scans(True)
             QtWidgets.QMessageBox.critical(self.main_window, "Error!", exception.args[0])
 
     def finished_scan(self) -> None:
+        """Handle scan finishing."""
         if self.main_window is not None:
             self.main_window.set_allow_new_scans(True)
 
     def set_allow_new_scans(self, allow: bool = True, reason: str = "") -> None:
+        """Enable/disable UI elements that start new scan."""
         self.resonance_scan_button.setEnabled(allow)
         self.resonance_scan_button.setToolTip(reason)
         self.rf_scan_button.setEnabled(allow)

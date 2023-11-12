@@ -1,11 +1,13 @@
-import time
+"""Contains RFScanner and helpers."""
+
 import logging
+import time
 
-from PySide6.QtCore import QRunnable, Slot, Signal, QObject
 import numpy as np
+from PySide6.QtCore import QObject, QRunnable, Signal, Slot
 
-from qms.consts import MONITOR_VOLTMETER_CHANNEL, QUADRUPOLE_GENERATOR_CHANNEL
 from qms.backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
+from qms.consts import MONITOR_VOLTMETER_CHANNEL, QUADRUPOLE_GENERATOR_CHANNEL
 
 logger = logging.getLogger("main")
 
@@ -13,14 +15,22 @@ SLEEP_TIME = 0.03
 
 
 class RFScannerSignals(QObject):
+    """Class containing signals needed for RFScanner.
+
+    RFScanner cannot hold them as it isn't a QObject.
+    """
+
     data_point_acquired = Signal(float, float)
     error_occured = Signal(Exception)
     finished = Signal()
 
 
 class RFScanner(QRunnable):
+    """RFScanner QRunnable used to preform source current vs voltage scan."""
+
     def __init__(self, euromeasure: EuroMeasure, stop: float, step_count: int, frequency: float):
-        super(RFScanner, self).__init__()
+        """Initialize with scan config parameters."""
+        super().__init__()
         self.em = euromeasure
         self.stop = stop
         self.step_count = step_count
@@ -29,6 +39,7 @@ class RFScanner(QRunnable):
 
     @Slot()
     def run(self) -> None:
+        """Run the scan."""
         try:
             self.em.set_pid_state(False)
             self.em.set_generator_frequency(QUADRUPOLE_GENERATOR_CHANNEL, self.frequency)

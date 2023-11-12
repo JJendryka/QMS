@@ -1,27 +1,30 @@
+"""Contains MainWindow widget."""
+
 import json
+import logging
 from pathlib import Path
-from PySide6 import QtWidgets, QtGui, QtCore
 
 import serial.tools.list_ports
+from PySide6 import QtCore, QtGui, QtWidgets
+
 from qms.backend.euromeasure import EMCannotConnectError, EuroMeasure
 from qms.backend.fake_euromeasure import FakeEuroMeasure
 from qms.config import Config
 from qms.consts import LAST_STATE_FILENAME
-
 from qms.layouts.main_window_ui import Ui_MainWindow
-
-import logging
-
 from qms.misc import get_home_dir
 
 logger = logging.getLogger("main")
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
-    def __init__(self) -> None:
-        super(MainWindow, self).__init__()
-        self.setupUi(self)
+    """MainWindow for QMS app."""
 
+    def __init__(self) -> None:
+        """Initialize GUI, callbacks, backreferences."""
+        super().__init__()
+        self.setupUi(self)
+        self.showMaximized()
         # Setting so that closing works correctly when any dialog is shown
         self.setAttribute(QtCore.Qt.WidgetAttribute.WA_DeleteOnClose, True)
 
@@ -29,22 +32,29 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.thread_pool = QtCore.QThreadPool(self)
 
         self.setup_backreferences()
-        self.showMaximized()
         self.setup_callbacks()
+
         logger.debug("Finished main_window initialization")
 
         self.set_allow_new_scans(False, "EuroMeasure is not connected")
 
     def setup_backreferences(self) -> None:
+        """Setup needed backreferences to self in children."""  # noqa: D401
         self.diagnostic_tab.main_window = self
 
     def setup_callbacks(self) -> None:
+        """Setup needed callbacks."""  # noqa: D401
         self.connection_menu.aboutToShow.connect(self.fill_connection_menu)
         self.load_profile_action.triggered.connect(self.load_profile)
         self.save_profile_action.triggered.connect(self.save_profile)
         self.save_profile_as_action.triggered.connect(self.save_profile_as)
 
     def fill_connection_menu(self) -> None:
+        """Fill connection menu with available devices.
+
+        If there are none display that none are found.
+        If debug flag is passed, add debug port.
+        """
         for action in self.connection_menu.actions():
             self.connection_menu.removeAction(action)
 
@@ -74,12 +84,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.connection_menu.addAction(action)
 
     def connect_port(self, port: str) -> None:
+        """Connect to port.
+
+        First disconnect if already connected.
+        If in debug mode, connect to fake euromeasure.
+        Allow starting scans after connecting.
+        """
         logger.info("Connecting to port: %s", port)
         self.connection_menu.setTitle(f"Connected to: {port}")
         if self.euromeasure is not None:
             self.euromeasure.disconnect()
             self.euromeasure = None
-            logger.warn("Connect when other port is already connected")
+            logger.warning("Connect when other port is already connected")
         if Config.get().args.debug:
             self.euromeasure = FakeEuroMeasure()
         else:
@@ -94,25 +110,28 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             QtWidgets.QMessageBox.critical(self, "Error!", "Couldn't connect to EuroMeasure system on this port")
 
     def disconnect_port(self) -> None:
+        """Disconnect from currently connected port."""
         logger.info("Disconnecting from serial port")
         self.connection_menu.setTitle("Connect")
         if self.euromeasure is not None:
             self.euromeasure.disconnect()
             self.euromeasure = None
         else:
-            logger.warn("Trying to disconnect already disconnected port")
+            logger.warning("Trying to disconnect already disconnected port")
         self.set_allow_new_scans(False, "EuroMeasure is not connected")
 
     def set_allow_new_scans(self, allow: bool = True, reason: str = "") -> None:
+        """Change UI to allow or disallow starting new scans."""
         self.diagnostic_tab.set_allow_new_scans(allow, reason)
         self.spectrum_tab.set_allow_new_scans(allow, reason)
         self.stability_map_tab.set_allow_new_scans(allow, reason)
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:  # noqa: N802
+        """Handle clode event. Save state and ask user to save profile."""
         logger.debug("Saving state to file")
         json_object = Config.get().state.dump_to_json()
 
-        with open(get_home_dir() / LAST_STATE_FILENAME, "w") as json_file:
+        with (get_home_dir() / LAST_STATE_FILENAME).open("w") as json_file:
             json_file.write(json.dumps(json_object))
 
         # TODO: Ask user whether to save profile
@@ -147,16 +166,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def load_profile_from(self, path: Path) -> None:
         """Load profile from path."""
         if path is not None and path.exists():
-            logger.info(f"Opening profile: {path}")
+            logger.info("Opening profile: %s", path)
             try:
-                with open(path, "r") as json_file:
+                with path.open("r") as json_file:
                     json_object = json.load(json_file)
                     Config.get().spectrometer_config.load_from_json(json_object["spectrometer"])
                 self.set_loaded_profile(path)
             except OSError as e:
-                logger.error(f"Cannot load profile: {path}, os error: {e.strerror}")
+                logger.error("Cannot load profile: %s, os error: %s", path, e.strerror)
         else:
-            logger.error(f"Cannot load profile {path}, file doesn't exist")
+            logger.error("Cannot load profile: %s, file doesn't exist", path)
 
     def save_profile(self) -> None:
         """Save profile to currently loaded profile file."""
@@ -166,13 +185,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def save_profile_to(self, path: Path) -> None:
         """Save profile to path."""
         if path is not None:
-            logger.info(f"Saving profile to: {path}")
+            logger.info("Saving profile to: %s", path)
             json_object = {"spectrometer": Config.get().spectrometer_config.dump_to_json()}
             try:
-                with open(path, "w") as json_file:
+                with path.open("w") as json_file:
                     json.dump(json_object, json_file)
             except OSError as e:
-                logger.error(f"Cannot save profile to: {path}. OS Error: {e.strerror}")
+                logger.error("Cannot save profile to: %s. OS Error: %s", path, e.strerror)
 
     def save_profile_as(self) -> None:
         """Save profile to path selected by user."""

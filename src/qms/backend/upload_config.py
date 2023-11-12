@@ -1,9 +1,12 @@
+"""Contains function for uploading constant parameters to EuroMeasure."""
+
 from qms.backend.euromeasure import EuroMeasure
 from qms.config import Config
 from qms.consts import MAX_SOURCE_CURRENT, MAX_SOURCE_VOLTAGE
 
 
 def upload_configuration(em: EuroMeasure) -> None:
+    """Upload current spectrometer configuration to EuroMeasure."""
     conf = Config.get().spectrometer_config
 
     if conf.source_cc:

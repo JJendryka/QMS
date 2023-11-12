@@ -1,8 +1,10 @@
-import time
-import logging
+"""Contains SourceTester and helpers."""
 
-from PySide6.QtCore import QRunnable, Slot, Signal, QObject
+import logging
+import time
+
 import numpy as np
+from PySide6.QtCore import QObject, QRunnable, Signal, Slot
 
 from qms.backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 from qms.consts import (
@@ -17,23 +19,32 @@ logger = logging.getLogger("main")
 SLEEP_TIME = 0.03
 
 
-class SourceScannerSignals(QObject):
+class SourceTesterSignals(QObject):
+    """Class containing signals needed for SourceTester.
+
+    SourceTester cannot hold them as it isn't a QObject.
+    """
+
     data_point_acquired = Signal(float, float, float)
     error_occured = Signal(Exception)
     finished = Signal()
 
 
 class SourceScanner(QRunnable):
+    """SourceTester QRunnable used to preform source current vs voltage scan."""
+
     def __init__(self, euromeasure: EuroMeasure, start: float, stop: float, step_count: int):
-        super(SourceScanner, self).__init__()
+        """Initialize with test config parameters."""
+        super().__init__()
         self.em = euromeasure
         self.start = start
         self.stop = stop
         self.step_count = step_count
-        self.signals = SourceScannerSignals()
+        self.signals = SourceTesterSignals()
 
     @Slot()
     def run(self) -> None:
+        """Run the test."""
         try:
             self.em.set_pid_state(False)
             self.em.set_generator_amplitude(QUADRUPOLE_GENERATOR_CHANNEL, 0)

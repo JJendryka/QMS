@@ -1,17 +1,18 @@
-from __future__ import annotations
-from argparse import Namespace
-import json
+"""Contains global config class that stores all configurations."""
 
+from __future__ import annotations
+
+import json
 import logging
-from pathlib import Path
 import sys
 import time
+from argparse import Namespace
+from pathlib import Path
 from types import NoneType
-from typing import Any, Dict, List, Tuple
+from typing import Any
+
 from qms.consts import LAST_STATE_FILENAME
-
 from qms.misc import get_home_dir
-
 
 logger = logging.getLogger("__main__")
 
@@ -31,7 +32,7 @@ class Config:
         raise Exception("Config hasn't been instatiated")
 
     def __init__(self, args: Namespace) -> None:
-        """Initialize Config"""
+        """Initialize Config."""
         if self.__class__.__instance is not None:
             logger.warning("Config has already beed instatiated. Use Config.get() to get the instance. Skipping")
             return
@@ -43,7 +44,10 @@ class Config:
 
 
 class SpectrometerConfig:
+    """Stores physical configuraition of the spectrometer."""
+
     def __init__(self) -> None:
+        """Create new SpectrometerConfig objec with default values."""
         self.source_cc: bool = False
         self.source_voltage: float | None = 0
         self.source_current: float | None = None
@@ -53,7 +57,8 @@ class SpectrometerConfig:
         self.pid_d: float = 0
         self.frequency: float = 0
 
-    def load_from_json(self, json_object: Dict) -> None:
+    def load_from_json(self, json_object: dict) -> None:
+        """Update object with data from json_object."""
         self.source_cc = safely_get(json_object, ["source", "cc"], bool, False)
         self.source_voltage = safely_get(json_object, ["source", "voltage"], (int, float, NoneType), 0)
         self.source_current = safely_get(json_object, ["source", "current"], (int, float, NoneType), 0)
@@ -63,7 +68,8 @@ class SpectrometerConfig:
         self.pid_d = float(safely_get(json_object, ["pid", "d"], (int, float), 1))
         self.frequency = float(safely_get(json_object, ["frequency"], (int, float), 6e6))
 
-    def dump_to_json(self) -> Dict:
+    def dump_to_json(self) -> dict:
+        """Dump the object to json object."""
         return {
             "source": {"cc": self.source_cc, "voltage": self.source_voltage, "current": self.source_current},
             "pid": {"p": self.pid_p, "i": self.pid_i, "d": self.pid_d, "enabled": self.pid_enabled},
@@ -72,41 +78,52 @@ class SpectrometerConfig:
 
 
 class State:
+    """Stores temporary state of the app, such as currently loaded profile."""
+
     def __init__(self) -> None:
+        """Initialize State with defaults."""
         self.loaded_profile: Path | None = None
-        self.recent_profiles: List[Tuple[Path, float]] = []
+        self.recent_profiles: list[tuple[Path, float]] = []
 
     def load_last_state(self) -> None:
+        """Load last state from default path."""
         path = get_home_dir() / LAST_STATE_FILENAME
         if path.exists():
             logger.debug("Loading last state")
             try:
-                with open(path, "r") as json_file:
+                with path.open("r") as json_file:
                     json_object = json.load(json_file)
                     self.load_from_json(json_object)
             except OSError as e:
-                logger.error(f"Couldn't load last state. OS Error {e.strerror}")
+                logger.error("Couldn't load last state. OS Error %s", e.strerror)
         else:
             logger.info("There is no previous state found. Initializing with defaults")
 
-    def load_from_json(self, json_object: Dict) -> None:
-        recent_profiles = safely_get(json_object, ["recent_profiles"], List, [])
+    def load_from_json(self, json_object: dict) -> None:
+        """Update object with data from json object."""
+        recent_profiles = safely_get(json_object, ["recent_profiles"], list, [])
         if recent_profiles is not None:
             for recent in recent_profiles:
                 if (
                     isinstance(recent, list)
                     and len(recent) == 2
                     and isinstance(recent[0], str)
-                    and (isinstance(recent[1], float) or isinstance(recent[1], int))
+                    and isinstance(recent[1], float | int)
                 ):
                     self.recent_profiles.append((Path(recent[0]), float(recent[1])))
                 else:
                     logger.warning("Incorrect type in recent profiles in state file. Ignoring")
 
-    def dump_to_json(self) -> Dict:
+    def dump_to_json(self) -> dict:
+        """Dump object to json object."""
         return {"recent_profiles": [(str(recent[0]), recent[1]) for recent in self.recent_profiles]}
 
     def add_recent_profile(self, path: Path) -> None:
+        """Add profile to recently loaded profiles.
+
+        If alreay exists, update last used timestamp.
+        If doesn't exist, add and if over 8 recents exist, delete oldest one.
+        """
         for index, (exitsting_path, _) in enumerate(self.recent_profiles):
             if path == exitsting_path:
                 self.recent_profiles[index] = (path, time.time())
@@ -119,15 +136,15 @@ class State:
 
 def safely_get(
     json_object: Any,
-    path: List[str | int],
-    kind: type | Tuple[type, ...],
+    path: list[str | int],
+    kind: type | tuple[type, ...],
     default: Any = None,
 ) -> Any:
     """Gracefully look for value in object."""
     for name in path:
-        if isinstance(json_object, Dict) and name in json_object:
+        if isinstance(json_object, dict) and name in json_object:  # noqa: SIM114
             json_object = json_object[name]
-        elif isinstance(name, int) and isinstance(json_object, List) and name < len(json_object):
+        elif isinstance(name, int) and isinstance(json_object, list) and name < len(json_object):
             json_object = json_object[name]
         elif default is None:
             logger.error("No field %s found in json object", path)

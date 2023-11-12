@@ -1,3 +1,5 @@
+"""Contains custom logging formater and setup."""
+
 import logging
 import sys
 import time
@@ -6,6 +8,8 @@ from qms.misc import get_home_dir
 
 
 class ColoredFormatter(logging.Formatter):
+    """Colored log formatter."""
+
     GRAY = "\033[90m"
     BLUE = "\033[94m"
     WARNING = "\033[93m"
@@ -24,12 +28,14 @@ class ColoredFormatter(logging.Formatter):
     }
 
     def format(self, record: logging.LogRecord) -> str:  # noqa: A003
+        """Format the log.record according to FORMATS."""
         log_fmt = self.FORMATS.get(record.levelno)
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
 
 def setup_logging(level: str, logger: logging.Logger) -> None:
+    """Setup logging with colored formatting and two streams: stdio and file."""  # noqa: D401
     logger.setLevel(logging.DEBUG)
 
     terminal_formatter = ColoredFormatter()

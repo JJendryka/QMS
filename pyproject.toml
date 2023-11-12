@@ -14,10 +14,11 @@ dependencies = ["pyside6", "matplotlib", "pyserial", "numpy", "xdg-base-dirs"]
 dev = ["mypy", "ruff", "black"]
 
 [tool.ruff]
-select = ["E", "F", "N", "B", "A", "RET"]
+select = ["E", "F", "W", "I", "D", "UP", "N", "B", "A", "C4", "ISC", "ICN", "G", "INP", "PIE", "SIM", "PTH", "RET"]
 line-length = 120
 target-version = "py310"
-exclude = ["build", ".venv", "src/layouts"]
+exclude = ["build", ".venv", "src/qms/layouts"]
+ignore = ["D203", "D213"]
 
 [tool.black]
 line-length = 120
