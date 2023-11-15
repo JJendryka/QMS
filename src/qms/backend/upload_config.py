@@ -23,3 +23,8 @@ def upload_configuration(em: EuroMeasure) -> None:
     em.set_pid_d(conf.pid_d)
 
     em.set_generator_frequency(conf.frequency)
+
+
+def upload_setpoint(em: EuroMeasure, setpoint: float) -> None:
+    """Upload PID setpoint to EuroMeasure."""
+    em.set_pid_setpoint(setpoint)

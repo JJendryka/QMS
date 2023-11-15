@@ -15,7 +15,7 @@ from qms.backend.rf_scan import RFScanner
 from qms.backend.rf_test import RFTester
 from qms.backend.source_scan import SourceScanner
 from qms.backend.source_test import SourceTester
-from qms.backend.upload_config import upload_configuration
+from qms.backend.upload_config import upload_configuration, upload_setpoint
 from qms.config import Config
 from qms.layouts.diagnostic_view_ui import Ui_diagnostic_view
 
@@ -171,6 +171,8 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.source_voltage_spinbox.valueChanged.connect(self.spectrometer_config_updated)
         self.source_current_spinbox.valueChanged.connect(self.spectrometer_config_updated)
         self.source_buttongroup.buttonToggled.connect(self.spectrometer_config_updated)
+
+        self.rf_setpoint_spinbox.valueChanged.connect(self.setpoint_updated)
 
     def start_resonance_scan(self) -> None:
         """Start RF amplitude vs frequency scan."""
@@ -440,3 +442,9 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
             config.source_current = self.source_current_spinbox.value() * 1e-3
             if self.main_window is not None and self.main_window.euromeasure is not None:
                 upload_configuration(self.main_window.euromeasure)
+
+    def setpoint_updated(self) -> None:
+        """When setpoint is updated, send it to euromeasure."""
+        logger.info("Setpoint changed, sending to EM")
+        if self.main_window is not None and self.main_window.euromeasure is not None:
+            upload_setpoint(self.main_window.euromeasure, self.rf_setpoint_spinbox.value())
