@@ -43,6 +43,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def setup_backreferences(self) -> None:
         """Setup needed backreferences to self in children."""  # noqa: D401
         self.diagnostic_tab.main_window = self
+        self.stability_map_tab.map_control.main_window = self
 
     def setup_callbacks(self) -> None:
         """Setup needed callbacks."""  # noqa: D401

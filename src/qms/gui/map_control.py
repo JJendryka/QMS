@@ -1,11 +1,16 @@
 """Contains MapControl widget."""
 
+import logging
 from typing import Any
 
 from PySide6 import QtWidgets
 
+from qms.backend.spectrum_scan import SpectrumScanner
 from qms.config import Config
+from qms.gui.main_window import MainWindow
 from qms.layouts.map_control_ui import Ui_map_control
+
+logger = logging.getLogger("main")
 
 
 class MapControl(QtWidgets.QWidget, Ui_map_control):
@@ -17,6 +22,8 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.setupUi(self)
         self.parameters_update_paused: bool = False
         self.pause_xy_updates: bool = False
+        self.dc_step = 0
+        self.main_window: MainWindow | None = None
         self.setup_signals()
 
     def setup_signals(self) -> None:
@@ -142,3 +149,69 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         dc_max = self.dc_max_spinbox.value()
         dc_step_count = self.dc_step_count_spinbox.value()
         self.dc_step_size_spinbox.setValue((dc_max - dc_min) / dc_step_count)
+
+    def start_measurement(self) -> None:
+        """Start measurement of stability map."""
+        if self.main_window is not None:
+            self.main_window.set_allow_new_scans(False, "Stability map scan is running")
+        self.dc_step = 0
+        self.stop_push_button.setEnabled(True)
+        self.next_measurement_step()
+
+    def measurement_finished(self) -> None:
+        """Handle finished stability map measurement."""
+        if self.main_window is not None:
+            self.main_window.set_allow_new_scans(True)
+        self.dc_step = 0
+        self.stop_push_button.setEnabled(False)
+
+    def measurement_step_finished(self) -> None:
+        """Handle last measurement finishing."""
+        if self.dc_step == self.dc_step_count_spinbox.value():
+            self.measurement_finished()
+        else:
+            self.next_measurement_step()
+
+    def next_measurement_step(self) -> None:
+        """Start next measurement step."""
+        if self.main_window is not None:
+            if self.main_window.euromeasure is not None:
+                ac, dc = self.calculate_ac_dc()
+                self.dc_step += 1
+                scanner = SpectrumScanner(self.main_window.euromeasure, ac, dc)
+                scanner.signals.data_point_acquired.connect(self.received_spectrum_point)
+                scanner.signals.error_occured.connect(self.handle_em_exception)
+                scanner.signals.finished.connect(self.measurement_step_finished)
+                self.main_window.thread_pool.start(scanner)
+            else:
+                logger.error("Tried to start stability map scan when EuroMeasure system is not connected")
+                QtWidgets.QMessageBox.critical(self.main_window, "Error!", "EuroMeasure system is not connected")
+        else:
+            logger.error("Main window reference is not set")
+
+    def received_spectrum_point(
+        self, ac_step: int, detector_voltage: float, monitor_voltage: float, source: float
+    ) -> None:
+        """Handle received data from spectrum scanner."""
+
+    def calculate_ac_dc(self) -> tuple[list[float], list[float]]:
+        """Calculate DC and AC values for next spectrum measurement."""
+        rf_min = self.rf_min_spinbox.value()
+        rf_step_count = self.rf_step_count_spinbox.value()
+        rf_step_size = self.rf_step_size_spinbox.value()
+        ac = [rf_min + i * rf_step_size for i in range(rf_step_count)]
+
+        dc_min = self.dc_min_spinbox.value()
+        dc_step_count = self.dc_step_count_spinbox.value()
+        dc_step_size = self.dc_step_size_spinbox.value()
+        dc_rf_offset = self.dc_offset_spinbox.value()
+        dc = [dc_min + self.dc_step * dc_step_size + dc_rf_offset * ac[i] for i in range(dc_step_count)]
+
+        return (ac, dc)
+
+    # TODO: merge with one in diagnostic tab
+    def handle_em_exception(self, exception: Exception) -> None:
+        """Handle exception from EuroMeasure. Display it to user."""
+        if self.main_window is not None:
+            self.main_window.set_allow_new_scans(True)
+            QtWidgets.QMessageBox.critical(self.main_window, "Error!", exception.args[0])

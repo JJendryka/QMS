@@ -3,9 +3,9 @@
 import logging
 import time
 
+from euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 from PySide6 import QtCore, QtWidgets
 
-from euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 from qms.consts import (
     DETECTOR_VOLTMETER_CHANNEL,
 )
