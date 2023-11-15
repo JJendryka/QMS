@@ -102,7 +102,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="rf_step_count_spinbox"/>
+      <widget class="QSpinBox" name="rf_step_count_spinbox">
+       <property name="minimum">
+        <number>2</number>
+       </property>
+       <property name="maximum">
+        <number>9999</number>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="Line" name="line_106">
@@ -122,7 +129,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="rf_step_size_spinbox"/>
+      <widget class="QDoubleSpinBox" name="rf_step_size_spinbox">
+       <property name="decimals">
+        <number>3</number>
+       </property>
+       <property name="minimum">
+        <double>0.001000000000000</double>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="rf_step_size_unit_label">
@@ -355,7 +369,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="dc_step_count_spinbox"/>
+      <widget class="QSpinBox" name="dc_step_count_spinbox">
+       <property name="minimum">
+        <number>2</number>
+       </property>
+       <property name="maximum">
+        <number>9999</number>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="Line" name="line_112">
@@ -375,7 +396,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="dc_step_size_spinbox"/>
+      <widget class="QDoubleSpinBox" name="dc_step_size_spinbox">
+       <property name="decimals">
+        <number>3</number>
+       </property>
+       <property name="minimum">
+        <double>0.001000000000000</double>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="dc_step_size_unit_label">

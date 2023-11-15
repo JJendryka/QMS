@@ -29,6 +29,14 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.x2_spinbox.valueChanged.connect(self.xy_updated)
         self.y1_spinbox.valueChanged.connect(self.xy_updated)
         self.y2_spinbox.valueChanged.connect(self.xy_updated)
+        self.rf_min_spinbox.valueChanged.connect(self.rf_min_max_size_updated)
+        self.rf_max_spinbox.valueChanged.connect(self.rf_min_max_size_updated)
+        self.rf_step_size_spinbox.valueChanged.connect(self.rf_min_max_size_updated)
+        self.rf_step_count_spinbox.valueChanged.connect(self.rf_step_count_updated)
+        self.dc_min_spinbox.valueChanged.connect(self.dc_min_max_size_updated)
+        self.dc_max_spinbox.valueChanged.connect(self.dc_min_max_size_updated)
+        self.dc_step_size_spinbox.valueChanged.connect(self.dc_min_max_size_updated)
+        self.dc_step_count_spinbox.valueChanged.connect(self.dc_step_count_updated)
 
     def load_profile(self) -> None:
         """Load data from currently loaded profile."""
@@ -106,3 +114,31 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
             self.a_spinbox.setValue(a)
             self.b_spinbox.setValue(b)
             self.pause_xy_updates = False
+
+    def rf_min_max_size_updated(self) -> None:
+        """Update RF step count based when other values changed."""
+        rf_min = self.rf_min_spinbox.value()
+        rf_max = self.rf_max_spinbox.value()
+        rf_step_size = self.rf_step_size_spinbox.value()
+        self.rf_step_count_spinbox.setValue((rf_max - rf_min) / rf_step_size)
+
+    def dc_min_max_size_updated(self) -> None:
+        """Update DC step count based when other values changed."""
+        dc_min = self.dc_min_spinbox.value()
+        dc_max = self.dc_max_spinbox.value()
+        dc_step_size = self.dc_step_size_spinbox.value()
+        self.dc_step_count_spinbox.setValue((dc_max - dc_min) / dc_step_size)
+
+    def rf_step_count_updated(self) -> None:
+        """Update RF step size when step count changes."""
+        rf_min = self.rf_min_spinbox.value()
+        rf_max = self.rf_max_spinbox.value()
+        rf_step_count = self.rf_step_count_spinbox.value()
+        self.rf_step_size_spinbox.setValue((rf_max - rf_min) / rf_step_count)
+
+    def dc_step_count_updated(self) -> None:
+        """Update RF step size when step count changes."""
+        dc_min = self.dc_min_spinbox.value()
+        dc_max = self.dc_max_spinbox.value()
+        dc_step_count = self.dc_step_count_spinbox.value()
+        self.dc_step_size_spinbox.setValue((dc_max - dc_min) / dc_step_count)

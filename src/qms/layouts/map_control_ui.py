@@ -101,6 +101,8 @@ class Ui_map_control(object):
 
         self.rf_step_count_spinbox = QSpinBox(map_control)
         self.rf_step_count_spinbox.setObjectName(u"rf_step_count_spinbox")
+        self.rf_step_count_spinbox.setMinimum(2)
+        self.rf_step_count_spinbox.setMaximum(9999)
 
         self.horizontalLayout.addWidget(self.rf_step_count_spinbox)
 
@@ -119,6 +121,8 @@ class Ui_map_control(object):
 
         self.rf_step_size_spinbox = QDoubleSpinBox(map_control)
         self.rf_step_size_spinbox.setObjectName(u"rf_step_size_spinbox")
+        self.rf_step_size_spinbox.setDecimals(3)
+        self.rf_step_size_spinbox.setMinimum(0.001000000000000)
 
         self.horizontalLayout.addWidget(self.rf_step_size_spinbox)
 
@@ -293,6 +297,8 @@ class Ui_map_control(object):
 
         self.dc_step_count_spinbox = QSpinBox(map_control)
         self.dc_step_count_spinbox.setObjectName(u"dc_step_count_spinbox")
+        self.dc_step_count_spinbox.setMinimum(2)
+        self.dc_step_count_spinbox.setMaximum(9999)
 
         self.horizontalLayout_2.addWidget(self.dc_step_count_spinbox)
 
@@ -311,6 +317,8 @@ class Ui_map_control(object):
 
         self.dc_step_size_spinbox = QDoubleSpinBox(map_control)
         self.dc_step_size_spinbox.setObjectName(u"dc_step_size_spinbox")
+        self.dc_step_size_spinbox.setDecimals(3)
+        self.dc_step_size_spinbox.setMinimum(0.001000000000000)
 
         self.horizontalLayout_2.addWidget(self.dc_step_size_spinbox)
 
