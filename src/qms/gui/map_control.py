@@ -16,7 +16,8 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
         self.parameters_update_paused: bool = False
-        self.pause_ab_updates: bool = False
+        self.pause_xy_updates: bool = False
+        self.setup_signals()
 
     def setup_signals(self) -> None:
         """Connect all needed signals to their handlers."""
@@ -37,7 +38,7 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.pause_scanline_updates = True
         self.a_spinbox.setValue(params.a)
         self.b_spinbox.setValue(params.b)
-        self.pause_ab_updates = False
+        self.pause_xy_updates = False
 
     def rf_to_unit_factor_updated(self) -> None:
         """On spinbox value change, update other values and save."""
@@ -45,6 +46,7 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         Config.get().parameters.rf_to_unit_factor = rf_to_unit_factor
         mass = self.mass_spinbox.value()
         self.rf_spinbox.setValue(mass / rf_to_unit_factor)
+        self.ab_updated()
 
     def mass_updated(self) -> None:
         """On spinbox value change, update other values and save."""
@@ -76,23 +78,31 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
 
     def ab_updated(self) -> None:
         """Recalculate calibration points based on changed a and b."""
-        a = self.a_spinbox.value()
-        b = self.b_spinbox.value()
+        if not self.pause_xy_updates:
+            a = self.a_spinbox.value()
+            b = self.b_spinbox.value()
 
-        self.y1_spinbox.setValue(self.x1_spinbox.value() * a + b)
-        self.y2_spinbox.setValue(self.x2_spinbox.value() * a + b)
+            rf_u_factor = Config.get().parameters.rf_to_unit_factor
+
+            self.pause_xy_updates = True
+            self.y1_spinbox.setValue(self.x1_spinbox.value() / rf_u_factor * a + b)
+            self.y2_spinbox.setValue(self.x2_spinbox.value() / rf_u_factor * a + b)
+            self.pause_xy_updates = False
 
     def xy_updated(self) -> None:
         """If any of the calibration coordinates change, update a and b."""
-        if not self.pause_ab_updates:
-            x1 = self.x1_spinbox.value()
-            x2 = self.x2_spinbox.value()
+        if not self.pause_xy_updates:
+            params = Config.get().parameters
+            rf_u_factor = params.rf_to_unit_factor
+            x1 = self.x1_spinbox.value() / rf_u_factor
+            x2 = self.x2_spinbox.value() / rf_u_factor
             y1 = self.y1_spinbox.value()
             y2 = self.y2_spinbox.value()
             a = (y2 - y1) / (x2 - x1)
             b = y1 - a * x1
-            params = Config.get().parameters
             params.a = a
             params.b = b
+            self.pause_xy_updates = True
             self.a_spinbox.setValue(a)
             self.b_spinbox.setValue(b)
+            self.pause_xy_updates = False

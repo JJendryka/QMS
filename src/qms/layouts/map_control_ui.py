@@ -23,7 +23,7 @@ class Ui_map_control(object):
     def setupUi(self, map_control):
         if not map_control.objectName():
             map_control.setObjectName(u"map_control")
-        map_control.resize(1304, 222)
+        map_control.resize(1579, 514)
         self.verticalLayout = QVBoxLayout(map_control)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.line_121 = QFrame(map_control)
@@ -154,7 +154,11 @@ class Ui_map_control(object):
 
         self.rf_u_scale_spinbox = QDoubleSpinBox(map_control)
         self.rf_u_scale_spinbox.setObjectName(u"rf_u_scale_spinbox")
-        self.rf_u_scale_spinbox.setEnabled(False)
+        self.rf_u_scale_spinbox.setEnabled(True)
+        self.rf_u_scale_spinbox.setDecimals(3)
+        self.rf_u_scale_spinbox.setMinimum(0.001000000000000)
+        self.rf_u_scale_spinbox.setMaximum(999.000000000000000)
+        self.rf_u_scale_spinbox.setValue(1.000000000000000)
 
         self.horizontalLayout.addWidget(self.rf_u_scale_spinbox)
 
@@ -177,7 +181,10 @@ class Ui_map_control(object):
 
         self.mass_spinbox = QDoubleSpinBox(map_control)
         self.mass_spinbox.setObjectName(u"mass_spinbox")
-        self.mass_spinbox.setEnabled(False)
+        self.mass_spinbox.setEnabled(True)
+        self.mass_spinbox.setMinimum(0.010000000000000)
+        self.mass_spinbox.setMaximum(999.000000000000000)
+        self.mass_spinbox.setValue(18.000000000000000)
 
         self.horizontalLayout.addWidget(self.mass_spinbox)
 
@@ -193,7 +200,9 @@ class Ui_map_control(object):
 
         self.rf_spinbox = QDoubleSpinBox(map_control)
         self.rf_spinbox.setObjectName(u"rf_spinbox")
-        self.rf_spinbox.setEnabled(False)
+        self.rf_spinbox.setEnabled(True)
+        self.rf_spinbox.setMaximum(999.000000000000000)
+        self.rf_spinbox.setValue(18.000000000000000)
 
         self.horizontalLayout.addWidget(self.rf_spinbox)
 
@@ -325,7 +334,7 @@ class Ui_map_control(object):
 
         self.dc_offset_spinbox = QDoubleSpinBox(map_control)
         self.dc_offset_spinbox.setObjectName(u"dc_offset_spinbox")
-        self.dc_offset_spinbox.setEnabled(False)
+        self.dc_offset_spinbox.setEnabled(True)
 
         self.horizontalLayout_2.addWidget(self.dc_offset_spinbox)
 
@@ -448,7 +457,10 @@ class Ui_map_control(object):
 
         self.a_spinbox = QDoubleSpinBox(map_control)
         self.a_spinbox.setObjectName(u"a_spinbox")
-        self.a_spinbox.setEnabled(False)
+        self.a_spinbox.setEnabled(True)
+        self.a_spinbox.setDecimals(3)
+        self.a_spinbox.setMaximum(999.000000000000000)
+        self.a_spinbox.setSingleStep(0.250000000000000)
 
         self.horizontalLayout_4.addWidget(self.a_spinbox)
 
@@ -465,7 +477,9 @@ class Ui_map_control(object):
 
         self.b_spinbox = QDoubleSpinBox(map_control)
         self.b_spinbox.setObjectName(u"b_spinbox")
-        self.b_spinbox.setEnabled(False)
+        self.b_spinbox.setEnabled(True)
+        self.b_spinbox.setMaximum(250.000000000000000)
+        self.b_spinbox.setSingleStep(0.100000000000000)
 
         self.horizontalLayout_4.addWidget(self.b_spinbox)
 
@@ -489,7 +503,10 @@ class Ui_map_control(object):
 
         self.x1_spinbox = QDoubleSpinBox(map_control)
         self.x1_spinbox.setObjectName(u"x1_spinbox")
-        self.x1_spinbox.setEnabled(False)
+        self.x1_spinbox.setEnabled(True)
+        self.x1_spinbox.setMinimum(0.010000000000000)
+        self.x1_spinbox.setMaximum(999.000000000000000)
+        self.x1_spinbox.setValue(18.000000000000000)
 
         self.horizontalLayout_4.addWidget(self.x1_spinbox)
 
@@ -506,7 +523,8 @@ class Ui_map_control(object):
 
         self.y1_spinbox = QDoubleSpinBox(map_control)
         self.y1_spinbox.setObjectName(u"y1_spinbox")
-        self.y1_spinbox.setEnabled(False)
+        self.y1_spinbox.setEnabled(True)
+        self.y1_spinbox.setMaximum(999.000000000000000)
 
         self.horizontalLayout_4.addWidget(self.y1_spinbox)
 
@@ -523,7 +541,10 @@ class Ui_map_control(object):
 
         self.x2_spinbox = QDoubleSpinBox(map_control)
         self.x2_spinbox.setObjectName(u"x2_spinbox")
-        self.x2_spinbox.setEnabled(False)
+        self.x2_spinbox.setEnabled(True)
+        self.x2_spinbox.setMinimum(0.010000000000000)
+        self.x2_spinbox.setMaximum(999.000000000000000)
+        self.x2_spinbox.setValue(28.000000000000000)
 
         self.horizontalLayout_4.addWidget(self.x2_spinbox)
 
@@ -540,7 +561,8 @@ class Ui_map_control(object):
 
         self.y2_spinbox = QDoubleSpinBox(map_control)
         self.y2_spinbox.setObjectName(u"y2_spinbox")
-        self.y2_spinbox.setEnabled(False)
+        self.y2_spinbox.setEnabled(True)
+        self.y2_spinbox.setMaximum(999.000000000000000)
 
         self.horizontalLayout_4.addWidget(self.y2_spinbox)
 
@@ -618,11 +640,11 @@ class Ui_map_control(object):
         self.b_label.setText(QCoreApplication.translate("map_control", u"b:", None))
         self.b_unit_label.setText(QCoreApplication.translate("map_control", u"[V]    ", None))
         self.x1_label.setText(QCoreApplication.translate("map_control", u"X1:", None))
-        self.x1_unit_label.setText(QCoreApplication.translate("map_control", u"[Vrf]", None))
+        self.x1_unit_label.setText(QCoreApplication.translate("map_control", u"[u]", None))
         self.y1_label.setText(QCoreApplication.translate("map_control", u"Y1:", None))
         self.y1_unit_label.setText(QCoreApplication.translate("map_control", u"[Vdc]", None))
         self.x2_label.setText(QCoreApplication.translate("map_control", u"X2:", None))
-        self.x2_unit_label.setText(QCoreApplication.translate("map_control", u"[Vrf]", None))
+        self.x2_unit_label.setText(QCoreApplication.translate("map_control", u"[u]", None))
         self.y2_label.setText(QCoreApplication.translate("map_control", u"Y2:", None))
         self.y2_unit_label.setText(QCoreApplication.translate("map_control", u"[Vdc]", None))
     # retranslateUi

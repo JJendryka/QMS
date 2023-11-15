@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1304</width>
-    <height>222</height>
+    <width>1579</width>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -165,7 +165,19 @@
      <item>
       <widget class="QDoubleSpinBox" name="rf_u_scale_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
+       <property name="minimum">
+        <double>0.001000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>999.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -193,7 +205,16 @@
      <item>
       <widget class="QDoubleSpinBox" name="mass_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="minimum">
+        <double>0.010000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>999.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>18.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -214,7 +235,13 @@
      <item>
       <widget class="QDoubleSpinBox" name="rf_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="maximum">
+        <double>999.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>18.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -377,7 +404,7 @@
      <item>
       <widget class="QDoubleSpinBox" name="dc_offset_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -545,7 +572,16 @@
      <item>
       <widget class="QDoubleSpinBox" name="a_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
+       <property name="maximum">
+        <double>999.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.250000000000000</double>
        </property>
       </widget>
      </item>
@@ -569,7 +605,13 @@
      <item>
       <widget class="QDoubleSpinBox" name="b_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="maximum">
+        <double>250.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
        </property>
       </widget>
      </item>
@@ -600,14 +642,23 @@
      <item>
       <widget class="QDoubleSpinBox" name="x1_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="minimum">
+        <double>0.010000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>999.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>18.000000000000000</double>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="x1_unit_label">
        <property name="text">
-        <string>[Vrf]</string>
+        <string>[u]</string>
        </property>
       </widget>
      </item>
@@ -624,7 +675,10 @@
      <item>
       <widget class="QDoubleSpinBox" name="y1_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="maximum">
+        <double>999.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -648,14 +702,23 @@
      <item>
       <widget class="QDoubleSpinBox" name="x2_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="minimum">
+        <double>0.010000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>999.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>28.000000000000000</double>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="x2_unit_label">
        <property name="text">
-        <string>[Vrf]</string>
+        <string>[u]</string>
        </property>
       </widget>
      </item>
@@ -672,7 +735,10 @@
      <item>
       <widget class="QDoubleSpinBox" name="y2_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="maximum">
+        <double>999.000000000000000</double>
        </property>
       </widget>
      </item>
