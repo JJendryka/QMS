@@ -3,7 +3,7 @@
 from euromeasure import EuroMeasure
 
 from qms.config import Config
-from qms.consts import MAX_SOURCE_CURRENT, MAX_SOURCE_VOLTAGE
+from qms.consts import MAX_SOURCE_CURRENT, MAX_SOURCE_VOLTAGE, QUADRUPOLE_GENERATOR_CHANNEL
 
 
 def upload_configuration(em: EuroMeasure) -> None:
@@ -22,7 +22,7 @@ def upload_configuration(em: EuroMeasure) -> None:
     em.set_pid_i(conf.pid_i)
     em.set_pid_d(conf.pid_d)
 
-    em.set_generator_frequency(conf.frequency)
+    em.set_generator_frequency(QUADRUPOLE_GENERATOR_CHANNEL, conf.frequency)
 
 
 def upload_setpoint(em: EuroMeasure, setpoint: float) -> None:
