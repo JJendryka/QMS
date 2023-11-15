@@ -15,3 +15,7 @@ class SpectrumView(QtWidgets.QWidget, Ui_SpectrumView):
 
     def set_allow_new_scans(self, allow: bool = True, reason: str = "") -> None:
         """Change if starting new scans is allowed."""
+
+    def load_profile(self) -> None:
+        """Load data from currently loaded profile."""
+        self.spectrum_control.load_profile()

@@ -187,8 +187,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 with path.open("r") as json_file:
                     json_object = json.load(json_file)
                     Config.get().spectrometer_config.load_from_json(json_object["spectrometer"])
+                    Config.get().parameters.load_from_json(json_object["parameters"])
                 self.set_loaded_profile(path)
                 self.diagnostic_tab.load_profile()
+                self.stability_map_tab.load_profile()
+                self.spectrum_tab.load_profile()
             except OSError as e:
                 logger.error("Cannot load profile: %s, os error: %s", path, e.strerror)
         else:
@@ -208,7 +211,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Save profile to path."""
         if path is not None:
             logger.debug("Saving profile to: %s", path)
-            json_object = {"spectrometer": Config.get().spectrometer_config.dump_to_json()}
+            json_object = {
+                "spectrometer": Config.get().spectrometer_config.dump_to_json(),
+                "parameters": Config.get().parameters.dump_to_json(),
+            }
             try:
                 with path.open("w") as json_file:
                     json.dump(json_object, json_file)

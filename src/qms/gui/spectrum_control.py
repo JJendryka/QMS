@@ -14,3 +14,7 @@ class SpectrumControl(QtWidgets.QWidget, Ui_spectrum_control):
         """Initialize with default configuration."""
         super().__init__(*args, **kwargs)
         self.setupUi(self)
+
+    def load_profile(self) -> None:
+        """Load data from currently loaded profile."""
+        # TODO: Implement

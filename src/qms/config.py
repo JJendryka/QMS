@@ -39,6 +39,7 @@ class Config:
         self.args = args
         self.__class__.__instance = self
         self.spectrometer_config = SpectrometerConfig()
+        self.parameters = MeasurementParameters()
         self.state = State()
 
 
@@ -73,6 +74,33 @@ class SpectrometerConfig:
             "source": {"cc": self.source_cc, "voltage": self.source_voltage, "current": self.source_current},
             "pid": {"p": self.pid_p, "i": self.pid_i, "d": self.pid_d, "enabled": self.pid_enabled},
             "frequency": self.frequency,
+        }
+
+
+class MeasurementParameters:
+    """Stores parameters for measurement that are not physical."""
+
+    def __init__(self) -> None:
+        """Create new MeasurementParameters objec with default values."""
+        self.rf_to_unit_factor: float = 1
+        self.map_dc_offset: float = 0
+        self.a: float = 0
+        self.b: float = 0
+
+    def load_from_json(self, json_object: dict) -> None:
+        """Update object with data from json_object."""
+        self.rf_to_unit_factor = float(safely_get(json_object, ["rf_to_unit_factor"], (float, int), 1))
+        self.map_dc_offset = float(safely_get(json_object, ["map_dc_offset"], (float, int), 0))
+        self.a = float(safely_get(json_object, ["a"], (float, int), 0))
+        self.b = float(safely_get(json_object, ["b"], (float, int), 0))
+
+    def dump_to_json(self) -> dict:
+        """Dump the object to json object."""
+        return {
+            "a": self.a,
+            "b": self.b,
+            "rf_to_unit_factor": self.rf_to_unit_factor,
+            "map_dc_offset": self.map_dc_offset,
         }
 
 
