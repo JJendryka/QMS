@@ -6,7 +6,7 @@ import time
 import numpy as np
 from PySide6.QtCore import QObject, QRunnable, Signal, Slot
 
-from qms.backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
+from euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 from qms.consts import (
     DC_MINUS_HVPSU_CHANNEL,
     DC_PLUS_HVPSU_CHANNEL,

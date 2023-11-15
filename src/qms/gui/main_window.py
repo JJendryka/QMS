@@ -5,9 +5,9 @@ import logging
 from pathlib import Path
 
 import serial.tools.list_ports
+from euromeasure import EMCannotConnectError, EuroMeasure
 from PySide6 import QtCore, QtGui, QtWidgets
 
-from qms.backend.euromeasure import EMCannotConnectError, EuroMeasure
 from qms.backend.fake_euromeasure import FakeEuroMeasure
 from qms.config import Config
 from qms.consts import AUTOSAVE_PERIOD, BACKUP_FILENAME, LAST_STATE_FILENAME

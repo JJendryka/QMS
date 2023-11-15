@@ -3,8 +3,7 @@
 import logging
 
 import numpy as np
-
-from qms.backend.euromeasure import EuroMeasure
+from euromeasure import EuroMeasure
 
 logger = logging.getLogger("main")
 

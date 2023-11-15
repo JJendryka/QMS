@@ -4,9 +4,9 @@ import logging
 import time
 
 import numpy as np
+from euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 from PySide6.QtCore import QObject, QRunnable, Signal, Slot
 
-from qms.backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 from qms.consts import MONITOR_VOLTMETER_CHANNEL, QUADRUPOLE_GENERATOR_CHANNEL
 
 logger = logging.getLogger("main")

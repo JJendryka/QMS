@@ -5,7 +5,7 @@ import time
 
 from PySide6 import QtCore, QtWidgets
 
-from qms.backend.euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
+from euromeasure import EMConnectionError, EMError, EMIncorrectResponseError, EuroMeasure
 from qms.consts import (
     DETECTOR_VOLTMETER_CHANNEL,
 )

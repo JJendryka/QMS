@@ -1,6 +1,7 @@
 """Contains function for uploading constant parameters to EuroMeasure."""
 
-from qms.backend.euromeasure import EuroMeasure
+from euromeasure import EuroMeasure
+
 from qms.config import Config
 from qms.consts import MAX_SOURCE_CURRENT, MAX_SOURCE_VOLTAGE
 
