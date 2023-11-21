@@ -1,14 +1,16 @@
 """Contains MapControl widget."""
 
 import logging
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from PySide6 import QtWidgets
 
 from qms.backend.spectrum_scan import SpectrumScanner
 from qms.config import Config
-from qms.gui.main_window import MainWindow
 from qms.layouts.map_control_ui import Ui_map_control
+
+if TYPE_CHECKING:
+    from qms.gui.main_window import MainWindow
 
 logger = logging.getLogger("main")
 
@@ -215,3 +217,8 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         if self.main_window is not None:
             self.main_window.set_allow_new_scans(True)
             QtWidgets.QMessageBox.critical(self.main_window, "Error!", exception.args[0])
+
+    def set_allow_new_scans(self, allow: bool = True, reason: str = "") -> None:
+        """Enable/disable UI elements that start new scan."""
+        self.resonance_scan_button.setEnabled(allow)
+        self.resonance_scan_button.setToolTip(reason)
