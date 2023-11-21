@@ -16,6 +16,7 @@ class MapView(QtWidgets.QWidget, Ui_map_view):
 
     def set_allow_new_scans(self, allow: bool = True, reason: str = "") -> None:
         """Change is starting new scans is allowed."""
+        self.map_control.set_allow_new_scans(allow, reason)
 
     def load_profile(self) -> None:
         """Load data from currently loaded profile."""

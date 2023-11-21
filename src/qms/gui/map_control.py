@@ -26,6 +26,7 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.pause_xy_updates: bool = False
         self.dc_step = 0
         self.main_window: MainWindow | None = None
+        self.scanner: SpectrumScanner | None = None
         self.setup_signals()
 
     def setup_signals(self) -> None:
@@ -46,6 +47,8 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.dc_max_spinbox.valueChanged.connect(self.dc_min_max_size_updated)
         self.dc_step_size_spinbox.valueChanged.connect(self.dc_min_max_size_updated)
         self.dc_step_count_spinbox.valueChanged.connect(self.dc_step_count_updated)
+        self.start_push_button.clicked.connect(self.start_measurement)
+        self.stop_push_button.clicked.connect(self.stop_measurement)
 
     def load_profile(self) -> None:
         """Load data from currently loaded profile."""
@@ -180,11 +183,11 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
             if self.main_window.euromeasure is not None:
                 ac, dc = self.calculate_ac_dc()
                 self.dc_step += 1
-                scanner = SpectrumScanner(self.main_window.euromeasure, ac, dc)
-                scanner.signals.data_point_acquired.connect(self.received_spectrum_point)
-                scanner.signals.error_occured.connect(self.handle_em_exception)
-                scanner.signals.finished.connect(self.measurement_step_finished)
-                self.main_window.thread_pool.start(scanner)
+                self.scanner = SpectrumScanner(self.main_window.euromeasure, ac, dc)
+                self.scanner.signals.data_point_acquired.connect(self.received_spectrum_point)
+                self.scanner.signals.error_occured.connect(self.handle_em_exception)
+                self.scanner.signals.finished.connect(self.measurement_step_finished)
+                self.main_window.thread_pool.start(self.scanner)
             else:
                 logger.error("Tried to start stability map scan when EuroMeasure system is not connected")
                 QtWidgets.QMessageBox.critical(self.main_window, "Error!", "EuroMeasure system is not connected")
@@ -204,12 +207,17 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         ac = [rf_min + i * rf_step_size for i in range(rf_step_count)]
 
         dc_min = self.dc_min_spinbox.value()
-        dc_step_count = self.dc_step_count_spinbox.value()
         dc_step_size = self.dc_step_size_spinbox.value()
         dc_rf_offset = self.dc_offset_spinbox.value()
-        dc = [dc_min + self.dc_step * dc_step_size + dc_rf_offset * ac[i] for i in range(dc_step_count)]
+        dc = [dc_min + self.dc_step * dc_step_size + dc_rf_offset * ac[i] for i in range(rf_step_count)]
 
         return (ac, dc)
+
+    def stop_measurement(self) -> None:
+        """Stop current measurement."""
+        if self.scanner is not None:
+            self.scanner.signals.stop()
+            self.measurement_finished()
 
     # TODO: merge with one in diagnostic tab
     def handle_em_exception(self, exception: Exception) -> None:
@@ -220,5 +228,5 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
 
     def set_allow_new_scans(self, allow: bool = True, reason: str = "") -> None:
         """Enable/disable UI elements that start new scan."""
-        self.resonance_scan_button.setEnabled(allow)
-        self.resonance_scan_button.setToolTip(reason)
+        self.start_push_button.setEnabled(allow)
+        self.start_push_button.setToolTip(reason)

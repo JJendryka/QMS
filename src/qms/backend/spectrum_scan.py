@@ -60,6 +60,8 @@ class SpectrumScanner(QtCore.QRunnable):
         try:
             upload_config.upload_configuration(self.em)
             for i in range(len(self.ac_voltages)):
+                if self.signals.stopped:
+                    return
                 self.em.set_hvpsu_voltage(DC_PLUS_HVPSU_CHANNEL, self.dc_voltages[i])
                 self.em.set_hvpsu_voltage(DC_MINUS_HVPSU_CHANNEL, -self.dc_voltages[i])
                 if Config.get().spectrometer_config.pid_enabled:
