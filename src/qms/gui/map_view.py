@@ -13,6 +13,7 @@ class MapView(QtWidgets.QWidget, Ui_map_view):
         """Initialize with default configuration."""
         super().__init__(*args, **kwargs)
         self.setupUi(self)
+        self.map_control.map_plot = self.map_plot
 
     def set_allow_new_scans(self, allow: bool = True, reason: str = "") -> None:
         """Change is starting new scans is allowed."""

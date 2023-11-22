@@ -53,6 +53,8 @@ class Plot(QtWidgets.QWidget):
         self.canvas.axes.set_xlim(min_x, max_x)
         self.canvas.axes.set_ylim(min_y, max_y)
 
+        self.update_drawing()
+
     def insert_point(self, index: int, x: float, y: float, value: float) -> None:
         """Add new data point to plot."""
         self.canvas.data[index] = value
@@ -68,7 +70,8 @@ class Plot(QtWidgets.QWidget):
         self.data: np.ndarray[Literal["N"], np.dtype[Any]] = np.zeros(4)
         self.y_coords: np.ndarray[Literal["N"], np.dtype[Any]] = np.zeros(4)
         self.x_coords: np.ndarray[Literal["N"], np.dtype[Any]] = np.zeros(4)
-        self.canvas.draw()
+
+        self.update_drawing()
 
 
 class MapPlot(QtWidgets.QWidget, Ui_map_plot):

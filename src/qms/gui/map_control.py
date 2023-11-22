@@ -7,6 +7,7 @@ from PySide6 import QtWidgets
 
 from qms.backend.spectrum_scan import SpectrumScanner
 from qms.config import Config
+from qms.gui.map_plot import MapPlot
 from qms.layouts.map_control_ui import Ui_map_control
 
 if TYPE_CHECKING:
@@ -26,6 +27,7 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.pause_xy_updates: bool = False
         self.dc_step = 0
         self.main_window: MainWindow | None = None
+        self.map_plot: MapPlot | None = None
         self.scanner: SpectrumScanner | None = None
         self.setup_signals()
 
@@ -161,6 +163,15 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
             self.main_window.set_allow_new_scans(False, "Stability map scan is running")
         self.dc_step = 0
         self.stop_push_button.setEnabled(True)
+        if self.map_plot is not None:
+            self.map_plot.plot.new_plot(
+                self.rf_step_count_spinbox.value(),
+                self.rf_min_spinbox.value(),
+                self.rf_step_size_spinbox.value() * self.rf_step_count_spinbox.value(),
+                self.dc_step_count_spinbox.value(),
+                self.dc_min_spinbox.value(),
+                self.dc_step_size_spinbox.value() * self.dc_step_count_spinbox.value(),
+            )
         self.next_measurement_step()
 
     def measurement_finished(self) -> None:
