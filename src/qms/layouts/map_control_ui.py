@@ -416,7 +416,7 @@ class Ui_map_control(object):
 
         self.start_push_button = QPushButton(map_control)
         self.start_push_button.setObjectName(u"start_push_button")
-        self.start_push_button.setEnabled(False)
+        self.start_push_button.setEnabled(True)
 
         self.horizontalLayout_3.addWidget(self.start_push_button)
 

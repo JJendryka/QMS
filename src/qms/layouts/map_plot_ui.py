@@ -125,20 +125,15 @@ class Ui_map_plot(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        self.plot = QWidget(map_plot)
-        self.plot.setObjectName(u"plot")
+        self.chart = QWidget(map_plot)
+        self.chart.setObjectName(u"chart")
         sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.plot.sizePolicy().hasHeightForWidth())
-        self.plot.setSizePolicy(sizePolicy1)
+        sizePolicy1.setHeightForWidth(self.chart.sizePolicy().hasHeightForWidth())
+        self.chart.setSizePolicy(sizePolicy1)
 
-        self.verticalLayout.addWidget(self.plot)
-
-        self.navigation_bar = QWidget(map_plot)
-        self.navigation_bar.setObjectName(u"navigation_bar")
-
-        self.verticalLayout.addWidget(self.navigation_bar)
+        self.verticalLayout.addWidget(self.chart)
 
 
         self.retranslateUi(map_plot)
