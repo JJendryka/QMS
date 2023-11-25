@@ -5,7 +5,8 @@ from typing import TYPE_CHECKING, Any, cast
 
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
+from matplotlib.backends.backend_qt import NavigationToolbar2QT
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
 from PySide6 import QtGui, QtWidgets
@@ -102,7 +103,6 @@ class MplCanvas(FigureCanvasQTAgg):
 
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
 
-    # Commented out for now as it throws an error with multiple axes
     def resizeEvent(self, event: QtGui.QResizeEvent) -> None:  # noqa: N802
         """Handle resize event - update layout."""
         super().resizeEvent(event)
@@ -113,6 +113,7 @@ class MplCanvas(FigureCanvasQTAgg):
         bottom = 0.3 * y_scale
         width = 1 - left - ((0.5 * (len(self.axes) - 1) + 0.05) * x_scale)
         height = 1 - bottom - (0.05 * y_scale)
+        # TODO: Do something about those magic consts
         self.axes[0].set_position((left, bottom, width, height))
 
         for index, axes in enumerate(self.axes[1:]):
@@ -419,8 +420,10 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         self.pid_d_spinbox.setValue(config.pid_d)
         self.cc_radiobutton.setChecked(config.source_cc)
         self.cv_radiobutton.setChecked(not config.source_cc)
-        self.source_voltage_spinbox.setValue(config.source_voltage)
-        self.source_current_spinbox.setValue(config.source_current)
+        if config.source_voltage is not None:
+            self.source_voltage_spinbox.setValue(config.source_voltage)
+        if config.source_current is not None:
+            self.source_current_spinbox.setValue(config.source_current)
 
         self.spectrometer_config_update_paused = False
 

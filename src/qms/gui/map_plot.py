@@ -3,7 +3,8 @@
 from typing import Any, Literal
 
 import numpy as np
-from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
+from matplotlib.backends.backend_qt import NavigationToolbar2QT
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 from PySide6 import QtWidgets
 from PySide6.QtGui import QResizeEvent
