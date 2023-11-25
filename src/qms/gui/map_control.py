@@ -4,7 +4,7 @@ import logging
 from typing import TYPE_CHECKING, Any
 
 from PySide6 import QtWidgets
-
+import numpy as np
 from qms.backend.spectrum_scan import SpectrumScanner
 from qms.config import Config
 from qms.gui.map_plot import MapPlot
@@ -134,28 +134,28 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         rf_min = self.rf_min_spinbox.value()
         rf_max = self.rf_max_spinbox.value()
         rf_step_size = self.rf_step_size_spinbox.value()
-        self.rf_step_count_spinbox.setValue((rf_max - rf_min) / rf_step_size)
+        self.rf_step_count_spinbox.setValue(int((rf_max - rf_min) / rf_step_size))
 
     def dc_min_max_size_updated(self) -> None:
         """Update DC step count based when other values changed."""
         dc_min = self.dc_min_spinbox.value()
         dc_max = self.dc_max_spinbox.value()
         dc_step_size = self.dc_step_size_spinbox.value()
-        self.dc_step_count_spinbox.setValue((dc_max - dc_min) / dc_step_size)
+        self.dc_step_count_spinbox.setValue(int((dc_max - dc_min) / dc_step_size))
 
     def rf_step_count_updated(self) -> None:
         """Update RF step size when step count changes."""
         rf_min = self.rf_min_spinbox.value()
         rf_max = self.rf_max_spinbox.value()
         rf_step_count = self.rf_step_count_spinbox.value()
-        self.rf_step_size_spinbox.setValue((rf_max - rf_min) / rf_step_count)
+        self.rf_step_size_spinbox.setValue(int((rf_max - rf_min) / rf_step_count))
 
     def dc_step_count_updated(self) -> None:
         """Update RF step size when step count changes."""
         dc_min = self.dc_min_spinbox.value()
         dc_max = self.dc_max_spinbox.value()
         dc_step_count = self.dc_step_count_spinbox.value()
-        self.dc_step_size_spinbox.setValue((dc_max - dc_min) / dc_step_count)
+        self.dc_step_size_spinbox.setValue(int((dc_max - dc_min) / dc_step_count))
 
     def start_measurement(self) -> None:
         """Start measurement of stability map."""
@@ -163,15 +163,18 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
             self.main_window.set_allow_new_scans(False, "Stability map scan is running")
         self.dc_step = 0
         self.stop_push_button.setEnabled(True)
+        xs = (
+            np.arange(0, self.rf_step_count_spinbox.value()) * self.rf_step_size_spinbox.value()
+            + self.rf_min_spinbox.value()
+        )
+        ys = (
+            np.arange(0, self.dc_step_count_spinbox.value()) * self.dc_step_size_spinbox.value()
+            + self.dc_min_spinbox.value()
+        )
+        xx, yy = np.meshgrid(xs, ys)
+        yy = yy + self.dc_offset_spinbox.value() * xx
         if self.map_plot is not None:
-            self.map_plot.plot.new_plot(
-                self.rf_step_count_spinbox.value(),
-                self.rf_min_spinbox.value(),
-                self.rf_step_size_spinbox.value() * self.rf_step_count_spinbox.value(),
-                self.dc_step_count_spinbox.value(),
-                self.dc_min_spinbox.value(),
-                self.dc_step_size_spinbox.value() * self.dc_step_count_spinbox.value(),
-            )
+            self.map_plot.new_plot(xx, yy)
         self.next_measurement_step()
 
     def measurement_finished(self) -> None:
@@ -183,6 +186,7 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
 
     def measurement_step_finished(self) -> None:
         """Handle last measurement finishing."""
+        self.dc_step += 1
         if self.dc_step == self.dc_step_count_spinbox.value():
             self.measurement_finished()
         else:
@@ -193,7 +197,6 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         if self.main_window is not None:
             if self.main_window.euromeasure is not None:
                 ac, dc = self.calculate_ac_dc()
-                self.dc_step += 1
                 self.scanner = SpectrumScanner(self.main_window.euromeasure, ac, dc)
                 self.scanner.signals.data_point_acquired.connect(self.received_spectrum_point)
                 self.scanner.signals.error_occured.connect(self.handle_em_exception)
@@ -205,10 +208,12 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         else:
             logger.error("Main window reference is not set")
 
-    def received_spectrum_point(
-        self, ac_step: int, detector_voltage: float, monitor_voltage: float, source: float
-    ) -> None:
+    def received_spectrum_point(self, rf_step: int, detector_voltage: float) -> None:
         """Handle received data from spectrum scanner."""
+        if self.map_plot is not None:
+            self.map_plot.new_point(rf_step, self.dc_step, detector_voltage)
+        else:
+            logger.error("Tried to access map_plot when it wasn't set.")
 
     def calculate_ac_dc(self) -> tuple[list[float], list[float]]:
         """Calculate DC and AC values for next spectrum measurement."""
