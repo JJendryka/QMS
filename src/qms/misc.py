@@ -4,10 +4,45 @@ import logging
 import os
 import sys
 from pathlib import Path
+from typing import Literal, Protocol, TypeAlias, TypeVarTuple, Unpack
 
+import numpy as np
 import xdg_base_dirs
 
 logger = logging.getLogger("main")
+
+Array1Df: TypeAlias = np.ndarray[Literal["N"], np.dtype[np.float_]]
+Array2Df: TypeAlias = np.ndarray[Literal["N", "N"], np.dtype[np.float_]]
+
+T = TypeVarTuple("T")
+
+
+class UILock:
+    """Lock that is manually set with 'with' and evaluates to True if locked and can wrap a function."""
+
+    def __init__(self) -> None:
+        """Initialize in unlocked state."""
+        self.locked: bool = False
+
+    def __bool__(self) -> bool:
+        """Evaluate to True if locked."""
+        return self.locked
+
+    def __enter__(self) -> None:
+        """Lock when entering."""
+        self.locked = True
+
+    def __exit__(self) -> None:
+        """Unlock when exiting."""
+        self.locked = False
+
+    class _Callback(Protocol[Unpack[T]]):
+        def __call__(self, *args: Unpack[T]) -> None:
+            pass
+
+    def __call__(self, callback: _Callback) -> _Callback:
+        """Wrap callback with lock. Won't be called when locked."""
+        return lambda *arg: callback(*arg) if not self.locked else None
 
 
 def get_home_dir() -> Path:

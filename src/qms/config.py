@@ -13,7 +13,7 @@ from typing import Any
 from qms.consts import LAST_STATE_FILENAME
 from qms.misc import get_home_dir
 
-logger = logging.getLogger("__main__")
+logger = logging.getLogger("main")
 
 
 class Config:
