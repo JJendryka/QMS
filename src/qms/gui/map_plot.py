@@ -39,6 +39,7 @@ class MplCanvas(FigureCanvasQTAgg):
         data: np.ndarray[Literal["N"], np.dtype[np.float_]],
     ) -> None:
         """Create new colormesh with new coordinates."""
+        self.axes.clear()
         self.mesh = self.axes.pcolormesh(x_coords, y_coords, data, shading="nearest")
         self.update_drawing()
 
