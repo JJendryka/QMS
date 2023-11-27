@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 from pathlib import Path
+from types import TracebackType
 from typing import Literal, Protocol, TypeAlias, TypeVarTuple, Unpack
 
 import numpy as np
@@ -32,7 +33,12 @@ class UILock:
         """Lock when entering."""
         self.locked = True
 
-    def __exit__(self) -> None:
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
+        exc_traceback: TracebackType | None,
+    ) -> None:
         """Unlock when exiting."""
         self.locked = False
 

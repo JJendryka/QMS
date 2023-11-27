@@ -25,9 +25,7 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         """Initialize with default configuration."""
         super().__init__(*args, **kwargs)
         self.setupUi(self)
-        self.pause_ui_signals = UILock()
-        self.parameters_update_paused: bool = False
-        self.pause_xy_updates: bool = False
+        self.ui_lock = UILock()
         self.dc_step = 0
         self.rf_points: Array2Df | None = None
         self.dc_points: Array2Df | None = None
@@ -38,22 +36,22 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
 
     def setup_signals(self) -> None:
         """Connect all needed signals to their handlers."""
-        self.rf_u_scale_spinbox.valueChanged.connect(self.rf_to_unit_factor_updated)
-        self.dc_offset_spinbox.valueChanged.connect(self.map_dc_offset_updated)
-        self.a_spinbox.valueChanged.connect(self.a_updated)
-        self.b_spinbox.valueChanged.connect(self.b_updated)
-        self.x1_spinbox.valueChanged.connect(self.xy_updated)
-        self.x2_spinbox.valueChanged.connect(self.xy_updated)
-        self.y1_spinbox.valueChanged.connect(self.xy_updated)
-        self.y2_spinbox.valueChanged.connect(self.xy_updated)
-        self.rf_min_spinbox.valueChanged.connect(self.rf_min_max_size_updated)
-        self.rf_max_spinbox.valueChanged.connect(self.rf_min_max_size_updated)
-        self.rf_step_size_spinbox.valueChanged.connect(self.rf_min_max_size_updated)
-        self.rf_step_count_spinbox.valueChanged.connect(self.rf_step_count_updated)
-        self.dc_min_spinbox.valueChanged.connect(self.dc_min_max_size_updated)
-        self.dc_max_spinbox.valueChanged.connect(self.dc_min_max_size_updated)
-        self.dc_step_size_spinbox.valueChanged.connect(self.dc_min_max_size_updated)
-        self.dc_step_count_spinbox.valueChanged.connect(self.dc_step_count_updated)
+        self.rf_u_scale_spinbox.valueChanged.connect(self.ui_lock(self.rf_to_unit_factor_updated))
+        self.dc_offset_spinbox.valueChanged.connect(self.ui_lock(self.map_dc_offset_updated))
+        self.a_spinbox.valueChanged.connect(self.ui_lock(self.a_updated))
+        self.b_spinbox.valueChanged.connect(self.ui_lock(self.b_updated))
+        self.x1_spinbox.valueChanged.connect(self.ui_lock(self.xy_updated))
+        self.x2_spinbox.valueChanged.connect(self.ui_lock(self.xy_updated))
+        self.y1_spinbox.valueChanged.connect(self.ui_lock(self.xy_updated))
+        self.y2_spinbox.valueChanged.connect(self.ui_lock(self.xy_updated))
+        self.rf_min_spinbox.valueChanged.connect(self.ui_lock(self.rf_min_max_size_updated))
+        self.rf_max_spinbox.valueChanged.connect(self.ui_lock(self.rf_min_max_size_updated))
+        self.rf_step_size_spinbox.valueChanged.connect(self.ui_lock(self.rf_min_max_size_updated))
+        self.rf_step_count_spinbox.valueChanged.connect(self.ui_lock(self.rf_step_count_updated))
+        self.dc_min_spinbox.valueChanged.connect(self.ui_lock(self.dc_min_max_size_updated))
+        self.dc_max_spinbox.valueChanged.connect(self.ui_lock(self.dc_min_max_size_updated))
+        self.dc_step_size_spinbox.valueChanged.connect(self.ui_lock(self.dc_min_max_size_updated))
+        self.dc_step_count_spinbox.valueChanged.connect(self.ui_lock(self.dc_step_count_updated))
         self.start_push_button.clicked.connect(self.start_measurement)
         self.stop_push_button.clicked.connect(self.stop_measurement)
 
@@ -67,103 +65,107 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.b_spinbox.setValue(params.b)
         self.pause_xy_updates = False
 
-    def rf_to_unit_factor_updated(self) -> None:
+    def rf_to_unit_factor_updated(self, *_: Any) -> None:
         """On spinbox value change, update other values and save."""
         rf_to_unit_factor = self.rf_u_scale_spinbox.value()
         Config.get().parameters.rf_to_unit_factor = rf_to_unit_factor
         mass = self.mass_spinbox.value()
-        self.rf_spinbox.setValue(mass / rf_to_unit_factor)
+        with self.ui_lock:
+            self.rf_spinbox.setValue(mass / rf_to_unit_factor)
         self.ab_updated()
 
-    def mass_updated(self) -> None:
+    def mass_updated(self, *_: Any) -> None:
         """On spinbox value change, update other values and save."""
         mass = self.mass_spinbox.value()
         rf = self.rf_spinbox.value()
         rf_to_unit_factor = mass / rf
         Config.get().parameters.rf_to_unit_factor = rf_to_unit_factor
+        with self.ui_lock:
+            self.rf_u_scale_spinbox.setValue(rf_to_unit_factor)
+        self.ab_updated()
 
-    def rf_updated(self) -> None:
+    def rf_updated(self, *_: Any) -> None:
         """On spinbox value change, update other values and save."""
         mass = self.mass_spinbox.value()
         rf = self.rf_spinbox.value()
         rf_to_unit_factor = mass / rf
         Config.get().parameters.rf_to_unit_factor = rf_to_unit_factor
+        with self.ui_lock:
+            self.rf_u_scale_spinbox.setValue(rf_to_unit_factor)
+        self.ab_updated()
 
-    def map_dc_offset_updated(self) -> None:
+    def map_dc_offset_updated(self, *_: Any) -> None:
         """On spinbox value change, update other values and save."""
         Config.get().parameters.map_dc_offset = self.dc_offset_spinbox.value()
 
-    def a_updated(self) -> None:
+    def a_updated(self, *_: Any) -> None:
         """On spinbox value change, update other values and save."""
         Config.get().parameters.a = self.a_spinbox.value()
         self.ab_updated()
 
-    def b_updated(self) -> None:
+    def b_updated(self, *_: Any) -> None:
         """On spinbox value change, update other values and save."""
         Config.get().parameters.b = self.b_spinbox.value()
         self.ab_updated()
 
-    def ab_updated(self) -> None:
+    def ab_updated(self, *_: Any) -> None:
         """Recalculate calibration points based on changed a and b."""
-        if not self.pause_xy_updates:
-            a = self.a_spinbox.value()
-            b = self.b_spinbox.value()
+        a = self.a_spinbox.value()
+        b = self.b_spinbox.value()
 
-            rf_u_factor = Config.get().parameters.rf_to_unit_factor
+        rf_u_factor = self.rf_u_scale_spinbox.value()
 
-            self.pause_xy_updates = True
+        with self.ui_lock:
             self.y1_spinbox.setValue(self.x1_spinbox.value() / rf_u_factor * a + b)
             self.y2_spinbox.setValue(self.x2_spinbox.value() / rf_u_factor * a + b)
-            self.pause_xy_updates = False
 
-    def xy_updated(self) -> None:
+    def xy_updated(self, *_: Any) -> None:
         """If any of the calibration coordinates change, update a and b."""
-        if not self.pause_xy_updates:
-            params = Config.get().parameters
-            rf_u_factor = params.rf_to_unit_factor
-            x1 = self.x1_spinbox.value() / rf_u_factor
-            x2 = self.x2_spinbox.value() / rf_u_factor
-            y1 = self.y1_spinbox.value()
-            y2 = self.y2_spinbox.value()
-            a = (y2 - y1) / (x2 - x1)
-            b = y1 - a * x1
-            params.a = a
-            params.b = b
-            self.pause_xy_updates = True
+        params = Config.get().parameters
+        rf_u_factor = params.rf_to_unit_factor
+        x1 = self.x1_spinbox.value() / rf_u_factor
+        x2 = self.x2_spinbox.value() / rf_u_factor
+        y1 = self.y1_spinbox.value()
+        y2 = self.y2_spinbox.value()
+        a = (y2 - y1) / (x2 - x1)
+        b = y1 - a * x1
+        params.a = a
+        params.b = b
+        with self.ui_lock:
             self.a_spinbox.setValue(a)
             self.b_spinbox.setValue(b)
-            self.pause_xy_updates = False
 
-    def rf_min_max_size_updated(self) -> None:
+    def rf_min_max_size_updated(self, *_: Any) -> None:
         """Update RF step count based when other values changed."""
-        if not self.pause_xy_updates:
-            rf_min = self.rf_min_spinbox.value()
-            rf_max = self.rf_max_spinbox.value()
-            rf_step_size = self.rf_step_size_spinbox.value()
-            self.pause_xy_updates = True
+        rf_min = self.rf_min_spinbox.value()
+        rf_max = self.rf_max_spinbox.value()
+        rf_step_size = self.rf_step_size_spinbox.value()
+        with self.ui_lock:
             self.rf_step_count_spinbox.setValue(int((rf_max - rf_min) / rf_step_size))
-            self.pause_xy_updates = False
 
-    def dc_min_max_size_updated(self) -> None:
+    def dc_min_max_size_updated(self, *_: Any) -> None:
         """Update DC step count based when other values changed."""
         dc_min = self.dc_min_spinbox.value()
         dc_max = self.dc_max_spinbox.value()
         dc_step_size = self.dc_step_size_spinbox.value()
-        self.dc_step_count_spinbox.setValue(int((dc_max - dc_min) / dc_step_size))
+        with self.ui_lock:
+            self.dc_step_count_spinbox.setValue(int((dc_max - dc_min) / dc_step_size))
 
-    def rf_step_count_updated(self) -> None:
+    def rf_step_count_updated(self, *_: Any) -> None:
         """Update RF step size when step count changes."""
         rf_min = self.rf_min_spinbox.value()
         rf_max = self.rf_max_spinbox.value()
         rf_step_count = self.rf_step_count_spinbox.value()
-        self.rf_step_size_spinbox.setValue(int((rf_max - rf_min) / rf_step_count))
+        with self.ui_lock:
+            self.rf_step_size_spinbox.setValue((rf_max - rf_min) / rf_step_count)
 
-    def dc_step_count_updated(self) -> None:
+    def dc_step_count_updated(self, *_: Any) -> None:
         """Update RF step size when step count changes."""
         dc_min = self.dc_min_spinbox.value()
         dc_max = self.dc_max_spinbox.value()
         dc_step_count = self.dc_step_count_spinbox.value()
-        self.dc_step_size_spinbox.setValue(int((dc_max - dc_min) / dc_step_count))
+        with self.ui_lock:
+            self.dc_step_size_spinbox.setValue((dc_max - dc_min) / dc_step_count)
 
     def calculate_measurement_points(
         self,
