@@ -28,9 +28,12 @@ class Ui_map_plot(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer_2)
+
         self.log_checkbox = QCheckBox(map_plot)
         self.log_checkbox.setObjectName(u"log_checkbox")
-        self.log_checkbox.setEnabled(False)
 
         self.horizontalLayout.addWidget(self.log_checkbox)
 
@@ -48,7 +51,7 @@ class Ui_map_plot(object):
 
         self.current_min_lineedit = QLineEdit(map_plot)
         self.current_min_lineedit.setObjectName(u"current_min_lineedit")
-        self.current_min_lineedit.setEnabled(False)
+        self.current_min_lineedit.setEnabled(True)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -76,7 +79,7 @@ class Ui_map_plot(object):
 
         self.current_max_lineedit = QLineEdit(map_plot)
         self.current_max_lineedit.setObjectName(u"current_max_lineedit")
-        self.current_max_lineedit.setEnabled(False)
+        self.current_max_lineedit.setEnabled(True)
         sizePolicy.setHeightForWidth(self.current_max_lineedit.sizePolicy().hasHeightForWidth())
         self.current_max_lineedit.setSizePolicy(sizePolicy)
 
@@ -96,27 +99,31 @@ class Ui_map_plot(object):
 
         self.scale_current_button = QPushButton(map_plot)
         self.scale_current_button.setObjectName(u"scale_current_button")
-        self.scale_current_button.setEnabled(False)
+        self.scale_current_button.setEnabled(True)
 
         self.horizontalLayout.addWidget(self.scale_current_button)
 
         self.scale_rf_button = QPushButton(map_plot)
         self.scale_rf_button.setObjectName(u"scale_rf_button")
-        self.scale_rf_button.setEnabled(False)
+        self.scale_rf_button.setEnabled(True)
 
         self.horizontalLayout.addWidget(self.scale_rf_button)
 
         self.scale_dc_button = QPushButton(map_plot)
         self.scale_dc_button.setObjectName(u"scale_dc_button")
-        self.scale_dc_button.setEnabled(False)
+        self.scale_dc_button.setEnabled(True)
 
         self.horizontalLayout.addWidget(self.scale_dc_button)
 
         self.scanline_checkbox = QCheckBox(map_plot)
         self.scanline_checkbox.setObjectName(u"scanline_checkbox")
-        self.scanline_checkbox.setEnabled(False)
+        self.scanline_checkbox.setEnabled(True)
 
         self.horizontalLayout.addWidget(self.scanline_checkbox)
+
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer_3)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -148,7 +155,10 @@ class Ui_map_plot(object):
 
     def retranslateUi(self, map_plot):
         map_plot.setWindowTitle(QCoreApplication.translate("map_plot", u"Form", None))
-        self.log_checkbox.setText(QCoreApplication.translate("map_plot", u"Log Current", None))
+#if QT_CONFIG(tooltip)
+        self.log_checkbox.setToolTip(QCoreApplication.translate("map_plot", u"Plot current data wih logarithmic scale", None))
+#endif // QT_CONFIG(tooltip)
+        self.log_checkbox.setText(QCoreApplication.translate("map_plot", u"Log current", None))
         self.current_min_label.setText(QCoreApplication.translate("map_plot", u"Current Min:", None))
         self.current_min_unit_label.setText(QCoreApplication.translate("map_plot", u"[A]", None))
         self.current_max_label.setText(QCoreApplication.translate("map_plot", u"Current Max:", None))

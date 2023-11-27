@@ -12,8 +12,8 @@ import xdg_base_dirs
 
 logger = logging.getLogger("main")
 
-Array1Df: TypeAlias = np.ndarray[Literal["N"], np.dtype[np.float_]]
-Array2Df: TypeAlias = np.ndarray[Literal["N", "N"], np.dtype[np.float_]]
+Array1Df: TypeAlias = np.ndarray[Literal["N"], np.dtype[np.float32]]
+Array2Df: TypeAlias = np.ndarray[Literal["N", "N"], np.dtype[np.float32]]
 
 T = TypeVarTuple("T")
 
