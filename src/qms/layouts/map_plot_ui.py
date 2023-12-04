@@ -23,7 +23,7 @@ class Ui_map_plot(object):
     def setupUi(self, map_plot):
         if not map_plot.objectName():
             map_plot.setObjectName(u"map_plot")
-        map_plot.resize(1051, 542)
+        map_plot.resize(1073, 542)
         self.verticalLayout = QVBoxLayout(map_plot)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
@@ -97,11 +97,11 @@ class Ui_map_plot(object):
 
         self.horizontalLayout.addWidget(self.line_3)
 
-        self.scale_current_button = QPushButton(map_plot)
-        self.scale_current_button.setObjectName(u"scale_current_button")
-        self.scale_current_button.setEnabled(True)
+        self.scale_current_checkbox = QCheckBox(map_plot)
+        self.scale_current_checkbox.setObjectName(u"scale_current_checkbox")
+        self.scale_current_checkbox.setChecked(True)
 
-        self.horizontalLayout.addWidget(self.scale_current_button)
+        self.horizontalLayout.addWidget(self.scale_current_checkbox)
 
         self.scale_rf_button = QPushButton(map_plot)
         self.scale_rf_button.setObjectName(u"scale_rf_button")
@@ -163,7 +163,7 @@ class Ui_map_plot(object):
         self.current_min_unit_label.setText(QCoreApplication.translate("map_plot", u"[A]", None))
         self.current_max_label.setText(QCoreApplication.translate("map_plot", u"Current Max:", None))
         self.current_max_unit_label.setText(QCoreApplication.translate("map_plot", u"[A]", None))
-        self.scale_current_button.setText(QCoreApplication.translate("map_plot", u"Scale Current", None))
+        self.scale_current_checkbox.setText(QCoreApplication.translate("map_plot", u"Scale Current", None))
         self.scale_rf_button.setText(QCoreApplication.translate("map_plot", u"Scale RF", None))
         self.scale_dc_button.setText(QCoreApplication.translate("map_plot", u"Scale DC", None))
         self.scanline_checkbox.setText(QCoreApplication.translate("map_plot", u"Show Scanline", None))

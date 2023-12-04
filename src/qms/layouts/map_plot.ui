@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1051</width>
+    <width>1073</width>
     <height>542</height>
    </rect>
   </property>
@@ -115,12 +115,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="scale_current_button">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
+      <widget class="QCheckBox" name="scale_current_checkbox">
        <property name="text">
         <string>Scale Current</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
