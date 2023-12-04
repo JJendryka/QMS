@@ -172,7 +172,7 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
     ) -> tuple[Array2Df, Array2Df]:
         """Calculate all measurement points given current UI settings."""
         rf = (
-            np.arange(0, self.rf_step_count_spinbox.value()) * self.rf_step_size_spinbox.value()
+            np.arange(self.rf_step_count_spinbox.value()) * self.rf_step_size_spinbox.value()
             + self.rf_min_spinbox.value()
         )
         dc = (

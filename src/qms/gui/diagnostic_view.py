@@ -194,7 +194,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
                 )
                 scanner.signals.data_point_acquired.connect(self.received_resonance_scan_point)
                 scanner.signals.error_occured.connect(self.handle_em_exception)
-                scanner.signals.finished.connect(self.finished_scan)
+                scanner.signals.finished.connect(self.finished_resonance_scan)
                 self.main_window.thread_pool.start(scanner)
             else:
                 logger.error("Tried to start resonance scan when EuroMeasure system is not connected")
@@ -214,7 +214,7 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
                     self.main_window.euromeasure,
                     self.rf_max_spinbox.value(),
                     self.rf_step_count_spinbox.value(),
-                    self.working_frequency_spinbox.value(),
+                    self.working_frequency_spinbox.value() * 1e6,
                 )
                 scanner.signals.data_point_acquired.connect(self.received_rf_scan_point)
                 scanner.signals.error_occured.connect(self.handle_em_exception)
@@ -330,7 +330,6 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         if voltage > self.voltage_at_maximum_resonance:
             self.voltage_at_maximum_resonance = voltage
             self.frequency_at_maximum_resonance = frequency
-            self.working_frequency_spinbox.setValue(frequency / 1e6)
 
     def received_rf_scan_point(self, amplitude: float, monitor_voltage: float) -> None:
         """Handle new point received from rf scan."""
@@ -389,6 +388,11 @@ class DiagnosticView(QtWidgets.QWidget, Ui_diagnostic_view):
         if self.main_window is not None:
             self.main_window.set_allow_new_scans(True)
             QtWidgets.QMessageBox.critical(self.main_window, "Error!", exception.args[0])
+
+    def finished_resonance_scan(self) -> None:
+        """Handle resonance scan finishing."""
+        self.working_frequency_spinbox.setValue(self.frequency_at_maximum_resonance / 1e6)
+        self.finished_scan()
 
     def finished_scan(self) -> None:
         """Handle scan finishing."""

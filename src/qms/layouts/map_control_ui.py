@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'map_control.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.3
+## Created by: Qt User Interface Compiler version 6.6.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -125,7 +125,7 @@ class Ui_map_control(object):
         self.rf_step_size_spinbox.setObjectName(u"rf_step_size_spinbox")
         self.rf_step_size_spinbox.setDecimals(3)
         self.rf_step_size_spinbox.setMinimum(0.001000000000000)
-        self.rf_step_size_spinbox.setValue(0.250000000000000)
+        self.rf_step_size_spinbox.setValue(0.040000000000000)
 
         self.horizontalLayout.addWidget(self.rf_step_size_spinbox)
 
