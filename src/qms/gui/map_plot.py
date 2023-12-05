@@ -9,6 +9,7 @@ from matplotlib.backends.backend_qt import NavigationToolbar2QT
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.collections import QuadMesh
 from matplotlib.figure import Figure
+from matplotlib.lines import Line2D
 from PySide6 import QtWidgets
 from PySide6.QtGui import QResizeEvent
 
@@ -28,11 +29,8 @@ class MplCanvas(FigureCanvasQTAgg):
 
         self.axes = figure.add_subplot(111)
         self.mesh: QuadMesh | None = None
+        self.line: Line2D | None = None
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
-
-    def update_drawing(self) -> None:
-        """Re-render the plot."""
-        self.draw()
 
     def new_plot(
         self,
@@ -43,15 +41,22 @@ class MplCanvas(FigureCanvasQTAgg):
         """Create new colormesh with new coordinates."""
         self.axes.clear()
         self.mesh = self.axes.pcolormesh(x_coords, y_coords, data, shading="nearest")
-        self.update_drawing()
+        (self.line,) = self.axes.plot([np.min(x_coords).item(), np.max(x_coords).item()], [0, 0], color="red")
+        self.draw()
 
     def update_data(self, data: np.ndarray[Literal["N"], np.dtype[np.float_]]) -> None:
         """Update data for color mesh."""
         if self.mesh is not None:
             self.mesh.set_array(data)
-            self.update_drawing()
+            self.draw()
         else:
             logger.error("Trying to update plot when no plot was created")
+
+    def update_line(self, a: float, b: float) -> None:
+        """Update scanline with linear function parameters."""
+        if self.line is not None:
+            self.line.set_ydata(np.asanyarray(self.line.get_xdata()) * a + b)
+            self.draw()
 
     def set_range(self, minimum: float, maximum: float, logarithmic: bool) -> None:
         """Set range for plot."""
@@ -60,8 +65,25 @@ class MplCanvas(FigureCanvasQTAgg):
                 self.mesh.set_norm(colors.Normalize(minimum, maximum))
             else:
                 self.mesh.set_norm(colors.LogNorm(max(0, minimum), max(0, maximum)))
+            self.draw()
         else:
             logger.error("Trying to update plot when no plot was created")
+
+    def set_scanline_visibility(self, visible: bool) -> None:
+        """Change scanline visibility."""
+        if self.line is not None:
+            self.line.set_visible(visible)
+            self.draw()
+
+    def set_x_range(self, minimum: float, maximum: float) -> None:
+        """Set x range."""
+        self.axes.set_xlim(minimum, maximum)
+        self.draw()
+
+    def set_y_range(self, minimum: float, maximum: float) -> None:
+        """Set x range."""
+        self.axes.set_ylim(minimum, maximum)
+        self.draw()
 
     def resizeEvent(self, event: QResizeEvent) -> None:  # noqa: N802
         """Handle resize event - update layout."""
@@ -98,22 +120,25 @@ class MapPlot(QtWidgets.QWidget, Ui_map_plot):
         self.current_max_lineedit.editingFinished.connect(self.ui_lock(self.current_scale_changed))
         self.scale_rf_button.clicked.connect(self.scale_rf)
         self.scale_dc_button.clicked.connect(self.scale_dc)
+        self.scanline_checkbox.clicked.connect(self.scanline_visibility_changed)
 
     def new_plot(
         self,
         x_coords: np.ndarray[Literal["N", "N"], np.dtype[np.float_]],
         y_coords: np.ndarray[Literal["N", "N"], np.dtype[np.float_]],
+        scanline_a: float,
+        scanline_b: float,
     ) -> None:
         """Start new plot."""
         self.data = np.ma.masked_all(x_coords.shape)
         self.x_coords = x_coords
         self.y_coords = y_coords
 
-        self.canvas.axes.set_xlim(float(np.min(x_coords)), float(np.max(x_coords)))
-        self.canvas.axes.set_ylim(float(np.min(y_coords)), float(np.max(y_coords)))
+        self.canvas.set_x_range(float(np.min(x_coords)), float(np.max(x_coords)))
+        self.canvas.set_y_range(float(np.min(y_coords)), float(np.max(y_coords)))
 
         self.canvas.new_plot(x_coords, y_coords, self.data)
-        self.canvas.update_drawing()
+        self.canvas.update_line(scanline_a, scanline_b)
 
     def new_point(self, x: int, y: int, value: float) -> None:
         """Add new data point."""
@@ -137,16 +162,14 @@ class MapPlot(QtWidgets.QWidget, Ui_map_plot):
         if self.x_coords is not None:
             minimum = np.min(self.x_coords).item()
             maximum = np.max(self.x_coords).item()
-            self.canvas.axes.set_xlim(minimum, maximum)
-            self.canvas.update_drawing()
+            self.canvas.set_x_range(minimum, maximum)
 
     def scale_dc(self, *_: Any) -> None:
         """Autoscale dc on user request."""
         if self.y_coords is not None:
             minimum = np.min(self.y_coords).item()
             maximum = np.max(self.y_coords).item()
-            self.canvas.axes.set_ylim(minimum, maximum)
-            self.canvas.update_drawing()
+            self.canvas.set_y_range(minimum, maximum)
 
     def set_scale(self) -> None:
         """Set scale according to UI."""
@@ -155,7 +178,7 @@ class MapPlot(QtWidgets.QWidget, Ui_map_plot):
                 minimum = np.min(self.data).item()
                 maximum = np.max(self.data).item()
                 self.canvas.set_range(minimum, maximum, self.log_checkbox.isChecked())
-                self.canvas.update_drawing()
+                self.canvas.draw()
                 with self.ui_lock:
                     self.current_min_lineedit.setText(f"{minimum:.2E}")
                     self.current_max_lineedit.setText(f"{maximum:.2E}")
@@ -164,4 +187,12 @@ class MapPlot(QtWidgets.QWidget, Ui_map_plot):
                 maximum = float(self.current_max_lineedit.text())
                 print(minimum, maximum)
                 self.canvas.set_range(minimum, maximum, self.log_checkbox.isChecked())
-                self.canvas.update_drawing()
+                self.canvas.draw()
+
+    def scanline_visibility_changed(self, *_: Any) -> None:
+        """Update scanline visibiliy on UI change."""
+        self.canvas.set_scanline_visibility(self.scanline_checkbox.isChecked())
+
+    def update_scanline(self, a: float, b: float) -> None:
+        """Update scanline based on linear function parameters."""
+        self.canvas.update_line(a, b)

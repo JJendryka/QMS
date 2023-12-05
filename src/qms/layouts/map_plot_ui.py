@@ -118,6 +118,7 @@ class Ui_map_plot(object):
         self.scanline_checkbox = QCheckBox(map_plot)
         self.scanline_checkbox.setObjectName(u"scanline_checkbox")
         self.scanline_checkbox.setEnabled(True)
+        self.scanline_checkbox.setChecked(True)
 
         self.horizontalLayout.addWidget(self.scanline_checkbox)
 

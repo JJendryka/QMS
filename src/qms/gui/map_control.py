@@ -118,6 +118,8 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         with self.ui_lock:
             self.y1_spinbox.setValue(self.x1_spinbox.value() / rf_u_factor * a + b)
             self.y2_spinbox.setValue(self.x2_spinbox.value() / rf_u_factor * a + b)
+        if self.map_plot is not None:
+            self.map_plot.update_scanline(a, b)
 
     def xy_updated(self, *_: Any) -> None:
         """If any of the calibration coordinates change, update a and b."""
@@ -134,6 +136,8 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         with self.ui_lock:
             self.a_spinbox.setValue(a)
             self.b_spinbox.setValue(b)
+        if self.map_plot is not None:
+            self.map_plot.update_scanline(a, b)
 
     def rf_min_max_size_updated(self, *_: Any) -> None:
         """Update RF step count based when other values changed."""
@@ -191,7 +195,7 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.stop_push_button.setEnabled(True)
         self.rf_points, self.dc_points = self.calculate_measurement_points()
         if self.map_plot is not None:
-            self.map_plot.new_plot(self.rf_points, self.dc_points)
+            self.map_plot.new_plot(self.rf_points, self.dc_points, self.a_spinbox.value(), self.b_spinbox.value())
         self.next_measurement_step()
 
     def measurement_finished(self) -> None:
