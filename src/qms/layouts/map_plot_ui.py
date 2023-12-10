@@ -122,6 +122,11 @@ class Ui_map_plot(object):
 
         self.horizontalLayout.addWidget(self.scanline_checkbox)
 
+        self.save_button = QPushButton(map_plot)
+        self.save_button.setObjectName(u"save_button")
+
+        self.horizontalLayout.addWidget(self.save_button)
+
         self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer_3)
@@ -168,5 +173,6 @@ class Ui_map_plot(object):
         self.scale_rf_button.setText(QCoreApplication.translate("map_plot", u"Scale RF", None))
         self.scale_dc_button.setText(QCoreApplication.translate("map_plot", u"Scale DC", None))
         self.scanline_checkbox.setText(QCoreApplication.translate("map_plot", u"Show Scanline", None))
+        self.save_button.setText(QCoreApplication.translate("map_plot", u"Save", None))
     # retranslateUi
 

@@ -1,6 +1,7 @@
 """Contains MapPlot widget."""
 
 import logging
+from pathlib import Path
 from typing import Any, Literal
 
 import numpy as np
@@ -14,7 +15,7 @@ from PySide6 import QtWidgets
 from PySide6.QtGui import QResizeEvent
 
 from qms.layouts.map_plot_ui import Ui_map_plot
-from qms.misc import Array2Df, UILock
+from qms.misc import Array2Df, UILock, get_home_dir
 
 logger = logging.getLogger("main")
 
@@ -121,6 +122,7 @@ class MapPlot(QtWidgets.QWidget, Ui_map_plot):
         self.scale_rf_button.clicked.connect(self.scale_rf)
         self.scale_dc_button.clicked.connect(self.scale_dc)
         self.scanline_checkbox.clicked.connect(self.scanline_visibility_changed)
+        self.save_button.clicked.connect(self.save_clicked)
 
     def new_plot(
         self,
@@ -196,3 +198,39 @@ class MapPlot(QtWidgets.QWidget, Ui_map_plot):
     def update_scanline(self, a: float, b: float) -> None:
         """Update scanline based on linear function parameters."""
         self.canvas.update_line(a, b)
+
+    def save_clicked(self) -> None:
+        """Handle user clicking save button."""
+        path = self.save_map_dialog()
+        if path is not None:
+            self.save_map_to(path)
+
+    def save_map_to(self, path: Path) -> None:
+        """Save map to file."""
+        if self.data is not None and self.x_coords is not None and self.y_coords is not None:
+            path_2d = path.with_stem(path.stem + "_2d")
+            output = np.zeros((self.data.shape[1], self.data.shape[0] * 2 + 1))
+            output[:, 2::2] = np.ma.filled(np.transpose(self.data), 0)
+            output[:, 0] = self.x_coords[0, :]
+            output[:, 1::2] = np.transpose(self.y_coords)
+            header = "RF [V]"
+            for _ in range(self.y_coords.shape[0]):
+                header += "; DC [V]; Current [A]"
+            np.savetxt(path_2d, output, fmt="%.4e", delimiter="; ", header=header)
+
+            path_linear = path.with_stem(path.stem + "_linear")
+            output = np.empty((self.data.size, 3))
+            output[:, 0] = np.reshape(self.x_coords, (-1))
+            output[:, 1] = np.reshape(self.y_coords, (-1))
+            output[:, 2] = np.reshape(self.data, (-1))
+            header = "RF [V]; DC [V]; Current [A]"
+            np.savetxt(path_linear, output, fmt="%.4e", delimiter="; ", header=header)
+
+    def save_map_dialog(self) -> Path | None:
+        """Ask user where to save the map."""
+        path = get_home_dir() / "maps"
+        path.mkdir(exist_ok=True, parents=True)
+        filename, _ = QtWidgets.QFileDialog.getSaveFileName(self, "Save map to...", str(path), "CSV files (*.csv)")
+        if filename is not None and filename:
+            return Path(filename).with_suffix(".csv")
+        return None
