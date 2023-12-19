@@ -60,10 +60,14 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         params = Config.get().parameters
         self.rf_u_scale_spinbox.setValue(params.rf_to_unit_factor)
         self.dc_offset_spinbox.setValue(params.map_dc_offset)
-        self.pause_scanline_updates = True
         self.a_spinbox.setValue(params.a)
         self.b_spinbox.setValue(params.b)
-        self.pause_xy_updates = False
+        self.rf_max_spinbox.setValue(params.map_rf_max)
+        self.rf_min_spinbox.setValue(params.map_rf_min)
+        self.rf_step_size_spinbox.setValue(params.map_rf_step_size)
+        self.dc_max_spinbox.setValue(params.map_dc_max)
+        self.dc_min_spinbox.setValue(params.map_dc_min)
+        self.dc_step_size_spinbox.setValue(params.map_dc_step_size)
 
     def rf_to_unit_factor_updated(self, *_: Any) -> None:
         """On spinbox value change, update other values and save."""
@@ -144,47 +148,54 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         rf_min = self.rf_min_spinbox.value()
         rf_max = self.rf_max_spinbox.value()
         rf_step_size = self.rf_step_size_spinbox.value()
+        params = Config.get().parameters
+        params.map_rf_min = rf_min
+        params.map_rf_max = rf_max
+        params.map_rf_step_size = rf_step_size
         with self.ui_lock:
-            self.rf_step_count_spinbox.setValue(int((rf_max - rf_min) / rf_step_size))
+            self.rf_step_count_spinbox.setValue(params.get_map_rf_step_count())
 
     def dc_min_max_size_updated(self, *_: Any) -> None:
         """Update DC step count based when other values changed."""
         dc_min = self.dc_min_spinbox.value()
         dc_max = self.dc_max_spinbox.value()
         dc_step_size = self.dc_step_size_spinbox.value()
+        params = Config.get().parameters
+        params.map_dc_min = dc_min
+        params.map_dc_max = dc_max
+        params.map_dc_step_size = dc_step_size
         with self.ui_lock:
-            self.dc_step_count_spinbox.setValue(int((dc_max - dc_min) / dc_step_size))
+            self.dc_step_count_spinbox.setValue(params.get_map_dc_step_count())
 
     def rf_step_count_updated(self, *_: Any) -> None:
         """Update RF step size when step count changes."""
         rf_min = self.rf_min_spinbox.value()
         rf_max = self.rf_max_spinbox.value()
         rf_step_count = self.rf_step_count_spinbox.value()
+        rf_step_size = (rf_max - rf_min) / rf_step_count
+        Config.get().parameters.map_rf_step_size = rf_step_size
         with self.ui_lock:
-            self.rf_step_size_spinbox.setValue((rf_max - rf_min) / rf_step_count)
+            self.rf_step_size_spinbox.setValue(rf_step_size)
 
     def dc_step_count_updated(self, *_: Any) -> None:
         """Update RF step size when step count changes."""
         dc_min = self.dc_min_spinbox.value()
         dc_max = self.dc_max_spinbox.value()
         dc_step_count = self.dc_step_count_spinbox.value()
+        dc_step_size = (dc_max - dc_min) / dc_step_count
+        Config.get().parameters.map_dc_step_size = dc_step_size
         with self.ui_lock:
-            self.dc_step_size_spinbox.setValue((dc_max - dc_min) / dc_step_count)
+            self.dc_step_size_spinbox.setValue(dc_step_size)
 
     def calculate_measurement_points(
         self,
     ) -> tuple[Array2Df, Array2Df]:
         """Calculate all measurement points given current UI settings."""
-        rf = (
-            np.arange(self.rf_step_count_spinbox.value()) * self.rf_step_size_spinbox.value()
-            + self.rf_min_spinbox.value()
-        )
-        dc = (
-            np.arange(0, self.dc_step_count_spinbox.value()) * self.dc_step_size_spinbox.value()
-            + self.dc_min_spinbox.value()
-        )
+        params = Config.get().parameters
+        rf = np.arange(0, params.get_map_rf_step_count()) * params.map_rf_step_size + params.map_rf_min
+        dc = np.arange(0, params.get_map_dc_step_count()) * params.map_dc_step_size + params.map_dc_min
         rfs, dcs = np.meshgrid(rf, dc)
-        dcs = dcs + self.dc_offset_spinbox.value() * rfs
+        dcs = dcs + Config.get().parameters.map_dc_offset * rfs
         return (rfs, dcs)
 
     def start_measurement(self) -> None:
@@ -194,8 +205,9 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.dc_step = 0
         self.stop_push_button.setEnabled(True)
         self.rf_points, self.dc_points = self.calculate_measurement_points()
+        params = Config.get().parameters
         if self.map_plot is not None:
-            self.map_plot.new_plot(self.rf_points, self.dc_points, self.a_spinbox.value(), self.b_spinbox.value())
+            self.map_plot.new_plot(self.rf_points, self.dc_points, params.a, params.b)
         self.next_measurement_step()
 
     def measurement_finished(self) -> None:
@@ -239,20 +251,6 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
             self.map_plot.new_point(rf_step, self.dc_step, detector_voltage)
         else:
             logger.error("Tried to access map_plot when it wasn't set.")
-
-    def calculate_ac_dc(self) -> tuple[list[float], list[float]]:
-        """Calculate DC and AC values for next spectrum measurement."""
-        rf_min = self.rf_min_spinbox.value()
-        rf_step_count = self.rf_step_count_spinbox.value()
-        rf_step_size = self.rf_step_size_spinbox.value()
-        ac = [rf_min + i * rf_step_size for i in range(rf_step_count)]
-
-        dc_min = self.dc_min_spinbox.value()
-        dc_step_size = self.dc_step_size_spinbox.value()
-        dc_rf_offset = self.dc_offset_spinbox.value()
-        dc = [dc_min + self.dc_step * dc_step_size + dc_rf_offset * ac[i] for i in range(rf_step_count)]
-
-        return (ac, dc)
 
     def stop_measurement(self) -> None:
         """Stop current measurement."""

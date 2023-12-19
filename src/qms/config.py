@@ -86,6 +86,12 @@ class MeasurementParameters:
         self.map_dc_offset: float = 0
         self.a: float = 0
         self.b: float = 0
+        self.map_rf_min: float = 0
+        self.map_rf_max: float = 1
+        self.map_rf_step_size = 0.1
+        self.map_dc_min: float = 0
+        self.map_dc_max: float = 1
+        self.map_dc_step_size = 0.1
 
     def load_from_json(self, json_object: dict) -> None:
         """Update object with data from json_object."""
@@ -93,6 +99,12 @@ class MeasurementParameters:
         self.map_dc_offset = float(safely_get(json_object, ["map_dc_offset"], (float, int), 0))
         self.a = float(safely_get(json_object, ["a"], (float, int), 0))
         self.b = float(safely_get(json_object, ["b"], (float, int), 0))
+        self.map_rf_min = safely_get(json_object, ["map_rf_min"], float, 0)
+        self.map_rf_max = safely_get(json_object, ["map_rf_max"], float, 1)
+        self.map_rf_step_size = safely_get(json_object, ["map_rf_step_size"], float, 0.1)
+        self.map_dc_min = safely_get(json_object, ["map_dc_min"], float, 0)
+        self.map_dc_max = safely_get(json_object, ["map_dc_max"], float, 1)
+        self.map_dc_step_size = safely_get(json_object, ["map_dc_step_size"], float, 0.1)
 
     def dump_to_json(self) -> dict:
         """Dump the object to json object."""
@@ -101,7 +113,21 @@ class MeasurementParameters:
             "b": self.b,
             "rf_to_unit_factor": self.rf_to_unit_factor,
             "map_dc_offset": self.map_dc_offset,
+            "map_rf_min": self.map_rf_min,
+            "map_rf_max": self.map_rf_max,
+            "map_rf_step_size": self.map_rf_step_size,
+            "map_dc_min": self.map_dc_min,
+            "map_dc_max": self.map_dc_max,
+            "map_dc_step_size": self.map_dc_step_size,
         }
+
+    def get_map_rf_step_count(self) -> int:
+        """Return calculated map rf step count."""
+        return int((self.map_rf_max - self.map_rf_min) // self.map_rf_step_size)
+
+    def get_map_dc_step_count(self) -> int:
+        """Return calculated map dc step count."""
+        return int((self.map_dc_max - self.map_dc_min) // self.map_dc_step_size)
 
 
 class State:
@@ -143,7 +169,9 @@ class State:
 
     def dump_to_json(self) -> dict:
         """Dump object to json object."""
-        return {"recent_profiles": [(str(recent[0]), recent[1]) for recent in self.recent_profiles]}
+        return {
+            "recent_profiles": [(str(recent[0]), recent[1]) for recent in self.recent_profiles],
+        }
 
     def add_recent_profile(self, path: Path) -> None:
         """Add profile to recently loaded profiles.
