@@ -33,6 +33,7 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.map_plot: MapPlot | None = None
         self.scanner: SpectrumScanner | None = None
         self.setup_signals()
+        self.load_profile()
 
     def setup_signals(self) -> None:
         """Connect all needed signals to their handlers."""
@@ -62,11 +63,13 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
         self.dc_offset_spinbox.setValue(params.map_dc_offset)
         self.a_spinbox.setValue(params.a)
         self.b_spinbox.setValue(params.b)
-        self.rf_max_spinbox.setValue(params.map_rf_max)
-        self.rf_min_spinbox.setValue(params.map_rf_min)
+        with self.ui_lock:
+            self.rf_max_spinbox.setValue(params.map_rf_max)
+            self.rf_min_spinbox.setValue(params.map_rf_min)
         self.rf_step_size_spinbox.setValue(params.map_rf_step_size)
-        self.dc_max_spinbox.setValue(params.map_dc_max)
-        self.dc_min_spinbox.setValue(params.map_dc_min)
+        with self.ui_lock:
+            self.dc_max_spinbox.setValue(params.map_dc_max)
+            self.dc_min_spinbox.setValue(params.map_dc_min)
         self.dc_step_size_spinbox.setValue(params.map_dc_step_size)
 
     def rf_to_unit_factor_updated(self, *_: Any) -> None:
@@ -192,6 +195,13 @@ class MapControl(QtWidgets.QWidget, Ui_map_control):
     ) -> tuple[Array2Df, Array2Df]:
         """Calculate all measurement points given current UI settings."""
         params = Config.get().parameters
+        logger.debug(
+            "Calculating scan points from: RF: (min: %d, max: %d, size: %d, step: %d)",
+            params.map_rf_min,
+            params.map_rf_max,
+            params.map_rf_step_size,
+            params.get_map_rf_step_count(),
+        )
         rf = np.arange(0, params.get_map_rf_step_count()) * params.map_rf_step_size + params.map_rf_min
         dc = np.arange(0, params.get_map_dc_step_count()) * params.map_dc_step_size + params.map_dc_min
         rfs, dcs = np.meshgrid(rf, dc)
