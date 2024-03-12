@@ -107,11 +107,11 @@ class Ui_spectrum_control(object):
 
         self.horizontalLayout.addWidget(self.step_count_label)
 
-        self.spinBox = QSpinBox(spectrum_control)
-        self.spinBox.setObjectName(u"spinBox")
-        self.spinBox.setEnabled(False)
+        self.step_count_spinbox = QSpinBox(spectrum_control)
+        self.step_count_spinbox.setObjectName(u"step_count_spinbox")
+        self.step_count_spinbox.setEnabled(False)
 
-        self.horizontalLayout.addWidget(self.spinBox)
+        self.horizontalLayout.addWidget(self.step_count_spinbox)
 
         self.line_6 = QFrame(spectrum_control)
         self.line_6.setObjectName(u"line_6")

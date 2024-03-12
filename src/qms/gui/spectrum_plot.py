@@ -9,6 +9,7 @@ from PySide6 import QtWidgets
 from PySide6.QtGui import QResizeEvent
 
 from qms.layouts.spectrum_plot_ui import Ui_spectrum_plot
+from qms.misc import Array1Df
 
 
 class Canvas(FigureCanvasQTAgg):
@@ -38,3 +39,6 @@ class SpectrumPlot(QtWidgets.QWidget, Ui_spectrum_plot):
         self.nav_bar = NavigationToolbar2QT(self.canvas, self)
         self.layout().replaceWidget(self.plot, self.canvas)
         self.layout().replaceWidget(self.navigation_bar, self.nav_bar)
+
+        self.y_current: list[Array1Df] | None = None
+        self.x_volts: list[Array1Df] | None = None

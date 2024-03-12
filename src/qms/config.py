@@ -92,6 +92,9 @@ class MeasurementParameters:
         self.map_dc_min: float = 0
         self.map_dc_max: float = 1
         self.map_dc_step_size = 0.1
+        self.u_min: float = 0
+        self.u_max: float = 34
+        self.step_size: float = 0.2
 
     def load_from_json(self, json_object: dict) -> None:
         """Update object with data from json_object."""
@@ -99,12 +102,15 @@ class MeasurementParameters:
         self.map_dc_offset = float(safely_get(json_object, ["map_dc_offset"], (float, int), 0))
         self.a = float(safely_get(json_object, ["a"], (float, int), 0))
         self.b = float(safely_get(json_object, ["b"], (float, int), 0))
-        self.map_rf_min = safely_get(json_object, ["map_rf_min"], float, 0)
-        self.map_rf_max = safely_get(json_object, ["map_rf_max"], float, 1)
-        self.map_rf_step_size = safely_get(json_object, ["map_rf_step_size"], float, 0.1)
-        self.map_dc_min = safely_get(json_object, ["map_dc_min"], float, 0)
-        self.map_dc_max = safely_get(json_object, ["map_dc_max"], float, 1)
-        self.map_dc_step_size = safely_get(json_object, ["map_dc_step_size"], float, 0.1)
+        self.map_rf_min = safely_get(json_object, ["map", "rf_min"], float, 0)
+        self.map_rf_max = safely_get(json_object, ["map", "rf_max"], float, 1)
+        self.map_rf_step_size = safely_get(json_object, ["map", "rf_step_size"], float, 0.1)
+        self.map_dc_min = safely_get(json_object, ["map", "dc_min"], float, 0)
+        self.map_dc_max = safely_get(json_object, ["map", "dc_max"], float, 1)
+        self.map_dc_step_size = safely_get(json_object, ["dc_step_size"], float, 0.1)
+        self.u_min = safely_get(json_object, ["spectrum", "u_min"], float, 0)
+        self.u_max = safely_get(json_object, ["spectrum", "u_max"], float, 34)
+        self.step_size = safely_get(json_object, ["spectrum", "step_size"], float, 0.2)
 
     def dump_to_json(self) -> dict:
         """Dump the object to json object."""
@@ -112,13 +118,20 @@ class MeasurementParameters:
             "a": self.a,
             "b": self.b,
             "rf_to_unit_factor": self.rf_to_unit_factor,
-            "map_dc_offset": self.map_dc_offset,
-            "map_rf_min": self.map_rf_min,
-            "map_rf_max": self.map_rf_max,
-            "map_rf_step_size": self.map_rf_step_size,
-            "map_dc_min": self.map_dc_min,
-            "map_dc_max": self.map_dc_max,
-            "map_dc_step_size": self.map_dc_step_size,
+            "map": {
+                "dc_offset": self.map_dc_offset,
+                "rf_min": self.map_rf_min,
+                "rf_max": self.map_rf_max,
+                "rf_step_size": self.map_rf_step_size,
+                "dc_min": self.map_dc_min,
+                "dc_max": self.map_dc_max,
+                "dc_step_size": self.map_dc_step_size,
+            },
+            "spectrum": {
+                "u_min": self.u_min,
+                "u_max": self.u_max,
+                "step_size": self.step_size,
+            },
         }
 
     def get_map_rf_step_count(self) -> int:
@@ -128,6 +141,10 @@ class MeasurementParameters:
     def get_map_dc_step_count(self) -> int:
         """Return calculated map dc step count."""
         return int((self.map_dc_max - self.map_dc_min) // self.map_dc_step_size)
+
+    def get_step_count(self) -> int:
+        """Return calculated spectrum step count."""
+        return int((self.u_max - self.u_min) // self.step_size)
 
 
 class State:

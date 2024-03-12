@@ -116,7 +116,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBox">
+      <widget class="QSpinBox" name="step_count_spinbox">
        <property name="enabled">
         <bool>false</bool>
        </property>
