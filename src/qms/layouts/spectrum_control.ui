@@ -56,7 +56,10 @@
      <item>
       <widget class="QDoubleSpinBox" name="min_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="maximum">
+        <double>999.990000000000009</double>
        </property>
       </widget>
      </item>
@@ -87,7 +90,10 @@
      <item>
       <widget class="QDoubleSpinBox" name="max_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="maximum">
+        <double>999.990000000000009</double>
        </property>
       </widget>
      </item>
@@ -118,7 +124,10 @@
      <item>
       <widget class="QSpinBox" name="step_count_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="maximum">
+        <number>9999</number>
        </property>
       </widget>
      </item>
@@ -142,7 +151,13 @@
      <item>
       <widget class="QDoubleSpinBox" name="step_size_spinbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
+       </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
        </property>
       </widget>
      </item>

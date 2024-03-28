@@ -2,6 +2,7 @@
 
 from typing import Any
 
+import numpy as np
 from matplotlib.backends.backend_qt import NavigationToolbar2QT
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
@@ -40,5 +41,19 @@ class SpectrumPlot(QtWidgets.QWidget, Ui_spectrum_plot):
         self.layout().replaceWidget(self.plot, self.canvas)
         self.layout().replaceWidget(self.navigation_bar, self.nav_bar)
 
-        self.y_current: list[Array1Df] | None = None
-        self.x_volts: list[Array1Df] | None = None
+        self.y_current: list[Array1Df] = []
+        self.x_volts: list[Array1Df] = []
+
+    def clear(self) -> None:
+        """Clear plot history."""
+        self.y_current = []
+        self.x_volts = []
+
+    def new_scan(self, rf_values: Array1Df) -> None:
+        """Start saving to new scan."""
+        self.y_current.append(np.ma.masked_all(rf_values.shape))
+        self.x_volts.append(rf_values)
+
+    def new_point(self, rf_step: int, current: float) -> None:
+        """Add new point to plot."""
+        self.y_current[-1][rf_step] = current

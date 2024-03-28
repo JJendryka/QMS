@@ -140,6 +140,7 @@ class MapPlot(QtWidgets.QWidget, Ui_map_plot):
         self.canvas.set_y_range(float(np.min(y_coords)), float(np.max(y_coords)))
 
         self.canvas.new_plot(x_coords, y_coords, self.data)
+        # TODO: Remove this scanline setup as it should probably be elsewhere
         self.canvas.update_line(scanline_a, scanline_b)
 
     def new_point(self, x: int, y: int, value: float) -> None:

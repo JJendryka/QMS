@@ -61,7 +61,8 @@ class Ui_spectrum_control(object):
 
         self.min_spinbox = QDoubleSpinBox(spectrum_control)
         self.min_spinbox.setObjectName(u"min_spinbox")
-        self.min_spinbox.setEnabled(False)
+        self.min_spinbox.setEnabled(True)
+        self.min_spinbox.setMaximum(999.990000000000009)
 
         self.horizontalLayout.addWidget(self.min_spinbox)
 
@@ -85,7 +86,8 @@ class Ui_spectrum_control(object):
 
         self.max_spinbox = QDoubleSpinBox(spectrum_control)
         self.max_spinbox.setObjectName(u"max_spinbox")
-        self.max_spinbox.setEnabled(False)
+        self.max_spinbox.setEnabled(True)
+        self.max_spinbox.setMaximum(999.990000000000009)
 
         self.horizontalLayout.addWidget(self.max_spinbox)
 
@@ -109,7 +111,8 @@ class Ui_spectrum_control(object):
 
         self.step_count_spinbox = QSpinBox(spectrum_control)
         self.step_count_spinbox.setObjectName(u"step_count_spinbox")
-        self.step_count_spinbox.setEnabled(False)
+        self.step_count_spinbox.setEnabled(True)
+        self.step_count_spinbox.setMaximum(9999)
 
         self.horizontalLayout.addWidget(self.step_count_spinbox)
 
@@ -128,7 +131,9 @@ class Ui_spectrum_control(object):
 
         self.step_size_spinbox = QDoubleSpinBox(spectrum_control)
         self.step_size_spinbox.setObjectName(u"step_size_spinbox")
-        self.step_size_spinbox.setEnabled(False)
+        self.step_size_spinbox.setEnabled(True)
+        self.step_size_spinbox.setDecimals(3)
+        self.step_size_spinbox.setSingleStep(0.100000000000000)
 
         self.horizontalLayout.addWidget(self.step_size_spinbox)
 
