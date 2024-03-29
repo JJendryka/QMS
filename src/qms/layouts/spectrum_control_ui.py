@@ -167,7 +167,7 @@ class Ui_spectrum_control(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.repeating_checkbox = QCheckBox(spectrum_control)
         self.repeating_checkbox.setObjectName(u"repeating_checkbox")
-        self.repeating_checkbox.setEnabled(False)
+        self.repeating_checkbox.setEnabled(True)
 
         self.horizontalLayout_2.addWidget(self.repeating_checkbox)
 

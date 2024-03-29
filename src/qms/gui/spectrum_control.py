@@ -46,6 +46,9 @@ class SpectrumControl(QtWidgets.QWidget, Ui_spectrum_control):
         self.step_size_spinbox.valueChanged.connect(self.ui_lock(self.min_max_size_updated))
         self.step_count_spinbox.valueChanged.connect(self.ui_lock(self.count_updated))
 
+        self.start_button.clicked.connect(self.start_measurement)
+        self.stop_button.clicked.connect(self.stop_measurement)
+
     def min_max_size_updated(self, *_: Any) -> None:
         """On spinbox value change, update other values and save."""
         minimum = self.min_spinbox.value()
@@ -83,7 +86,7 @@ class SpectrumControl(QtWidgets.QWidget, Ui_spectrum_control):
         """Calculate rf and dc values for next sweep."""
         params = Config.get().parameters
         rf = (
-            np.arange(self.min_spinbox.value, self.max_spinbox.value, step=self.step_size_spinbox.value)
+            np.arange(self.min_spinbox.value(), self.max_spinbox.value(), step=self.step_size_spinbox.value())
             / params.rf_to_unit_factor
         )
         dc = rf * params.a + params.b
@@ -103,7 +106,7 @@ class SpectrumControl(QtWidgets.QWidget, Ui_spectrum_control):
                 self.scanner.signals.finished.connect(self.measurement_finished)
                 self.main_window.thread_pool.start(self.scanner)
             else:
-                logger.error("Tried to start stability map scan when EuroMeasure system is not connected")
+                logger.error("Tried to start spectrum scan when EuroMeasure system is not connected")
                 QtWidgets.QMessageBox.critical(self.main_window, "Error!", "EuroMeasure system is not connected")
 
     def received_spectrum_point(self, rf_step: int, detector_voltage: float) -> None:
@@ -111,22 +114,26 @@ class SpectrumControl(QtWidgets.QWidget, Ui_spectrum_control):
         if self.spectrum_plot is not None:
             self.spectrum_plot.new_point(rf_step, detector_voltage)
         else:
-            logger.error("Tried to access map_plot when it wasn't set.")
+            logger.error("Tried to access spectrum_plot when it wasn't set.")
 
     def stop_measurement(self) -> None:
         """Stop current measurement."""
         if self.scanner is not None:
             self.scanner.signals.stop()
-            self.measurement_finished()
+        self.clean_after_measurement_stoped()
 
     def measurement_finished(self) -> None:
         """Handle finished spectrum measurement."""
-        if self.repeating_checkbox.isChecked:
+        if self.repeating_checkbox.isChecked():
             self.measure_spectrum()
         else:
-            if self.main_window is not None:
-                self.main_window.set_allow_new_scans(True)
-            self.stop_button.setEnabled(False)
+            self.clean_after_measurement_stoped()
+
+    def clean_after_measurement_stoped(self) -> None:
+        """Clean up UI so that it is in a state where no measurement is happening."""
+        if self.main_window is not None:
+            self.main_window.set_allow_new_scans(True)
+        self.stop_button.setEnabled(False)
 
     def set_allow_new_scans(self, allow: bool = True, reason: str = "") -> None:
         """Enable/disable UI elements that start new scan."""
