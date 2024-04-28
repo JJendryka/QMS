@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'map_control.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.0
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -28,8 +28,8 @@ class Ui_map_control(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.line_121 = QFrame(map_control)
         self.line_121.setObjectName(u"line_121")
-        self.line_121.setFrameShape(QFrame.HLine)
-        self.line_121.setFrameShadow(QFrame.Sunken)
+        self.line_121.setFrameShape(QFrame.Shape.HLine)
+        self.line_121.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.line_121)
 
@@ -42,8 +42,8 @@ class Ui_map_control(object):
 
         self.line_100 = QFrame(map_control)
         self.line_100.setObjectName(u"line_100")
-        self.line_100.setFrameShape(QFrame.VLine)
-        self.line_100.setFrameShadow(QFrame.Sunken)
+        self.line_100.setFrameShape(QFrame.Shape.VLine)
+        self.line_100.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_100)
 
@@ -65,8 +65,8 @@ class Ui_map_control(object):
 
         self.line_104 = QFrame(map_control)
         self.line_104.setObjectName(u"line_104")
-        self.line_104.setFrameShape(QFrame.VLine)
-        self.line_104.setFrameShadow(QFrame.Sunken)
+        self.line_104.setFrameShape(QFrame.Shape.VLine)
+        self.line_104.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_104)
 
@@ -89,8 +89,8 @@ class Ui_map_control(object):
 
         self.line_105 = QFrame(map_control)
         self.line_105.setObjectName(u"line_105")
-        self.line_105.setFrameShape(QFrame.VLine)
-        self.line_105.setFrameShadow(QFrame.Sunken)
+        self.line_105.setFrameShape(QFrame.Shape.VLine)
+        self.line_105.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_105)
 
@@ -110,8 +110,8 @@ class Ui_map_control(object):
 
         self.line_106 = QFrame(map_control)
         self.line_106.setObjectName(u"line_106")
-        self.line_106.setFrameShape(QFrame.VLine)
-        self.line_106.setFrameShadow(QFrame.Sunken)
+        self.line_106.setFrameShape(QFrame.Shape.VLine)
+        self.line_106.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_106)
 
@@ -136,8 +136,8 @@ class Ui_map_control(object):
 
         self.line_102 = QFrame(map_control)
         self.line_102.setObjectName(u"line_102")
-        self.line_102.setFrameShape(QFrame.VLine)
-        self.line_102.setFrameShadow(QFrame.Sunken)
+        self.line_102.setFrameShape(QFrame.Shape.VLine)
+        self.line_102.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_102)
 
@@ -148,8 +148,8 @@ class Ui_map_control(object):
 
         self.line_103 = QFrame(map_control)
         self.line_103.setObjectName(u"line_103")
-        self.line_103.setFrameShape(QFrame.VLine)
-        self.line_103.setFrameShadow(QFrame.Sunken)
+        self.line_103.setFrameShape(QFrame.Shape.VLine)
+        self.line_103.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_103)
 
@@ -176,8 +176,8 @@ class Ui_map_control(object):
 
         self.line_101 = QFrame(map_control)
         self.line_101.setObjectName(u"line_101")
-        self.line_101.setFrameShape(QFrame.VLine)
-        self.line_101.setFrameShadow(QFrame.Sunken)
+        self.line_101.setFrameShape(QFrame.Shape.VLine)
+        self.line_101.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_101)
 
@@ -218,7 +218,7 @@ class Ui_map_control(object):
 
         self.horizontalLayout.addWidget(self.scale_rf_unit_label)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
@@ -227,8 +227,8 @@ class Ui_map_control(object):
 
         self.line_119 = QFrame(map_control)
         self.line_119.setObjectName(u"line_119")
-        self.line_119.setFrameShape(QFrame.HLine)
-        self.line_119.setFrameShadow(QFrame.Sunken)
+        self.line_119.setFrameShape(QFrame.Shape.HLine)
+        self.line_119.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.line_119)
 
@@ -241,8 +241,8 @@ class Ui_map_control(object):
 
         self.line_109 = QFrame(map_control)
         self.line_109.setObjectName(u"line_109")
-        self.line_109.setFrameShape(QFrame.VLine)
-        self.line_109.setFrameShadow(QFrame.Sunken)
+        self.line_109.setFrameShape(QFrame.Shape.VLine)
+        self.line_109.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_2.addWidget(self.line_109)
 
@@ -264,8 +264,8 @@ class Ui_map_control(object):
 
         self.line_110 = QFrame(map_control)
         self.line_110.setObjectName(u"line_110")
-        self.line_110.setFrameShape(QFrame.VLine)
-        self.line_110.setFrameShadow(QFrame.Sunken)
+        self.line_110.setFrameShape(QFrame.Shape.VLine)
+        self.line_110.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_2.addWidget(self.line_110)
 
@@ -288,8 +288,8 @@ class Ui_map_control(object):
 
         self.line_111 = QFrame(map_control)
         self.line_111.setObjectName(u"line_111")
-        self.line_111.setFrameShape(QFrame.VLine)
-        self.line_111.setFrameShadow(QFrame.Sunken)
+        self.line_111.setFrameShape(QFrame.Shape.VLine)
+        self.line_111.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_2.addWidget(self.line_111)
 
@@ -309,8 +309,8 @@ class Ui_map_control(object):
 
         self.line_112 = QFrame(map_control)
         self.line_112.setObjectName(u"line_112")
-        self.line_112.setFrameShape(QFrame.VLine)
-        self.line_112.setFrameShadow(QFrame.Sunken)
+        self.line_112.setFrameShape(QFrame.Shape.VLine)
+        self.line_112.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_2.addWidget(self.line_112)
 
@@ -335,8 +335,8 @@ class Ui_map_control(object):
 
         self.line_107 = QFrame(map_control)
         self.line_107.setObjectName(u"line_107")
-        self.line_107.setFrameShape(QFrame.VLine)
-        self.line_107.setFrameShadow(QFrame.Sunken)
+        self.line_107.setFrameShape(QFrame.Shape.VLine)
+        self.line_107.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_2.addWidget(self.line_107)
 
@@ -359,12 +359,12 @@ class Ui_map_control(object):
 
         self.line_108 = QFrame(map_control)
         self.line_108.setObjectName(u"line_108")
-        self.line_108.setFrameShape(QFrame.VLine)
-        self.line_108.setFrameShadow(QFrame.Sunken)
+        self.line_108.setFrameShape(QFrame.Shape.VLine)
+        self.line_108.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_2.addWidget(self.line_108)
 
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
 
@@ -373,8 +373,8 @@ class Ui_map_control(object):
 
         self.line_116 = QFrame(map_control)
         self.line_116.setObjectName(u"line_116")
-        self.line_116.setFrameShape(QFrame.HLine)
-        self.line_116.setFrameShadow(QFrame.Sunken)
+        self.line_116.setFrameShape(QFrame.Shape.HLine)
+        self.line_116.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.line_116)
 
@@ -437,15 +437,15 @@ class Ui_map_control(object):
 
         self.line_117 = QFrame(map_control)
         self.line_117.setObjectName(u"line_117")
-        self.line_117.setFrameShape(QFrame.HLine)
-        self.line_117.setFrameShadow(QFrame.Sunken)
+        self.line_117.setFrameShape(QFrame.Shape.HLine)
+        self.line_117.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.line_117)
 
         self.line_120 = QFrame(map_control)
         self.line_120.setObjectName(u"line_120")
-        self.line_120.setFrameShape(QFrame.HLine)
-        self.line_120.setFrameShadow(QFrame.Sunken)
+        self.line_120.setFrameShape(QFrame.Shape.HLine)
+        self.line_120.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.line_120)
 
@@ -458,8 +458,8 @@ class Ui_map_control(object):
 
         self.line_113 = QFrame(map_control)
         self.line_113.setObjectName(u"line_113")
-        self.line_113.setFrameShape(QFrame.VLine)
-        self.line_113.setFrameShadow(QFrame.Sunken)
+        self.line_113.setFrameShape(QFrame.Shape.VLine)
+        self.line_113.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_4.addWidget(self.line_113)
 
@@ -506,8 +506,8 @@ class Ui_map_control(object):
 
         self.line_115 = QFrame(map_control)
         self.line_115.setObjectName(u"line_115")
-        self.line_115.setFrameShape(QFrame.VLine)
-        self.line_115.setFrameShadow(QFrame.Sunken)
+        self.line_115.setFrameShape(QFrame.Shape.VLine)
+        self.line_115.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_4.addWidget(self.line_115)
 
@@ -591,12 +591,12 @@ class Ui_map_control(object):
 
         self.line_114 = QFrame(map_control)
         self.line_114.setObjectName(u"line_114")
-        self.line_114.setFrameShape(QFrame.VLine)
-        self.line_114.setFrameShadow(QFrame.Sunken)
+        self.line_114.setFrameShape(QFrame.Shape.VLine)
+        self.line_114.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_4.addWidget(self.line_114)
 
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_3)
 
@@ -606,8 +606,8 @@ class Ui_map_control(object):
 
         self.line_118 = QFrame(map_control)
         self.line_118.setObjectName(u"line_118")
-        self.line_118.setFrameShape(QFrame.HLine)
-        self.line_118.setFrameShadow(QFrame.Sunken)
+        self.line_118.setFrameShape(QFrame.Shape.HLine)
+        self.line_118.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.line_118)
 

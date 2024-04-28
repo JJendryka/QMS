@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'spectrum_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.0
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -30,7 +30,7 @@ class Ui_SpectrumView(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.splitter = QSplitter(SpectrumView)
         self.splitter.setObjectName(u"splitter")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.splitter.sizePolicy().hasHeightForWidth())
@@ -43,7 +43,7 @@ class Ui_SpectrumView(object):
         self.splitter.addWidget(self.spectrum_plot)
         self.widget_2 = QWidget(self.splitter)
         self.widget_2.setObjectName(u"widget_2")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
@@ -54,7 +54,7 @@ class Ui_SpectrumView(object):
 
         self.spectrum_control = SpectrumControl(SpectrumView)
         self.spectrum_control.setObjectName(u"spectrum_control")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.spectrum_control.sizePolicy().hasHeightForWidth())

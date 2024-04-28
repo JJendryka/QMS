@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'map_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.0
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -29,7 +29,7 @@ class Ui_map_view(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.map_plot = MapPlot(map_view)
         self.map_plot.setObjectName(u"map_plot")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.map_plot.sizePolicy().hasHeightForWidth())
@@ -39,7 +39,7 @@ class Ui_map_view(object):
 
         self.map_control = MapControl(map_view)
         self.map_control.setObjectName(u"map_control")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.map_control.sizePolicy().hasHeightForWidth())

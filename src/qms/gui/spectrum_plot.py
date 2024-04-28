@@ -38,22 +38,27 @@ class Canvas(FigureCanvasQTAgg):
         if kind == PlotKind.LINE:
             self.axes.plot(x_data, y_data)
         elif kind == PlotKind.SCATTER:
-            self.axes.scatter(x_data, y_data)
+            self.axes.plot(x_data, y_data, marker="o", linestyle="")
         elif kind == PlotKind.HISTOGRAM:
             # TODO: Implement
             pass
         logger.debug("New sweep added to canvas")
-        # TODO: should be disableable
-        self.axes.set_xlim(float(np.min(x_data)), float(np.max(x_data)))
+        self.draw()
+
+    def set_xlim(self, low: float, high: float) -> None:
+        """Set x limits."""
+        self.axes.set_xlim(low, high)
+        self.draw()
+
+    def set_ylim(self, low: float, high: float) -> None:
+        """Set y limits."""
+        self.axes.set_ylim(low, high)
         self.draw()
 
     def update_current_sweep(self, data: Array1Df) -> None:
         """Update data in current sweep."""
         self.axes.lines[-1].set_ydata(data)
-        # TODO: should be disableable
-        self.axes.set_ylim(float(np.min(data)), float(np.max(data)))
         self.draw()
-        print("sweep_updated")
 
     def get_sweep_count(self) -> int:
         """Return the number of currently displayed sweeps."""
@@ -85,24 +90,72 @@ class SpectrumPlot(QtWidgets.QWidget, Ui_spectrum_plot):
         self.y_current: list[Array1Df] = []
         self.x_volts: list[Array1Df] = []
 
+        self.cleared = True
+
+        self.connect_signals()
+
+    def connect_signals(self) -> None:
+        """Connect all signals."""
+        self.y_fullscale_button.clicked.connect(self.autoscale_y)
+        self.x_fullscale_button.clicked.connect(self.autoscale_x)
+        self.plot_type_combobox.currentTextChanged.connect(self.kind_change)
+
     def clear(self) -> None:
         """Clear plot history."""
         self.y_current = []
         self.x_volts = []
+        while self.canvas.get_sweep_count() > 0:
+            self.canvas.remove_oldest_sweep()
+        self.cleared = True
 
     def new_scan(self, rf_values: Array1Df) -> None:
         """Start saving to new scan."""
         self.y_current.append(np.ma.masked_all(rf_values.shape))
         self.x_volts.append(rf_values)
 
-        # TODO: Change to take into account selected type
-        self.canvas.add_new_sweep(self.x_volts[-1], self.y_current[-1], PlotKind.LINE)
+        self.canvas.add_new_sweep(self.x_volts[-1], self.y_current[-1], self.get_current_plot_kind())
 
-        # TODO: This should be adjustable
-        while self.canvas.get_sweep_count() > 1:
+        while self.canvas.get_sweep_count() > self.history_count_spinbox.value() + 1:
             self.canvas.remove_oldest_sweep()
+
+        if self.cleared:
+            self.cleared = False
+            self.autoscale_x()
 
     def new_point(self, rf_step: int, current: float) -> None:
         """Add new point to plot."""
         self.y_current[-1][rf_step] = current
         self.canvas.update_current_sweep(self.y_current[-1])
+
+    def get_current_plot_kind(self) -> PlotKind:
+        """Return currently selected plot kind."""
+        kind = self.plot_type_combobox.currentText()
+        if kind == "Line":
+            return PlotKind.LINE
+        if kind == "Scatter":
+            return PlotKind.SCATTER
+        return PlotKind.HISTOGRAM
+
+    def autoscale_y(self) -> None:
+        """Autoscale y axis to full extent."""
+        low = float(np.min(self.y_current))
+        high = float(np.max(self.y_current))
+        new_low = low - (0.05 * (high - low))
+        new_high = high + (0.05 * (high - low))
+        self.canvas.set_ylim(new_low, new_high)
+
+    def autoscale_x(self) -> None:
+        """Autoscale x axis to full extent."""
+        low = float(np.min(self.x_volts))
+        high = float(np.max(self.x_volts))
+        self.canvas.set_xlim(low, high)
+
+    def kind_change(self) -> None:
+        """Handle plot kind change."""
+        kind = self.get_current_plot_kind()
+        while self.canvas.get_sweep_count() > 0:
+            self.canvas.remove_oldest_sweep()
+        count = min(self.history_count_spinbox.value() + 1, len(self.x_volts))
+        print(count)
+        for i in range(-count, 0):
+            self.canvas.add_new_sweep(self.x_volts[i], self.y_current[i], kind)

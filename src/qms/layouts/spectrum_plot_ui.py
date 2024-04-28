@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'spectrum_plot.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.0
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -24,7 +24,7 @@ class Ui_spectrum_plot(object):
     def setupUi(self, spectrum_plot):
         if not spectrum_plot.objectName():
             spectrum_plot.setObjectName(u"spectrum_plot")
-        spectrum_plot.resize(1083, 760)
+        spectrum_plot.resize(1193, 760)
         self.verticalLayout = QVBoxLayout(spectrum_plot)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
@@ -36,7 +36,7 @@ class Ui_spectrum_plot(object):
 
         self.log_checkbox = QCheckBox(spectrum_plot)
         self.log_checkbox.setObjectName(u"log_checkbox")
-        self.log_checkbox.setEnabled(False)
+        self.log_checkbox.setEnabled(True)
 
         self.horizontalLayout.addWidget(self.log_checkbox)
 
@@ -64,14 +64,14 @@ class Ui_spectrum_plot(object):
 
         self.y_fullscale_button = QPushButton(spectrum_plot)
         self.y_fullscale_button.setObjectName(u"y_fullscale_button")
-        self.y_fullscale_button.setEnabled(False)
+        self.y_fullscale_button.setEnabled(True)
 
         self.horizontalLayout.addWidget(self.y_fullscale_button)
 
         self.line = QFrame(spectrum_plot)
         self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.VLine)
-        self.line.setFrameShadow(QFrame.Sunken)
+        self.line.setFrameShape(QFrame.Shape.VLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line)
 
@@ -90,14 +90,14 @@ class Ui_spectrum_plot(object):
 
         self.x_fullscale_button = QPushButton(spectrum_plot)
         self.x_fullscale_button.setObjectName(u"x_fullscale_button")
-        self.x_fullscale_button.setEnabled(False)
+        self.x_fullscale_button.setEnabled(True)
 
         self.horizontalLayout.addWidget(self.x_fullscale_button)
 
         self.line_2 = QFrame(spectrum_plot)
         self.line_2.setObjectName(u"line_2")
-        self.line_2.setFrameShape(QFrame.VLine)
-        self.line_2.setFrameShadow(QFrame.Sunken)
+        self.line_2.setFrameShape(QFrame.Shape.VLine)
+        self.line_2.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_2)
 
@@ -109,18 +109,35 @@ class Ui_spectrum_plot(object):
         self.plot_type_combobox = QComboBox(spectrum_plot)
         self.plot_type_combobox.addItem("")
         self.plot_type_combobox.addItem("")
-        self.plot_type_combobox.addItem("")
         self.plot_type_combobox.setObjectName(u"plot_type_combobox")
-        self.plot_type_combobox.setEnabled(False)
+        self.plot_type_combobox.setEnabled(True)
 
         self.horizontalLayout.addWidget(self.plot_type_combobox)
 
         self.line_3 = QFrame(spectrum_plot)
         self.line_3.setObjectName(u"line_3")
-        self.line_3.setFrameShape(QFrame.VLine)
-        self.line_3.setFrameShadow(QFrame.Sunken)
+        self.line_3.setFrameShape(QFrame.Shape.VLine)
+        self.line_3.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_3)
+
+        self.label = QLabel(spectrum_plot)
+        self.label.setObjectName(u"label")
+        self.label.setTextFormat(Qt.AutoText)
+
+        self.horizontalLayout.addWidget(self.label)
+
+        self.history_count_spinbox = QSpinBox(spectrum_plot)
+        self.history_count_spinbox.setObjectName(u"history_count_spinbox")
+
+        self.horizontalLayout.addWidget(self.history_count_spinbox)
+
+        self.line_4 = QFrame(spectrum_plot)
+        self.line_4.setObjectName(u"line_4")
+        self.line_4.setFrameShape(QFrame.Shape.VLine)
+        self.line_4.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.horizontalLayout.addWidget(self.line_4)
 
         self.peak_search_label = QLabel(spectrum_plot)
         self.peak_search_label.setObjectName(u"peak_search_label")
@@ -138,7 +155,7 @@ class Ui_spectrum_plot(object):
 
         self.horizontalLayout.addWidget(self.peak_search_count_spinbox)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
@@ -147,7 +164,7 @@ class Ui_spectrum_plot(object):
 
         self.plot = QWidget(spectrum_plot)
         self.plot.setObjectName(u"plot")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.plot.sizePolicy().hasHeightForWidth())
@@ -169,7 +186,7 @@ class Ui_spectrum_plot(object):
     def retranslateUi(self, spectrum_plot):
         spectrum_plot.setWindowTitle(QCoreApplication.translate("spectrum_plot", u"Form", None))
         self.y_axis_label.setText(QCoreApplication.translate("spectrum_plot", u"<html><head/><body><p><span style=\" font-weight:600;\">Y Axis:</span></p></body></html>", None))
-        self.log_checkbox.setText(QCoreApplication.translate("spectrum_plot", u"Logarithmic", None))
+        self.log_checkbox.setText(QCoreApplication.translate("spectrum_plot", u"Log", None))
         self.y_axis_offset_label.setText(QCoreApplication.translate("spectrum_plot", u"Offset:", None))
         self.y_axis_pA_label.setText(QCoreApplication.translate("spectrum_plot", u"pA", None))
         self.autozero_button.setText(QCoreApplication.translate("spectrum_plot", u"Auto zero", None))
@@ -182,8 +199,8 @@ class Ui_spectrum_plot(object):
         self.plot_label.setText(QCoreApplication.translate("spectrum_plot", u"<html><head/><body><p><span style=\" font-weight:600;\">Plot:</span></p></body></html>", None))
         self.plot_type_combobox.setItemText(0, QCoreApplication.translate("spectrum_plot", u"Line", None))
         self.plot_type_combobox.setItemText(1, QCoreApplication.translate("spectrum_plot", u"Scatter", None))
-        self.plot_type_combobox.setItemText(2, QCoreApplication.translate("spectrum_plot", u"Histogram", None))
 
+        self.label.setText(QCoreApplication.translate("spectrum_plot", u"<html><head/><body><p><span style=\" font-weight:600;\">History:</span></p></body></html>", None))
         self.peak_search_label.setText(QCoreApplication.translate("spectrum_plot", u"<html><head/><body><p><span style=\" font-weight:600;\">Peak search:</span></p></body></html>", None))
         self.peak_search_count_label.setText(QCoreApplication.translate("spectrum_plot", u"Count:", None))
     # retranslateUi

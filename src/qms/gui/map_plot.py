@@ -188,7 +188,6 @@ class MapPlot(QtWidgets.QWidget, Ui_map_plot):
             else:
                 minimum = float(self.current_min_lineedit.text())
                 maximum = float(self.current_max_lineedit.text())
-                print(minimum, maximum)
                 self.canvas.set_range(minimum, maximum, self.log_checkbox.isChecked())
                 self.canvas.draw()
 

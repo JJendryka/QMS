@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'diagnostic_view.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.0
+## Created by: Qt User Interface Compiler version 6.7.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -39,7 +39,7 @@ class Ui_diagnostic_view(object):
 
         self.resonance_chart = QWidget(diagnostic_view)
         self.resonance_chart.setObjectName(u"resonance_chart")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.resonance_chart.sizePolicy().hasHeightForWidth())
@@ -49,7 +49,7 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer_6)
 
@@ -73,8 +73,8 @@ class Ui_diagnostic_view(object):
 
         self.line = QFrame(diagnostic_view)
         self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.VLine)
-        self.line.setFrameShadow(QFrame.Sunken)
+        self.line.setFrameShape(QFrame.Shape.VLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_2.addWidget(self.line)
 
@@ -113,8 +113,8 @@ class Ui_diagnostic_view(object):
 
         self.line_11 = QFrame(diagnostic_view)
         self.line_11.setObjectName(u"line_11")
-        self.line_11.setFrameShape(QFrame.VLine)
-        self.line_11.setFrameShadow(QFrame.Sunken)
+        self.line_11.setFrameShape(QFrame.Shape.VLine)
+        self.line_11.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_2.addWidget(self.line_11)
 
@@ -130,7 +130,7 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_2.addWidget(self.frequency_step_size_label)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
@@ -144,14 +144,14 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_5)
 
         self.line_8 = QFrame(diagnostic_view)
         self.line_8.setObjectName(u"line_8")
-        self.line_8.setFrameShape(QFrame.VLine)
-        self.line_8.setFrameShadow(QFrame.Sunken)
+        self.line_8.setFrameShape(QFrame.Shape.VLine)
+        self.line_8.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_5.addWidget(self.line_8)
 
@@ -173,12 +173,12 @@ class Ui_diagnostic_view(object):
 
         self.line_7 = QFrame(diagnostic_view)
         self.line_7.setObjectName(u"line_7")
-        self.line_7.setFrameShape(QFrame.VLine)
-        self.line_7.setFrameShadow(QFrame.Sunken)
+        self.line_7.setFrameShape(QFrame.Shape.VLine)
+        self.line_7.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_5.addWidget(self.line_7)
 
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_3)
 
@@ -187,12 +187,12 @@ class Ui_diagnostic_view(object):
 
         self.line_14 = QFrame(diagnostic_view)
         self.line_14.setObjectName(u"line_14")
-        self.line_14.setFrameShape(QFrame.HLine)
-        self.line_14.setFrameShadow(QFrame.Sunken)
+        self.line_14.setFrameShape(QFrame.Shape.HLine)
+        self.line_14.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout_2.addWidget(self.line_14)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
 
@@ -201,8 +201,8 @@ class Ui_diagnostic_view(object):
 
         self.line_2 = QFrame(diagnostic_view)
         self.line_2.setObjectName(u"line_2")
-        self.line_2.setFrameShape(QFrame.VLine)
-        self.line_2.setFrameShadow(QFrame.Sunken)
+        self.line_2.setFrameShape(QFrame.Shape.VLine)
+        self.line_2.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_2)
 
@@ -221,14 +221,14 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_7)
 
         self.line_21 = QFrame(diagnostic_view)
         self.line_21.setObjectName(u"line_21")
-        self.line_21.setFrameShape(QFrame.VLine)
-        self.line_21.setFrameShadow(QFrame.Sunken)
+        self.line_21.setFrameShape(QFrame.Shape.VLine)
+        self.line_21.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_4.addWidget(self.line_21)
 
@@ -252,8 +252,8 @@ class Ui_diagnostic_view(object):
 
         self.line_22 = QFrame(diagnostic_view)
         self.line_22.setObjectName(u"line_22")
-        self.line_22.setFrameShape(QFrame.VLine)
-        self.line_22.setFrameShadow(QFrame.Sunken)
+        self.line_22.setFrameShape(QFrame.Shape.VLine)
+        self.line_22.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_4.addWidget(self.line_22)
 
@@ -272,8 +272,8 @@ class Ui_diagnostic_view(object):
 
         self.line_23 = QFrame(diagnostic_view)
         self.line_23.setObjectName(u"line_23")
-        self.line_23.setFrameShape(QFrame.VLine)
-        self.line_23.setFrameShadow(QFrame.Sunken)
+        self.line_23.setFrameShape(QFrame.Shape.VLine)
+        self.line_23.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_4.addWidget(self.line_23)
 
@@ -291,12 +291,12 @@ class Ui_diagnostic_view(object):
 
         self.line_24 = QFrame(diagnostic_view)
         self.line_24.setObjectName(u"line_24")
-        self.line_24.setFrameShape(QFrame.VLine)
-        self.line_24.setFrameShadow(QFrame.Sunken)
+        self.line_24.setFrameShape(QFrame.Shape.VLine)
+        self.line_24.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_4.addWidget(self.line_24)
 
-        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_8)
 
@@ -310,8 +310,8 @@ class Ui_diagnostic_view(object):
 
         self.line_5 = QFrame(diagnostic_view)
         self.line_5.setObjectName(u"line_5")
-        self.line_5.setFrameShape(QFrame.HLine)
-        self.line_5.setFrameShadow(QFrame.Sunken)
+        self.line_5.setFrameShape(QFrame.Shape.HLine)
+        self.line_5.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.line_5)
 
@@ -323,14 +323,14 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_13 = QHBoxLayout()
         self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_13.addItem(self.horizontalSpacer_2)
 
         self.line_16 = QFrame(diagnostic_view)
         self.line_16.setObjectName(u"line_16")
-        self.line_16.setFrameShape(QFrame.VLine)
-        self.line_16.setFrameShadow(QFrame.Sunken)
+        self.line_16.setFrameShape(QFrame.Shape.VLine)
+        self.line_16.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_13.addWidget(self.line_16)
 
@@ -341,8 +341,8 @@ class Ui_diagnostic_view(object):
 
         self.line_12 = QFrame(diagnostic_view)
         self.line_12.setObjectName(u"line_12")
-        self.line_12.setFrameShape(QFrame.VLine)
-        self.line_12.setFrameShadow(QFrame.Sunken)
+        self.line_12.setFrameShape(QFrame.Shape.VLine)
+        self.line_12.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_13.addWidget(self.line_12)
 
@@ -359,8 +359,8 @@ class Ui_diagnostic_view(object):
 
         self.line_9 = QFrame(diagnostic_view)
         self.line_9.setObjectName(u"line_9")
-        self.line_9.setFrameShape(QFrame.VLine)
-        self.line_9.setFrameShadow(QFrame.Sunken)
+        self.line_9.setFrameShape(QFrame.Shape.VLine)
+        self.line_9.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_13.addWidget(self.line_9)
 
@@ -377,8 +377,8 @@ class Ui_diagnostic_view(object):
 
         self.line_10 = QFrame(diagnostic_view)
         self.line_10.setObjectName(u"line_10")
-        self.line_10.setFrameShape(QFrame.VLine)
-        self.line_10.setFrameShadow(QFrame.Sunken)
+        self.line_10.setFrameShape(QFrame.Shape.VLine)
+        self.line_10.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_13.addWidget(self.line_10)
 
@@ -395,12 +395,12 @@ class Ui_diagnostic_view(object):
 
         self.line_17 = QFrame(diagnostic_view)
         self.line_17.setObjectName(u"line_17")
-        self.line_17.setFrameShape(QFrame.VLine)
-        self.line_17.setFrameShadow(QFrame.Sunken)
+        self.line_17.setFrameShape(QFrame.Shape.VLine)
+        self.line_17.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_13.addWidget(self.line_17)
 
-        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_13.addItem(self.horizontalSpacer_4)
 
@@ -409,8 +409,8 @@ class Ui_diagnostic_view(object):
 
         self.line_6 = QFrame(diagnostic_view)
         self.line_6.setObjectName(u"line_6")
-        self.line_6.setFrameShape(QFrame.HLine)
-        self.line_6.setFrameShadow(QFrame.Sunken)
+        self.line_6.setFrameShape(QFrame.Shape.HLine)
+        self.line_6.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.line_6)
 
@@ -427,21 +427,21 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_10 = QHBoxLayout()
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
-        self.horizontalSpacer_13 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_13 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_10.addItem(self.horizontalSpacer_13)
 
         self.line_18 = QFrame(diagnostic_view)
         self.line_18.setObjectName(u"line_18")
-        self.line_18.setFrameShape(QFrame.VLine)
-        self.line_18.setFrameShadow(QFrame.Sunken)
+        self.line_18.setFrameShape(QFrame.Shape.VLine)
+        self.line_18.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_10.addWidget(self.line_18)
 
         self.line_19 = QFrame(diagnostic_view)
         self.line_19.setObjectName(u"line_19")
-        self.line_19.setFrameShape(QFrame.VLine)
-        self.line_19.setFrameShadow(QFrame.Sunken)
+        self.line_19.setFrameShape(QFrame.Shape.VLine)
+        self.line_19.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_10.addWidget(self.line_19)
 
@@ -463,12 +463,12 @@ class Ui_diagnostic_view(object):
 
         self.line_20 = QFrame(diagnostic_view)
         self.line_20.setObjectName(u"line_20")
-        self.line_20.setFrameShape(QFrame.VLine)
-        self.line_20.setFrameShadow(QFrame.Sunken)
+        self.line_20.setFrameShape(QFrame.Shape.VLine)
+        self.line_20.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_10.addWidget(self.line_20)
 
-        self.horizontalSpacer_14 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_14 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_10.addItem(self.horizontalSpacer_14)
 
@@ -482,12 +482,12 @@ class Ui_diagnostic_view(object):
 
         self.line_15 = QFrame(diagnostic_view)
         self.line_15.setObjectName(u"line_15")
-        self.line_15.setFrameShape(QFrame.HLine)
-        self.line_15.setFrameShadow(QFrame.Sunken)
+        self.line_15.setFrameShape(QFrame.Shape.HLine)
+        self.line_15.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.line_15)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_2)
 
@@ -496,8 +496,8 @@ class Ui_diagnostic_view(object):
 
         self.line_3 = QFrame(diagnostic_view)
         self.line_3.setObjectName(u"line_3")
-        self.line_3.setFrameShape(QFrame.VLine)
-        self.line_3.setFrameShadow(QFrame.Sunken)
+        self.line_3.setFrameShape(QFrame.Shape.VLine)
+        self.line_3.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout.addWidget(self.line_3)
 
@@ -516,11 +516,11 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_7.addItem(self.horizontalSpacer_9)
 
-        self.horizontalSpacer_15 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_15 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_7.addItem(self.horizontalSpacer_15)
 
@@ -545,8 +545,8 @@ class Ui_diagnostic_view(object):
 
         self.line_13 = QFrame(diagnostic_view)
         self.line_13.setObjectName(u"line_13")
-        self.line_13.setFrameShape(QFrame.VLine)
-        self.line_13.setFrameShadow(QFrame.Sunken)
+        self.line_13.setFrameShape(QFrame.Shape.VLine)
+        self.line_13.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_7.addWidget(self.line_13)
 
@@ -571,8 +571,8 @@ class Ui_diagnostic_view(object):
 
         self.line_25 = QFrame(diagnostic_view)
         self.line_25.setObjectName(u"line_25")
-        self.line_25.setFrameShape(QFrame.VLine)
-        self.line_25.setFrameShadow(QFrame.Sunken)
+        self.line_25.setFrameShape(QFrame.Shape.VLine)
+        self.line_25.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.horizontalLayout_7.addWidget(self.line_25)
 
@@ -599,11 +599,11 @@ class Ui_diagnostic_view(object):
 
         self.horizontalLayout_7.addWidget(self.source_step_size_label)
 
-        self.horizontalSpacer_16 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_16 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_7.addItem(self.horizontalSpacer_16)
 
-        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_7.addItem(self.horizontalSpacer_10)
 
@@ -617,8 +617,8 @@ class Ui_diagnostic_view(object):
 
         self.line_4 = QFrame(diagnostic_view)
         self.line_4.setObjectName(u"line_4")
-        self.line_4.setFrameShape(QFrame.HLine)
-        self.line_4.setFrameShadow(QFrame.Sunken)
+        self.line_4.setFrameShape(QFrame.Shape.HLine)
+        self.line_4.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout_3.addWidget(self.line_4)
 
@@ -687,12 +687,12 @@ class Ui_diagnostic_view(object):
 
         self.line_26 = QFrame(diagnostic_view)
         self.line_26.setObjectName(u"line_26")
-        self.line_26.setFrameShape(QFrame.HLine)
-        self.line_26.setFrameShadow(QFrame.Sunken)
+        self.line_26.setFrameShape(QFrame.Shape.HLine)
+        self.line_26.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout_3.addWidget(self.line_26)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_3.addItem(self.verticalSpacer_3)
 

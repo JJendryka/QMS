@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1083</width>
+    <width>1193</width>
     <height>760</height>
    </rect>
   </property>
@@ -26,10 +26,10 @@
      <item>
       <widget class="QCheckBox" name="log_checkbox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
-        <string>Logarithmic</string>
+        <string>Log</string>
        </property>
       </widget>
      </item>
@@ -67,7 +67,7 @@
      <item>
       <widget class="QPushButton" name="y_fullscale_button">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>Full scale</string>
@@ -108,7 +108,7 @@
      <item>
       <widget class="QPushButton" name="x_fullscale_button">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>Full scale</string>
@@ -132,7 +132,7 @@
      <item>
       <widget class="QComboBox" name="plot_type_combobox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <item>
         <property name="text">
@@ -144,15 +144,30 @@
          <string>Scatter</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string>Histogram</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item>
       <widget class="Line" name="line_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;History:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="history_count_spinbox"/>
+     </item>
+     <item>
+      <widget class="Line" name="line_4">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
